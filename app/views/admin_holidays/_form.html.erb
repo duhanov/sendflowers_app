@@ -1,0 +1,35 @@
+	<%form_tag(request.request_uri, :multipart => true) do%>
+		<table>
+			<Tr>
+				<td>Язык</td>
+				<td><%=select_language%></td>
+			</Tr>
+			<tr>
+				<td>Название</td>
+				<td><%=text_field :item, :name%></td>
+			</tr>
+			<tr>
+				<td>Тип</td>
+				<td><%=select :item, :t, [["Праздник", "prazdniki"], ["Именины", "imenini"]]%></td>
+			</tr>
+			<tr>
+				<Td>Дата</Td>
+				<td><%=select(:item, :holiday_day, [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31])%><%=select(:item, :holiday_month, [["Января", 1], ["Февраля", 2], ["Марта", 3], ["Апреля", 4], ["Мая",5], ["Июня", 6], ["Июля", 7], ["Августа", 8], ["Сентября", 9], ["Октября", 10], ["Ноября", 11], ["Декабря", 12]])%></td>
+			</tr>
+		</table>
+Вступительный текст:<br/>
+<%=ckeditor_textarea :item, :body1, :toolbar=>'Full', :width=>'800px', :heigth=>'200px' %>
+<br/>
+Остальной текст:<br/>
+<%=ckeditor_textarea :item, :body2, :toolbar=>'Full', :width=>'800px', :heigth=>'200px' %>
+
+
+<%if params[:action]=="edit"%>		
+<br/>
+	<%=render :partial => "admin/assigments", :locals => {:name => "product", :title => "Товары связанные с праздником"}%>
+		<br/>
+<%end%>				
+
+		<%if params[:action]=="new"%><%=submit_tag "Добавить"%><%end%>
+		<%if params[:action]=="edit"%><%=submit_tag "Редактировать"%><%end%>
+	<%end%>

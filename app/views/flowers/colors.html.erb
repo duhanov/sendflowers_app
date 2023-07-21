@@ -1,0 +1,3 @@
+<%for item in @flower.colors%>
+	<option value="<%=item.id%>" flower_id="<%=item.id%>" price="<%=item.price%>" <%if !item.image.blank?%>photo_big='<%=item.image.url(:full)%>' photo_small='<%=item.image.url(:small_flower)%>'<%end%>><%=translate_name item.color%></option>
+<%end%>

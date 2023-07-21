@@ -1,0 +1,47 @@
+<%cache "products_category_#{@category.id}_#{session[:currency]}_#{products_on_page}_#{params[:page]}_#{@language}" do%>
+            	<div class="all">
+                	<div class="center">
+                		<%=print_way%>
+						<%if products_show_all%>
+                        <div class="sort"><a href="/catalog/category/<%=@category.id%>"><%=trans 'products_view_paged'%></a> <%=trans 'products_view_all'%></div>
+						<%else%>
+                        <div class="sort"><%=trans 'products_view_paged'%> <a href="/catalog/category/<%=@category.id%>?show_all=true"><%=trans 'products_view_all'%></a></div>
+						<%end%>
+						<%if @language == "ru"%>
+                    	<h1><%=category_name(@category)%></h1>
+						<%else%>
+						<h1>Send <%=category_name(@category).downcase%> to Minsk with delivery in Belarus</h1>
+						<%end%>
+	<%@i = 0%>
+	<%@products=Product.category_page(params[:page], 'is_service = 0 AND active=1', @category.id, products_on_page, get_sort)%>
+	<% for product in @products%>
+		<%@i = @i + 1%>
+		<%=render :partial => "product", :locals => {:product => product} %>
+	<%end%>
+                    	<div class="clear"></div>
+						<% if !products_show_all%>
+<%= will_paginate(@products, :renderer => PaginationListLinkRenderer) %>
+
+						<%end%>
+<style>
+.body_desc {
+      font: normal 12px Arial;
+    color: rgb(128,130,133);
+    text-align: left;
+    line-height: 18px;
+    margin: 0px;
+    padding: 0px 0px 20px 0px;
+}
+</style>	
+                    	<div class="body_desc">
+                    			<%if @language == "ru"%>
+                    		<%=@category.description%>
+                    			<%else%>
+                    		<%=@category.description_en%>
+                    			<%end%>
+                    	</div>
+						
+                    </div>
+                </div>
+<%end%>
+<%=render :partial => "layouts/left" %>

@@ -1,0 +1,13 @@
+                <div class="right">
+<%if !current_user.blank?%>
+                	<ul class="menur">
+                        <li<%if params[:controller]=="users"%> class="active"<%end%>><a href="/profile">Customer's Profile</a></li>
+                    	<li<%if params[:controller]=="users_addresses"%> class="active"<%end%>><a href="/users_addresses">Delivery Addresses</a></li>
+                    	<li<%if params[:controller]=="order" && params[:action] == "status"%> class="active"<%end%>><a href="/order/status">Order status</a></li>
+						<li <%if params[:controller]=="order" && params[:action] == "history"%> class="active"<%end%>><a href="/order/history">History</a></li>
+
+<!--                        <li<%if params[:controller]=="orders"%> class="active"<%end%>><a href="/orders">Orders History</a></li>-->
+<!--                        <li><a href="#">Products Request</a></li>-->
+                    </ul>
+<%end%>
+                </div>

@@ -1,0 +1,8 @@
+<%table_with_sort_links ["Название", "Уд."], {:item_name => "связанный товар", :del_url => "/#{params[:controller]}/delete_assigment/#{@item.id}?assigment_type=#{name}&assigment_id="} do%>
+	<%for item in items%>
+		<%tr item do%>
+			<td><%=item.name%></td>
+			<td><%=btn_del%></td>
+		<%end%>
+	<%end%>
+<%end%>

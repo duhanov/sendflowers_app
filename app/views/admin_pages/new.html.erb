@@ -1,0 +1,55 @@
+<% admin_page [["Новая страница", "/admin_pages/new"], ["Список страниц", "/admin_pages/list"]] do%>
+<script>
+	function page_url_set_index(){
+		if($("#item_url").val() == ""){
+			$("#item_url").val("index");
+		};
+	};
+	$(document).ready(function(){
+		$("#set_page_url_index").click(function(){
+			page_url_set_index();
+			return false;
+		});
+	});
+</script>
+<% form_tag '/admin_pages/new', :name => "form_hotel", :enctype => "multipart/form-data" do %>
+	  <div id="mainDIV">
+	  <table width=100%  class="list">
+      <tr><td class="act" nowrap>Родительская страница:</td><td width="100%"><%= page_select(Page.find(:all, :conditions => "page_id = 0"), 'item', 'page_id', @item) %></td></tr>
+      <tr><td class="act" nowrap>Название:</td><td width="100%"><%= text_field :item, :name, :class => "field" %></td></tr>
+      <tr><td class="act" nowrap>Заголовок страницы:</td><td width="100%"><%= text_field :item, :title, :class => "field" %></td></tr>
+	  <% if @item.system_name != "index" %>
+      <tr><td class="act" nowrap>URL:</td><td width="100%"><%= text_field :item, :url, :class => "field" %>
+	  </td></tr>
+	  <% end %>
+	  <tr><td>Показывать в меню<td><%=check_box :item, :show_in_menu%></td></tr>
+      <tr><td class="act" nowrap>Описание:</td><td width="100%"><%= text_area :item, :desc, :cols => 50, :rows => 5 %></td></tr>
+<%=edit_meta%>
+
+       </table>
+	  <br>
+   Текст страницы:<br>
+   <%=page_system_tags @item%>
+<%=ckeditor_textarea :item, :body, :toolbar=>'Full', :width=>'800px', :heigth=>'200px' %>
+
+	  <Br>
+<b>Ссылки в правом блоке</b>	  
+<table>
+	<Tr>
+		<td>Названия ссылок:<br><%=text_area :item, :links_titles, :cols => 50, :rows => 5%></td>
+		<td>Адреса ссылок:<br><%=text_area :item, :links_urls, :cols => 50, :rows => 5%></td>
+	</Tr>
+</table>
+
+<table>
+	  <tr><td>Показывать блок "Фото доставок"</td><td><%=check_box :item, :show_photos%></td></tr>
+	  <tr><td>Показывать блок "Отзывы покупателей"</td><td><%=check_box :item, :show_reviews%></td></tr>	
+</table>
+
+	  
+	  </div>
+<br><input type=submit value="Добавить страницу" class=field>  
+
+<% end %>
+
+<% end %>

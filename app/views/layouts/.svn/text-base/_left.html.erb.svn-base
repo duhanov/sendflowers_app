@@ -1,0 +1,69 @@
+                <div class="left">
+                	<ul class="mnl">
+<% cache  "menu_categories_#{@language}"  do %>
+<%=gen_time%>
+						<%i = 0 %>
+						<%cats = Category.root_in_menu%>
+						<%for category in cats%>
+						<% i = i + 1%>
+							<%if i == 1 %>
+                    	<li class="first">
+                   		<div>&nbsp;</div><span>&nbsp;</span>
+                    		<%elsif(!category.categories_in_menu.blank?)||(i==cats.size)%>	
+						<li class="last">	
+						<div>&nbsp;</div>
+							<%else%>
+						<li>
+						<div>&nbsp;</div>
+							<%end%>
+
+							<%if category.categories_in_menu.blank?%>
+						<big><a href="/catalog/category/<%=category.id%>"><%=category_name(category)%></a></big>
+								<%if i==cats.size%>
+									<span>&nbsp;</span>					
+								<%end%>
+							<%else%>
+                            <strong><a><%=translate "expand"%></a></strong>
+                            <div class="list_left"><a href="/catalog/category/<%=category.id%>"><%=category_name(category)%></a>
+                                <ul>
+                                	<%for subcategory in category.categories_in_menu%>
+                                    <li><a href="/catalog/category/<%=subcategory.id%>"><%=category_name(subcategory)%></a></li>
+									<%end%>
+                                </ul>
+                            </div>
+                            <span>&nbsp;</span>
+							<%end%>
+						</li>
+                    	<%end%>
+<%end%>
+					</ul>
+<!--                    <ul class="mnl2">
+                    	<li><span class="mnl2"><a href="#">Открытки</a></span></li>
+                        <li class="arrow"><span class="mnl2"><a>Шоколад и конфеты</a></span>
+                             <ul>
+                            	<li><a href="#">Открытки</a></li>
+                               	<li><a href="#">Шоколад </a></li>
+                                <li><a href="#">Мягкие игрушки</a></li>
+                            </ul>
+						</li>
+                        <li><span class="mnl2"><a href="#">Мягкие игрушки</a></span></li>
+                        <li><span class="mnl2"><a href="#">Сувениры</a></span></li>
+                        <li><span class="mnl2"><a href="#">Парфюмерия</a></span></li>
+                        <li><span class="mnl2"><a href="#">Чай и кофе</a></span></li>
+                    </ul>-->
+                    <form action="/catalog/search" class="search">
+                    	<input type="text" class="text" value="<%if !params[:q].blank?%><%=h params[:q]%><%else%><%=translate 'search_flower'%><%end%>"  onfocus="if (this.value == '<%=translate 'search_flower'%>') {this.value ='';this.style.color='#414141';}" onblur="if (this.value == '') {this.value='<%=translate 'search_flower'%>';this.style.color='#bcbdbf';}" name="q" /><input type="submit" value="" name="" class="find" />
+                        <span><%=translate 'for_example'%>, </span>
+						<%for w in SearchWord.find(:all, :conditions => ["language = ?", @language], :order => "count_requests DESC", :limit => 3)%>
+						<a href="/catalog/search?q=<%=URI.escape(w.q)%>"><%=h w.q%></a>,
+						<%end%>
+                    </form>
+                    <div class="block1">
+                    	<div class="top"></div>
+                    	<div class="cent">
+                    		<%=show_block("left_text")%>
+                        </div>
+                        <div class="bot"></div>
+                    </div>
+                </div>
+

@@ -1,0 +1,44 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/">Главная</a> / <a href="/easypay/index/<%=@order.id%>">Заказ #<%=@order.id%>. Оплата заказа через Payband</a ></div>
+<%=flashes%>
+<%=page_content("payband_pay_#{@language}",true)%>
+
+
+<% pay_url =  Option.get('pas_test_mode').to_s=="1" ? "https://test.paysecure.ru/pay/order.cfm" : "https://pay112.paysec.by/pay/order.cfm" %>
+
+<div >
+	<%form_tag pay_url, :method => 'POST', :style => "margin-top: 15px;", :name => "payment" do%>
+		<INPUT TYPE="HIDDEN" NAME="Merchant_ID" VALUE="<%=Option.get('pas_merchant')%>">
+		<INPUT TYPE="HIDDEN" NAME="OrderNumber" VALUE="<%= @order.id%>">
+
+	<%if @order.payment_method.name.to_s =~ /МИР/%>
+		<INPUT TYPE="HIDDEN" NAME="OrderAmount" VALUE="<%= @order.total_price_rub.to_f + @order.delivery_price_rub.to_f%>">
+	<%else%>
+		<INPUT TYPE="HIDDEN" NAME="OrderAmount" VALUE="<%= @order.total_price.to_f + @order.delivery_price.to_f%>">
+	<%end%>
+		
+
+	<%if @order.payment_method.name.to_s =~ /МИР/%>
+		<INPUT TYPE="HIDDEN" NAME="OrderCurrency" VALUE="BYN">
+	<%else%>
+		<INPUT TYPE="HIDDEN" NAME="OrderCurrency" VALUE="USD">
+	<%end%>
+
+		<INPUT TYPE="HIDDEN" NAME="CardPayment" VALUE="1" >
+		<INPUT TYPE="HIDDEN" NAME="Email" VALUE="<%= @order.email%>">
+		<INPUT TYPE="HIDDEN" NAME="MobilePhone" VALUE="<%= @order.telephone%>">
+		<INPUT TYPE="HIDDEN" NAME="AssistIDPayment" VALUE="0">
+		<INPUT TYPE="HIDDEN" NAME="URL_RETURN_OK" VALUE="http://<%= request.host%>:<%= request.port%>/pas/ok/<%= @order.id%>">
+		<INPUT TYPE="HIDDEN" NAME="URL_RETURN_NO" VALUE="http://<%= request.host%>:<%= request.port%>/pas/no/<%= @order.id%>">
+		<INPUT TYPE="HIDDEN" NAME="OrderComment" VALUE="Example of an order payment">
+		<INPUT TYPE="SUBMIT" NAME="submit" VALUE="Оплатить" class="btn">
+<!--		<INPUT TYPE="button" NAME="cancel" VALUE="Вернуться" onclick = "location.href = 'http://<%= request.host%>:<%= request.port%>/order/index/';"  >-->
+	<%end%>
+</div>
+
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                </div>

@@ -1,0 +1,24 @@
+<% admin_page @tabs do%>
+<% form_tag "", :multipart => true do %>
+	  <table width=100%  class="list">
+		<tr><td nowrap>Название(рус|англ):</td><td><%= text_field :item, :value%></td></tr>
+
+
+		<tr><td nowrap>Заголовок(рус):</td><td><%= text_field :item, :title%></td><td>(англ.)</td><td><%=text_field :item, :title_en%></td></tr>
+
+
+		<%=edit_meta_ru_en%>
+
+
+       </table>
+	  <br>
+   Полное описание(рус.):<br>
+<%=ckeditor_textarea :item, :body, :toolbar=>'Full', :width=>'800px', :heigth=>'200px' %>
+   Полное описание(англ.):<br>
+<%=ckeditor_textarea :item, :body_en, :toolbar=>'Full', :width=>'800px', :heigth=>'200px' %>
+	<%=submit_tag "Редактировать"%>
+
+<% end %>
+
+
+<% end %>

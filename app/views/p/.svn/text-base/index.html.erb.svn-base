@@ -1,0 +1,36 @@
+            	<div class="all">
+                	<div class="centeri">
+<%if @page.blank?%>
+                    	<div class="crumb"><a href="/"><%=translate "main_page"%></a> / <span>Страница не найдена</span></div>
+                    	<h1>Страница не найдена</h1>
+                        <div class="news_content">
+404 - Не найдено.
+						</div>
+<%else%>
+                    	<div class="crumb"><a href="/"><%=translate "main_page"%></a> / <span><%=@page.title%></span></div>
+                    	<h1><%=@page.title%></h1>
+                        <div class="news_content">
+<%=@page.body%>
+                        </div>
+<%end%>
+                    </div>
+                </div>
+<%=render :partial => "layouts/left" %>
+
+				<div class="right">
+<%if @page.links_titles.to_s.strip!=""%>                
+                    <ul class="menur">
+						<%for i in 0..(@links_titles.size)%>
+						<%=menu2_li @links_titles[i], @links_urls[i]%>    
+						<!--<%=@links_urls[i]%>-->                	
+						<%end%>
+                    </ul>
+<%end%>
+<% if @page.show_photos%>
+                <%=render :partial => "widgets/delivery_photos"%>
+<%end%>				
+<% if @page.show_reviews%>
+				<%=render :partial => "widgets/last_reviews"%>
+<%end%>				
+
+				</div>			

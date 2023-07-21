@@ -1,0 +1,32 @@
+<a href='#' id='addBlockButton<%=@blocks_t%>'><img src="/images/icon_additem.gif" border="0">Добавить</a><br>
+
+<div id='addBlockList<%=@blocks_t%>' style="display: none;">
+<% for b in ["banner", "text", "catalog", "search", "contacts", "last_articles"]%>
+<a href="#" onClick="addNewBlock(<%=@blocks_t%>, '', '<%=b%>'); return false;"><%=get_block_title(Block.new({:content_type => b}))%></a>
+<br>
+<% end %>
+</div>
+<script>
+	$('#addBlockButton<%=@blocks_t%>').qtip({content: $('#addBlockList<%=@blocks_t%>').html(), 
+		position: {
+			corner: {
+				target: 'bottomMiddle',
+				tooltip: 'topMiddle'
+			}
+		},
+		hide: { when: 'inactive', delay: 1000 }
+	});
+</script>
+
+<div id="items<%=@blocks_t%>">
+<ul id="sortable_list<%=@blocks_t%>" class="blocks_list">
+<%=render :file => "admin_blocks/_blocks_list"%>
+</ul>
+</div>
+<%
+%>
+
+<script>
+	createSortable(<%=@blocks_t%>);
+</script>
+

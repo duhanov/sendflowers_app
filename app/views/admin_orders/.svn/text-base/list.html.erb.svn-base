@@ -1,0 +1,91 @@
+<style>
+	.order {font-weight: 900; cursor: pointer;border: 1px solid black;padding: 5px 5px 5px 5px;font-size: 14px;margin: 0 0 0 0; background: url(/admin/i/hd_bg.gif)}
+	.order.current,.order:HOVER {background: #9DB3C8; background: url(/admin/i/hd_hover_bg.gif)}
+	.order_info {display: none;border: 1px solid black;padding: 5px 5px 5px 5px;}
+</style>
+<% admin_page [["Список заказов", "/admin_orders/list"], ["Настройка уведомлений", "/admin_orders/notify"]] do %>
+	<form>
+	Дата с <input name="date1" value="<%=params[:date1]%>" class="datepicker"> по <input name="date2" value="<%=params[:date2]%>" class="datepicker">
+	<br>
+	Статус <%=select_tag "status", options_for_select([["Любой", ""]] + order_statuses, params[:status].to_s)%>
+	<input type="hidden" name="filter" value="true">
+	<%=submit_tag "Фильтр"%>
+	</form>
+<br><Br>
+Быстрый поиск: <input id="search" name="search" value="<%=params[:q]%>"/><br/>
+
+<script>
+	var events_ajax = $.manageAjax.create('search', { queue: 'clear', cacheResponse: false });
+	
+	$(document).ready(function(){
+		$('#search').keyup(function(){
+			events_ajax.abort();
+			events_ajax.add({
+				url: "/admin_orders/search?&q=" + encodeURIComponent($('#search').val()),
+				success: function(html){
+						$('#orders').html(html);
+				}
+			});
+		});
+	});
+</script>
+
+<div id="orders">
+<%=render :partial => "orders" %>	
+</div>
+
+<%end%>
+
+<script>
+function init_orders(){
+		//Разворачиваем 1й заказ
+		$('.order:first').next().slideToggle();
+		$('.order:first').addClass('current');
+		//Кликаем
+		$('.order').click(function(){
+			if(!$(this).is('.current')){
+				$('.order.current').next().slideToggle();
+				$('.order.current').removeClass('current');
+				$(this).addClass('current');
+				$(this).next().slideToggle();
+			};
+			return false;
+		});
+		//Удалить/Обновить
+		$('.delete_order').click(function(){
+			if(confirm("Вы действительно хотите удалить заказ?")){
+				$(this).html("Заказ удаляется...");
+				$.ajax({
+					a_el: $(this),
+					type: "GET",
+					url: $(this).attr('href'),
+					dataType: "script",
+					success: function(){
+						this.a_el.parent().prev().remove();
+						this.a_el.parent().remove();
+						$('.order:first').click();
+					}
+				});
+			};
+			return false;
+		});
+		
+		$('.update_order').click(function(){
+			$(this).parent().prev().find("span").html("Обновляется...");
+			$.ajax({
+				a_el: $(this),
+				type: "GET",
+				url: $(this).attr('href'),
+				dataType: "script",
+				success: function(){
+				}
+			});			
+			return false;
+		});	
+};
+
+	$(document).ready(function(){
+		init_orders();
+	});
+	
+</script>

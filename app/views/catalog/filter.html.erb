@@ -1,0 +1,49 @@
+<%#cache "products_filters_#{@filters.inspect}_#{session[:currency]}_#{params[:price]}_#{products_on_page}_#{params[:page]}_#{params[:show_all]}" do%>
+            	<div class="all">
+                	<div class="center">
+                		<%=print_way%>
+						<%if products_show_all%>
+                        <div class="sort"><a href="/catalog/filter?price=<%=params[:price]%>&<%=@filters.map{|i| "filter[]=#{i}"}.join('&')%>">Отображать постранично</a> Показать всё</div>
+						<%else%>
+                        <div class="sort"><%=trans 'products_view_paged'%> <a href="/catalog/filter?show_all=true&price=<%=params[:price]%>&<%=@filters.map{|i| "filter[]=#{i}"}.join('&')%>"><%=trans 'products_view_all'%></a></div>
+						<%end%>
+                    	<h1><%if !@way.blank?%><%=@way[0][0]%><%end%></h1>
+	<%@i = 0%>
+	<%@products=Product.filter_page(params[:page], @filters, params[:price], session[:currency], products_on_page, get_sort)%>
+	<% for product in @products%>
+		<%@i = @i + 1%>
+		<%=render :partial => "product", :locals => {:product => product} %>
+	<%end%>
+                    	<div class="clear"></div>
+						<% if !products_show_all%>
+<%= will_paginate(@products, :renderer => PaginationListLinkRenderer) %>
+
+						<%end%>
+
+
+<style>
+.body_desc {
+      font: normal 12px Arial;
+    color: rgb(128,130,133);
+    text-align: left;
+    line-height: 18px;
+    margin: 0px;
+    padding: 0px 0px 20px 0px;
+}
+</style>    
+                        <div class="body_desc">
+                                <%if !@f.blank?%>
+                                    <%if @language == "en"%>
+                                        <%=@f.body_en%>
+                                    <%else%>
+                                        <%=@f.body%>
+                                    <%end%>
+                                <%end%>
+                        </div>
+
+
+
+                    </div>
+                </div>
+<%#end%>
+<%=render :partial => "layouts/left" %>

@@ -1,0 +1,2 @@
+module AdminFiltersHelper
+end

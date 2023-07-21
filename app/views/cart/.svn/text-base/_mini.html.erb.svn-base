@@ -1,0 +1,13 @@
+<%if @language == "ru"%>
+<%if @cart.items.blank?%>
+Пусто
+<%else%>
+<%=@cart.quantity%> <%=Russian.p(@cart.quantity, "товар", "товара", "товаров")%>
+<%end%>
+<%else%>
+<%if @cart.items.blank?%>
+Empty
+<%else%>
+<%=@cart.quantity%> <%=Russian.p(@cart.quantity, "product", "products", "products")%>
+<%end%>
+<%end%>

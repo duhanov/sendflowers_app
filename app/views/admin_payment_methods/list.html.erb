@@ -1,0 +1,55 @@
+<style>
+li.ui-state-default {
+	height: 120px;
+}
+.sortable {
+	width: 80%;
+}
+</style>
+<%admin_page [[model_title[:list], "/#{params[:controller]}/list"]] do%>
+	<%quick_add "Добавить вид #{model_title[:what]}", "/#{params[:controller]}/new" do%>
+	<table>
+		<tr>
+			<td>Название</td>
+			<td><input name="item[name]"></td>
+		</tr>
+		<tr>
+			<td>Описание</td>
+			<td><input name="item[description]"></td>
+		</tr>
+		<tr>
+			<td>Фото</td>
+			<td><input type='file' name="item[image]"></td>
+		</tr>
+	</table>
+	<%end%>
+	<br><Br>
+	<small>
+		Вы можете изменить порядок расположения с помощью перетягивания мышью.
+		<br>
+		Нажмите на название/фото/описание, чтобы изменить их.
+	</small>
+	<%=render :partial => "list", :locals => {:items => @items}%>
+	
+<%end%>
+
+<script>
+	$(document).ready(function(){
+		$('.del_product').click(function(){
+			if(confirm('Вы действительно хотите удалить <%=model_title[:what]%>?'))	
+			{
+				item_id = $(this).attr('item_id');
+				$(this).html("Идёт удаление...")
+				$.ajax({
+					"item_id": $(this).attr('item_id'),
+					"type": "GET",
+					"url": "/<%=params[:controller]%>/delete/" + $(this).attr('item_id'),
+					"success": function(){
+						$('#item_' + this.item_id).remove();
+					}
+				})
+			};
+			return false;
+		})
+	});
+</script>

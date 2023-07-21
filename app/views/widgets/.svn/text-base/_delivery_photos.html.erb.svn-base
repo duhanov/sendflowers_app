@@ -1,0 +1,34 @@
+
+
+                    <h2><a href="/delivery_photos"><%=translate "delivery_photos_title"%></a></h2>
+						<script type="text/javascript" src="/js/jquery.js"></script>
+                        <script type="text/javascript" src="/js/jquery.easing.1.2.js"></script>
+                        <link href="/css/gal.css" rel="stylesheet" type="text/css" />
+						<script type="text/javascript">
+                        jQuery(document).ready(function() {
+                            jQuery('#mycarousel').jcarousel({
+                                wrap: 'circular'
+                            });
+                            jQuery('#mycarousel1').jcarousel({
+                                wrap: 'circular'
+                            });
+                        });
+                        </script>
+                    	<!--1-->
+                    	<div class=" jcarousel-skin-tango">
+                          	<div class="jcarousel-container jcarousel-container-horizontal">
+                            	<div class="jcarousel-clip jcarousel-clip-horizontal">
+                                	<ul id="mycarousel" class="jcarousel-list jcarousel-list-horizontal">
+                                		<%i=0%>
+										<%photos = DeliveryPhoto.find(:all, :order=>"created_at DESC", :limit => 10)%>
+										<%for item in photos%>
+										<%i=i+1%>
+                                        <li jcarouselindex="<%=i%>"  class="jcarousel-item"><a href="/delivery_photos<%#item.image.url(:full)%>" rel="dost_group"><img src="<%=item.image.url(:mini)%>" alt=""></a><%next_photo = photos[photos.index(item)+1]%><%if !next_photo.blank?%><a href="/delivery_photos" rel="dost_group"><img src="<%=next_photo.image.url(:mini)%>" alt=""></a><%end%></li>
+										<%end%>
+  									</ul>
+                                </div>
+                                <div disabled="false" class="jcarousel-prev jcarousel-prev-horizontal"></div>
+                                <div disabled="false" class="jcarousel-next jcarousel-next-horizontal"></div>
+                          	</div>
+                        </div>
+                        <!--/1-->

@@ -1,0 +1,38 @@
+<% i = 0 %>
+<% for item in @menu_items %>
+	<% i = i + 1 %>
+	<% item_id = "item_#{i}#{item[:type]}#{item[:page_id]}"%>
+	<% if item[:type] == "link2page" %>
+	<li id="<%=item_id%>"><div><b>Ссылка на  
+		<% if item[:page_id] == "0" %>
+		Главную страницу
+		<% else%>
+			<% page= Page.find_by_id(item[:page_id])%>
+			<% if !page.blank?%>
+				страницу <%=page.title%>
+			<% else %>
+				страницу #<%=item[:page_id]%>
+			<% end %>
+		<% end %>
+		
+		</b>
+	<% else %>
+	<% end %>
+
+	<% if item[:type] == "link2newproducts" %>
+	<li id="<%=item_id%>"><div><b>Ссылка новинки</b>
+	<% end %>
+	<% if item[:type] == "link2news" %>
+	<li id="<%=item_id%>"><div><b>Ссылка на новости</b>
+	<% end %>
+	<% if item[:type] == "link2articles" %>
+	<li id="<%=item_id%>"><div><b>Ссылка на статьи</b>
+	<% end %>
+	<% if item[:type] == "link2top" %>
+	<li id="<%=item_id%>"><div><b>Ссылка на TOP-Товаров</b>
+	<% end %>
+		<div class="controls">
+<a href="#" onClick="deleteBlockMenuItem(<%=@item.id%>, '<%=item_id%>'); return false;"><img id="delImg_<%=item_id%>" src="/admin/i/delf.gif" alt="Удалить" border=0></a>				
+		</div>
+	</li>
+<% end %>

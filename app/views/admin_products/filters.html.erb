@@ -1,0 +1,34 @@
+<%admin_page @tabs do%>
+	<%=admin_tabs ["Повод", "Праздники", "Кому", "Цвет", "Цена(RUB)", "Цена(USD)"]%>
+	<%=render :partial => "admin_products/filter", :locals => {:name => "reason", :title => "Повод"}%>
+	<%=render :partial => "admin_products/filter", :locals => {:name => "holiday", :title => "Праздники"}%>
+	<%=render :partial => "admin_products/filter", :locals => {:name => "who", :title => "Кому"}%>
+	<%=render :partial => "admin_products/filter", :locals => {:name => "color", :title => "Цвет"}%>
+	<%=render :partial => "admin_products/filter", :locals => {:name => "price", :title => "Цена(RUB)"}%>
+	<%=render :partial => "admin_products/filter", :locals => {:name => "price_usd", :title => "Цена(USD)"}%>
+<%end%>
+<script>
+	$(document).ready(function(){
+		$('.delete_filter').click(function(){
+			if(confirm('Вы действительно хотите удалить значение?')){
+				$(this).html('Удаляется...');
+				$.ajax({
+					url: '/<%=params[:controller]%>/delete_filter_value/'+$(this).attr('itemid'),
+					dataType: 'script'
+				});
+			};
+		});
+		$('.filter_value').each(function(){
+			$(this).editInPlace({
+				saving_text: saving_text,
+				cancel_button: cancel_button,
+				save_button: save_button,
+				default_text: default_text,
+        		url: '/<%=params[:controller]%>/update_filter_value/'+$(this).attr('itemid'),
+				params: 'field=value&authenticity_token=' + window._token,
+        		show_buttons: true//,
+				//success: inplaceEditorCallback
+    		});			
+		});		
+	});
+</script>

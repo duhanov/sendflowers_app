@@ -1,0 +1,14 @@
+<% form_tag "/admin_blocks/update_block/#{@item.id}?ajax=true", :id => "edit_block_form", :enctype => "multipart/form-data", :target => "edit_frame", :onsubmit => "$('#form_edit_content').hide();$('#form_submit_progress').show();" do %>
+<%=ajax_form_loading%>
+<div id="form_edit_content">
+<p>
+	<label for="item_body">Название</label>
+	<%=text_field :item, :runame %>
+</p>
+<p>
+	<label for="item_body">Количество статей</label>
+	<%=text_field :item, :body %>
+</p>
+<%=submit_tag "Редактировать" %>
+<% end %>
+</div>

@@ -1,0 +1,67 @@
+            	<div class="all">
+                	<div class="center">
+
+                        <%=page_content "top_banners_#{@language}"%>
+<%=flashes%>
+
+<%cache "products_special_#{session[:currency]}_#{@language}" do %>
+<%=gen_time%>
+	<%@i = 0%>
+	<%@products=Product.find(:all, :conditions => ["is_special = 1 AND active=1"])%>
+	<% for product in @products%>
+		<%@i = @i + 1%>
+		<%=render :partial => "product", :locals => {:product => product} %>
+	<%end%>
+<%end%>
+<style>
+    a.razdel {
+        display: block;
+        margin-bottom: 15px;
+        color: #2c4b61;
+        margin: 0 0 0 0;
+        padding: 0 0 0 0;
+            font: italic 19px Georgia, "Times New Roman", Times, serif;
+    }
+    a.razdel.razdel1 {
+                color: #654841;
+
+    }
+</style>
+                    	<div class="clear"></div>
+                        <ul class="otziv">
+                        	<li class="one">
+                            	<div><a class='razdel razdel1' href="/reviews"><%=translate 'users_reviews'%></a></div>
+								<%for review in Review.find(:all, :conditions => ["moderated=1 AND language = ?", @language], :order => "created_at DESC", :limit => 2)%>
+                                <p>— <%=review.body%> 
+                                <strong><%=standartDate review.created_at%>, <%=review.name%></strong></p>
+								<%end%>
+                            </li>
+                        	<li class="too">
+                            	<div><a class='razdel' href="/holidays/index"><%=trans 'holiday_nearest'%></a></div>
+                                <p>
+								<%for holiday in Holiday.nearest_holidays(3, @language)%>
+								<strong><%=holiday_date holiday%></strong> — <%=holiday.name%><br />
+								<%end%>
+                            </li>
+                        	<li class="three last">
+                            	<div><a class='razdel' href="/flowers"><%=trans 'composing_link'%></a></div>
+                                <p><%=trans 'composing_descr'%></p>
+                            </li>
+                        </ul>
+                        <div class="news">
+                        	<div><a class='razdel' href="/news"><%=translate 'shop_news'%></a></div>
+                            <ul>
+                            	<%@news = News.find(:all, :order => "created_at DESC", :conditions => ["language = ?", @language], :limit => 3)%>
+                            	<%for news in @news%>
+                            	<li <%if news.id == @news.last.id%>class="last"<%end%>><a href="<%=link2news(news)%>"><%=news.title%></a><span><%=news_date(news)%></span><p><%=news.description%></p></li>
+								<%end%>
+                            </ul>
+                        </div>
+			<%=page_content("bank_rules_#{@language}")%>
+
+            <%=page_content("smo_#{@language}", {:add_text_title => "Добавить сюда социальные конпки", :edit_text_title => "Редактировать социальные кнопки", :textarea => true})%>
+            
+
+                    </div>
+                </div>
+<%=render :partial => "layouts/left" %>

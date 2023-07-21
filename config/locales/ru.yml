@@ -1,0 +1,316 @@
+ru:  
+  cancel: Отмена
+  remember_btn: Запомнить
+  select_delivery_country_and_city: 'Выберите страну и город доставки'
+  no_order_alone: Заказы в международную доставку передаются исключительно с цветочной продукцией.Пожалуйста закажите букет цветов к вашему подарку.
+  orders_history: История заказов
+  pay: Оплатить
+  order_detail: Детали заказа
+  order_status: Статус заказа
+  order_number: Номер заказа
+  check_order_status: Проверить статус
+  status: Статус
+  call_to_konwn_address: Узнать адрес, созвонившись с получателем
+  leave_order_to_friends: В случае отсутвия получателя на месте, оставить заказ родственникам или друзьям
+  sht: шт.
+  administration: Администрирование
+  dont_call_surprise: Звонить за день до доставки
+  sitemap: Карта сайта
+  cart_empty: Ваша корзина пуста!
+  additional_services: Дополнительные услуги
+  repass_mail_text: <p>Был сделан запрос на смену пароля</p><p>Если вы не делали этого запроса, то проигнорируйте это письмо</p><p>Если вы хотите сменить пароль то проследуйте по следующей ссылке
+  repass_form_info: Заполните форму и получите инструкции по смене пароля на E-Mail
+  repass_email: Электронная почта
+  repass_btn: Сменить пароль
+  repass_title: Напоминание пароля
+  password_changed: Пароль был успешно изменён.
+  repass_message: Инструкции по смене пароля были высланы вам. Проверьте email.
+  mail_footer: C уважением, администрация магазина
+  order_total_amount: Итого к оплате
+  ordered_products: Заказанные товары
+  phones: Телефоны
+  review: Отзыв
+  users_register_title: Регистрация пользователя
+  users_register_complete: Вы были успешно зарегистрированы.
+  users_edit_complete: Данные были отредактированы.
+  
+  review_add_btn: Оставить отзыв
+  review_add_complete: Благодарим, Ваш отзыв принят и будет добавлен после проверки модератором.
+
+  profile_addresses_title: Личный кабинет - Адреса
+ 
+  reviews_new: Новый отзыв
+
+  get_order_status: Ваш заказ id имеет статус orderstatus
+  
+  holidays_all: Все
+  holidays_prazdniki: Праздники
+  holidays_imenini: Именины
+
+  delete_in_process: Идёт удаление...
+
+  bouquet: Цветы
+  bouquet_pack: Упаковка
+  bouquet_shtuk: шт
+
+  please_wait: Пожалуйста подождите...
+  
+  firstname: Имя
+  lastname: Фамилия 
+  patronymic: Отчество  
+
+  invalid_email: E-Mail указан не верно.
+
+  payment_complete: Оплата произведена успешно!
+
+  pay_via_webpay_error: Произошла ошибка! Повторите оплату!
+  
+  pay_via_easypay: Оплата заказа через Easypay
+  pay_via_easypay_error: Произошла ошибка! Повторите оплату!
+
+  pay_via_webmoney: Оплата заказа через Webmoney
+  pay_via_webmoney_error: Произошла ошибка! Повторите оплату!
+
+  order_not_found: Заказ не найден
+  order_complete_webmoney: Ваш заказ id оформлен. Произведите оплату через систему WebMoney.
+  order_complete_easypay: Ваш заказ id оформлен. Произведите оплату через систему Easypay.
+  order_complete_webpay: Ваш заказ id оформлен. Произведите оплату через систему Web-Pay.
+  order_complete_payband: Ваш заказ id оформлен. Произведите оплату через систему Payband.
+  order_complete: Ваш заказ id оформлен.
+   
+  order_confrim_desc: Внимательно проверьте данные своего заказа, если всё верно — нажмите на кнопку в конце формы. Если что-то не так — прейдите по ссылке справа назад в форму заполнения данных.
+
+  order_payment_method: Способ оплаты
+  
+  t_name: Имя
+  
+  cart_empy: Ваша корзина пуста
+  order_page_title: Оформление заказа
+  
+  cart_title: Корзина
+  cart_add_specials_title: Добавьте к подарку приятную мелочь
+   
+  auth_title: Авторизация
+  auth_login: Эл. почта
+  auth_password: Пароль
+  auth_forgot_password: Забыли пароль?
+  auth_loginbtn: Войти
+  
+  personal_title: Личный кабинет - Личные данные
+  
+  order: Заказ
+  order_phone: Телефон получателя
+  order_country_code: код&nbsp;страны
+  order_city_code: города
+  order_telephone: телефон
+  order_call_time: Время звонка
+  order_final_check: Чек
+  order_confirm_title: Подтверждение заказа
+  order_confirm_desc: Внимательно проверьте данные своего заказа, если всё верно — нажмите на кнопку в&nbsp;конце формы. Если что-то не так — прейдите по ссылке справа назад в форму заполнения данных.
+  order_delivery: Доставка
+  order_total_amount: Суммарная стоимость
+  order_payment_method: Форма оплаты
+  order_who: Данные получателя
+  order_name: Получателя зовут
+  order_address: Адрес доставки
+  order_telephone_cap: Телефон
+  order_organization: Организация
+  order_delivery_date: Дата доставки
+  order_delivery_time: Время доставки
+  order_message: Сообщение с заказом
+  order_info: Дополнительная информация
+  order_sender_info: Данные отправителя
+  order_sender: Заказчик
+  order_address: Адрес
+  order_email: E-Mail
+  order_and_pay_btn: Оформить заказ и оплатить
+  order_back_to_order: Вернуться к оформлению заказа
+  order_via_easypay: Оплата заказа через Easypay
+  order_payment_instruction: Инструкция по оплате
+  order_easypay_descr: 
+  order_easypay_id: Идентификатор кошелька
+  order_delivery_address_title: Оформление заказа. Адрес доставки
+  order_delivery_info: Доставка. Данные получателя
+  order_receiver: Получатель
+  order_country: Страна
+  order_city: Город
+  order_zip: Индекс
+  
+  news_title: Новости магазина
+  news_back_to_archive: Вернуться к архиву новостей
+  
+  filter_reason: Повод
+  filter_holidays: Праздники
+  filter_who: Кому
+  filter_color: Цвет
+  filter_price: Цена
+  filter_currency: Валюта
+  
+  req_field: Поле обязательно для заполнения
+  field_errors: Следующие поля заполнены не верно
+  price: Цена
+  back: Назад
+  
+  next_page: следюущая страница
+  prev_page: предыдущая страница
+ 
+  delivery_photos_title: Фото доставок
+  
+  products_view_all: Показать всё
+  products_view_paged: Отображать постранично
+  
+  flowers_select: Выберите цветы
+  flowers_color: Цвет
+  flowers_count: Количество
+  flowers_delete: Удалить
+  flowers_price: Цена
+  flowers_total: Итого
+  flowers_title: Составление букета
+  flowers_pack: Упаковка
+  flowers_add_another: добавить другие цветы
+  
+  composing_link: Составьте свой букет
+  composing_descr: Не нравятся стандартные букеты? Не нашли ничего подходящего? Сделайте свой! Вы можете выбрать любой из представленных здесь букетов и указать как количество цветов, так и другие параметры букета по своему вкусу.
+  
+  cart: Корзина
+  cart_descr: Описание
+  cart_one_amount: Цена единицы
+  cart_count: Кол-во
+  cart_amount: Сумма
+  cart_delete: Удалить
+  cart_later: Отложить на потом
+  cart_total: Итого
+  cart_order_btn: Оформить
+  cart_delivery: Доставка
+  cart_country: Страна
+  cart_city: Город
+  cart_add_specials_title: Добавьте к подарку приятную мелочь
+  holiday_t_prazdniki: Праздники
+  holiday_t_imenini: Именины
+  holiday_t_all: Все
+  holiday_in_month: в
+  holiday_nearest: Ближайшие праздники
+  holiday_month_1: январе
+  holiday_month_2: феврале
+  holiday_month_3: марте
+  holiday_month_4: апреле
+  holiday_month_5: мае
+  holiday_month_6: июне
+  holiday_month_7: июле
+  holiday_month_8: августе
+  holiday_month_9: сентябре
+  holiday_month_10: октябре
+  holiday_month_11: ноябре
+  holiday_month_12: декабре
+  holiday_month_nominative_1: январь
+  holiday_month_nominative_2: февраль
+  holiday_month_nominative_3: март
+  holiday_month_nominative_4: апрель
+  holiday_month_nominative_5: май
+  holiday_month_nominative_6: июнь
+  holiday_month_nominative_7: июль
+  holiday_month_nominative_8: август
+  holiday_month_nominative_9: сентябрь
+  holiday_month_nominative_10: октябрь
+  holiday_month_nominative_11: ноябрь
+  holiday_month_nominative_12: декабрь
+  page_title_prazdniki_i_imenini: Праздники и именины
+  recommended: Рекомендуем
+  main_page: Главная
+  add_to_cart: в корзину
+  more_holday: развернуть
+  close_holiday: свернуть
+  cart: Корзина
+  Register: Регистрация
+  login_for_clients: Вход для клиентов
+  personal_data: Личный кабинет
+  exit: Выход
+  order_status: Состояние заказа
+  expand: развернуть
+  shop_news: Новости магазина
+  search_flower: Найти цветы
+  for_example: Например
+  products_catalog: Каталог товаров
+  users_reviews: Отзывы покупателей 
+  quantity: Количество
+  zoom: увеличить фото
+  activerecord:
+    errors:
+      messages:
+        greater_than: не указан 
+    attributes:
+      greeting_text:
+        body: Текст поздравления
+      letter:
+        subj: Тема письма
+        body: Текст письма
+      shop:
+        domain: Домен
+        name: Название сайта
+      review:
+        name: Имя
+        body: Отзыв
+      holiday:
+        name: Название праздника
+        d: Дата праздника
+        body1: Описание праздника
+      order:
+        sender_country: Страна
+        sender_firstname: Имя отправителя
+        sender_email: E-Mail отправителя
+        sender_telephone: Телефон отправителя
+        payment_method_id: Способ оплаты
+        firstname: Имя
+        lastname: Фамилия
+        patronymic: Отчество
+        delivery_date: Поле дата доставки
+        delivery_time: Время доставки
+        name: Имя
+        telephone: Телефон
+        comment: Комментарий
+        zip: Индекс
+        address: Адрес
+        city: Город
+        street: Улица
+        house: Дом
+        vin: Vin-код
+      product:
+        name: Название
+      user:
+        "email": E-mail
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+        username: Имя пользователя
+        wmz: WMZ-кошелек
+        site: Сайт
+        name: Имя
+    models:
+        user: Пользователь
+        company: Компания
+  authlogic:
+    error_messages:
+        login_blank: не может быть пустым
+        login_not_found: введен не корректно
+        login_invalid: может состоять из букв, цифр, пробелов, и .-_@ 
+        consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account is disabled.
+        email_invalid: введён не верно.
+        password_blank: не может быть пустым
+        password_invalid: введен не корректно
+        not_active: Ваша учётная запись не активна
+        not_confirmed: Your account is not confirmed
+        not_approved: Your account is not approved
+        no_authentication_details: Вы не ввели никакой информации.
+    models:
+        user_session: Авторизация
+        username: Имя пользователя
+        password: Пароль
+    attributes:
+        user_session:
+            username: Имя пользователя
+            password: Пароль
+            email: E-mail
+
+   #      login: login
+    #      email: email
+    #      password: password
+    #      remember_me: remember me

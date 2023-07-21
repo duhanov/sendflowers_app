@@ -1,0 +1,12 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/">Главная</a> / <a href="/easypay/index/<%=@order.id%>">Заказ #<%=@order.id%>. Оплата заказа через Easypay</a ></div>
+<%=flashes%>
+<h1><%=@page_title%></h1>
+
+
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                </div>

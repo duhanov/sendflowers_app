@@ -1,0 +1,47 @@
+<h2><%=@title%></h2>
+<div id="import_json">
+
+	<%= javascript_include_tag 'fileuploader' %>
+<%= stylesheet_link_tag 'fileuploader' %>
+                <div id="file-uploader" style="ddisplay: none;">
+                    <noscript>
+                     <p>Включите в браузере JavaScript для возможности прикрипления файлов.</p>
+                     <!-- or put a simple form for upload here -->
+                    </noscript>
+                </div>
+
+<script>
+        function createUploader(){
+            var uploader = new qq.FileUploader({
+                element: document.getElementById('file-uploader'),
+                action: '/admin_pages/import_json/<%=params[:id]%>',
+template: '<div class="qq-uploader">' + 
+                '<div class="qq-upload-drop-area"><span>Переместить файлы сюда</span></div>' +
+                '<div class="qq-upload-button">Нажмите сюда, чтобы закачать JSON файл</div>' +
+                '<ul class="qq-upload-list"></ul>' + 
+             '</div>',                
+                onProgress: function(id, fileName, loaded, total){
+		                	$('#import_status').html('<div id="flash_notice">Закачка файла...</div');
+                },
+                onCancel: function(id, fileName){
+                },
+                onComplete: function(id, fileName, responseJSON){
+                	$('#import_status').html('<div id="flash_notice">Страницы созданы. Обновляем дерево...</div>');
+                    $.ajax({
+                    	dataType: 'script',
+                    	url: '/admin_pages/update_pages_tree',
+                    	complete: function(){
+		                	$('#import_status').html('<div id="flash_notice">Страницы созданы.!</div');
+                    	}
+                    });
+//                  enable_send_button();
+                }
+            });
+        };
+        createUploader();
+
+
+</script>
+</div>
+
+<div id="import_status"></div>

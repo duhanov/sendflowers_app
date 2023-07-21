@@ -1,0 +1,140 @@
+<%  
+# this partial renders a navigation bar, you can call it in your views with:
+#   <% navigation :adminnav % > 
+#
+# you can pass render_navigation a few options:
+#   :generate_css => true|false #=> generates a default inline css for the tabnav, defaults to false
+#   :html => aHash #=> sets html options for the tabnav's div (es :html => {:class=> 'myCssClass', :id=>'myCssId'}) 
+#  
+render_navigation :adminnav, :generate_css => false, :separator => '' do 
+
+
+
+  if current_user.is_admin
+  	add_item do |i|
+    	i.named '<b>Пользователи</b>' 
+        i.links_to '/admin_users/list'
+        i.highlights_on :controller => 'admin_users', :action => 'list' 
+        i.highlights_on :controller => 'admin_users', :action => 'new' 
+        i.highlights_on :controller => 'admin_users', :action => 'edit' 
+    end
+  	add_item do |i|
+    	i.named  "<b>Страницы</b>"
+        i.links_to '/admin_pages/list'
+        i.highlights_on :controller => 'admin_pages', :action => 'list' 
+        i.highlights_on :controller => 'admin_pages', :action => 'new' 
+        i.highlights_on :controller => 'admin_pages', :action => 'edit' 
+    end
+  	add_item do |i|
+    	i.named '<b>Категории</b>' 
+        i.links_to '/admin_categories/list'
+        i.highlights_on :controller => 'admin_categories', :action => 'list' 
+        i.highlights_on :controller => 'admin_categories', :action => 'new' 
+        i.highlights_on :controller => 'admin_categories', :action => 'edit' 
+    end
+  	add_item do |i|
+    	i.named '<b>Товары</b>' 
+        i.links_to '/admin_products/list'
+        i.highlights_on :controller => 'admin_products', :action => 'list' 
+        i.highlights_on :controller => 'admin_products', :action => 'new' 
+        i.highlights_on :controller => 'admin_products', :action => 'edit' 
+        i.highlights_on :controller => 'admin_products', :action => 'services' 
+    end
+  	add_item do |i|
+    	i.named '<b>Доставка</b>' 
+        i.links_to '/admin_deliveries/index'
+        i.highlights_on :controller => 'admin_deliveries', :action => 'list' 
+        i.highlights_on :controller => 'admin_deliveries', :action => 'index' 
+        i.highlights_on :controller => 'admin_deliveries', :action => 'new' 
+        i.highlights_on :controller => 'admin_deliveries', :action => 'edit' 
+    end
+  	add_item do |i|
+    	i.named '<b>Виды оплаты</b>' 
+        i.links_to '/admin_payment_methods/list'
+        i.highlights_on :controller => 'admin_payment_methods', :action => 'list' 
+        i.highlights_on :controller => 'admin_payment_methods', :action => 'new' 
+        i.highlights_on :controller => 'admin_payment_methods', :action => 'edit' 
+    end
+  	add_item do |i|
+    	i.named '<b>Цветы и букеты</b>' 
+        i.links_to '/admin_flowers/list'
+        i.highlights_on :controller => 'admin_flowers', :action => 'list' 
+        i.highlights_on :controller => 'admin_flowers', :action => 'new' 
+        i.highlights_on :controller => 'admin_flowers', :action => 'edit' 
+        i.highlights_on :controller => 'admin_flowers', :action => 'colors' 
+        i.highlights_on :controller => 'admin_flowers', :action => 'packs' 
+    end
+  	add_item do |i|
+    	i.named '<b>Фото доставок</b>' 
+        i.links_to '/admin_delivery_photos/list'
+        i.highlights_on :controller => 'admin_delivery_photos', :action => 'list' 
+        i.highlights_on :controller => 'admin_delivery_photos', :action => 'edit' 
+        i.highlights_on :controller => 'admin_delivery_photos', :action => 'new' 
+    end
+
+  	add_item do |i|
+    	i.named admin_nav_counter_link "Отзывы", Review.count_new 
+        i.links_to '/admin_reviews/list'
+        i.highlights_on :controller => 'admin_reviews', :action => 'list' 
+        i.highlights_on :controller => 'admin_reviews', :action => 'new' 
+        i.highlights_on :controller => 'admin_reviews', :action => 'edit' 
+    end
+
+  	add_item do |i|
+    	i.named '<b>Праздники</b>' 
+        i.links_to '/admin_holidays/list'
+        i.highlights_on :controller => 'admin_holidays', :action => 'list' 
+        i.highlights_on :controller => 'admin_holidays', :action => 'edit' 
+        i.highlights_on :controller => 'admin_holidays', :action => 'new' 
+    end
+
+    add_item do |i|
+        i.named '<b>Поздравления</b>' 
+        i.links_to '/admin_greeting_text_categories/list'
+        i.highlights_on :controller => 'admin_greeting_text_categories', :action => 'list' 
+        i.highlights_on :controller => 'admin_greeting_text_categories', :action => 'edit' 
+        i.highlights_on :controller => 'admin_greeting_text_categories', :action => 'new' 
+
+        i.highlights_on :controller => 'admin_greeting_texts', :action => 'list' 
+        i.highlights_on :controller => 'admin_greeting_texts', :action => 'edit' 
+        i.highlights_on :controller => 'admin_greeting_texts', :action => 'new' 
+    end
+
+  	add_item do |i|
+    	i.named admin_nav_counter_link "Заказы", Order.count_new 
+        i.links_to '/admin_orders/list'
+        i.highlights_on :controller => 'admin_orders', :action => 'list' 
+        i.highlights_on :controller => 'admin_orders', :action => 'notify' 
+    end
+
+
+    add_item do |i|
+        i.named "Шаблоны писем"
+        i.links_to '/admin_form_templates/index'
+        i.highlights_on :controller => 'admin_form_templates', :action => 'index' 
+        i.highlights_on :controller => 'admin_form_templates', :action => 'edit' 
+    end
+
+
+  	add_item do |i|
+    	i.named  "<b>Новости</b>"
+        i.links_to '/admin_news/list'
+        i.highlights_on :controller => 'admin_news', :action => 'list' 
+        i.highlights_on :controller => 'admin_news', :action => 'new' 
+        i.highlights_on :controller => 'admin_news', :action => 'edit' 
+    end
+  	add_item do |i|
+    	i.named  "<b>Блоки/Реклама</b>"
+        i.links_to '/admin_blocks/list'
+        i.highlights_on :controller => 'admin_blocks', :action => 'list' 
+        i.highlights_on :controller => 'admin_blocks', :action => 'edit' 
+    end
+  	add_item do |i|
+    	i.named  "<b>Настройки</b>"
+        i.links_to '/admin_options/list'
+        i.highlights_on :controller => 'admin_options', :action => 'list' 
+    end
+  end
+
+end 
+%>

@@ -1,0 +1,4 @@
+                    <ul class="menur">
+						<%=menu1_li "Customers' Testimonials", "/reviews"%>                    	
+						<%=menu1_li "Photogallery of Deliveries", "/delivery_photos"%>
+                    </ul>

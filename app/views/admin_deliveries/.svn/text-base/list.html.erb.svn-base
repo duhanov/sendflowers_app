@@ -1,0 +1,62 @@
+<style>
+li.ui-state-default {
+/*	height: 30px;*/
+}
+.sortable {
+	width: 80%;
+}
+</style>
+
+	<%quick_add "Добавить вид доставки", "/#{params[:controller]}/new" do%>
+	<table>
+		<tr>
+		<td><select name=item[t]><option value="0">Страна</option><option value="1">Город в Беларуси</option></select></td>
+		</tr>
+		<tr>
+			<td>Название</td>
+			<td><input name="item[name]"></td>
+		</tr>
+		<tr>
+			<td>Цена</td>
+			<td><input name="item[price]"></td>
+		</tr>
+	</table>
+	<%end%>
+	<br><Br>
+	<small>
+		Вы можете изменить порядок расположения видов доставок с помощью перетягивания мышью.
+		<br>
+		Нажмите на название/цену, чтобы изменить их.
+		<br>
+		Используйте знак <b>|</b> для разделения русского и английского названий. (Русское название|Английское название)
+	</small>
+	<h2>Страны</h2>
+	<font color="black">Если в списке присутствует значение <b>Беларусь</b> то при выборе этого значения в корзине <Br>появится дополнительное меню с выбором города из списка <b>Города Беларуси</b>.</font>
+	<%=render :partial => "list", :locals => {:items => Delivery.find(:all, :order => "p", :conditions => ["t=0"])}%>
+
+	
+	<h2>Города Беларуси</h2>
+	<%=render :partial => "list", :locals => {:items => Delivery.find(:all, :order => "p", :conditions => ["t=1"])}%>
+	
+<script>createInplaceEditors();</script>
+
+<script>
+	$(document).ready(function(){
+		$('.del_product').click(function(){
+			if(confirm('Вы действительно хотите удалить вид доставки?'))	
+			{
+				item_id = $(this).attr('item_id');
+				$(this).html("Идёт удаление...")
+				$.ajax({
+					"item_id": $(this).attr('item_id'),
+					"type": "GET",
+					"url": "/<%=params[:controller]%>/delete/" + $(this).attr('item_id'),
+					"success": function(){
+						$('#item_' + this.item_id).remove();
+					}
+				})
+			};
+			return false;
+		})
+	});
+</script>

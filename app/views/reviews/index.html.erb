@@ -1,0 +1,33 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=translate "main_page"%></a> / <span><%=@page.name%></span></div>
+                    	<h1><%=translate "users_reviews"%></h1>
+						<%=@page.body%>
+						<%=flashes%>
+                        <ul class="testemon">
+                        	<%for item in @items%>
+                        	<li>— <%=item.body%> <br /><strong><%=standartDate item.created_at%>, <%=item.name%></strong></li>
+							<%end%>
+                        </ul>
+                    </div>
+                </div>
+				<%=render :partial => "layouts/left"  %>
+                <div class="right">
+<%if @page.links_titles.to_s.strip!=""%>                
+                    <ul class="menur">
+						<%for i in 0..(@links_titles.size-1)%>
+						<%=menu2_li @links_titles[i], @links_urls[i]%>    
+						<!--<%=@links_urls[i]%>-->                	
+						<%end%>
+                    </ul>
+<%end%>
+<% if @page.show_photos%>
+                <%=render :partial => "widgets/delivery_photos"%>
+<%end%>				
+<% if @page.show_reviews%>
+				<%=render :partial => "widgets/last_reviews"%>
+<%end%>				
+                    <br />
+                    <div class="button1"><div><a href="/reviews/new"><%=translate "review_add_btn"%></a></div></div>
+                </div>
+				

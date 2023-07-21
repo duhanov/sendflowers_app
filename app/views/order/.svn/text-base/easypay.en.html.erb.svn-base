@@ -1,0 +1,21 @@
+<div class="all">
+<div class="centeri">
+<div class="crumb"><a href="/"><%=trans 'main_page'%></a> / <a href="/order/easypay/<%=@order.id%>"><%=trans 'order'%> #<%=@order.id%>. <%=trans 'order_via_easypay'%></a></div>
+<h1><%=trans 'order_payment_instruction'%></h1>
+<%=page_content("easypay_pay_#{@language}",true)%>
+
+<p>Once you click "Proceed to check out" in the check-out process, our company will redirect you to the system of payments www.easypay.by and attempt to secure authorization of your Easy Pay electronic  Purse. You will be able to make payment for our products via Easy Pay payment system. </p>
+<%form_tag do%>
+<%=render :partial => "order/hidden_fields" %>
+<%= error_messages_for 'order', :header_message => "", :message => trans('field_errors') %>
+
+<div class="forma">
+<div class="necessar"><%=trans 'req_field'%></div>
+<div class="input necessarily block"><label><%=trans 'order_easypay_id'%>:</label><p><%=text_field :order, :easypay_id%></p></div>
+</div>
+<%end%>
+</div>
+</div>
+<%=render :partial => "layouts/left"  %>
+<div class="right">
+</div>

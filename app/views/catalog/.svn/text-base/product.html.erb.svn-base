@@ -1,0 +1,32 @@
+            	<div class="all">
+                	<div class="centeri">
+<%cache "product_#{@product.id}_#{session[:currency]}_#{@language}" do %>
+                		<%=print_way%>
+                        <div class="product">
+                        	<div class="img">
+                            	<div class="upl"></div>
+                            	<a rel="example_group" href="<%=product_image(@product, :full)%>"><img src="<%=product_image(@product, :big)%>" alt="<%=h @product.name%>" /><span><%=translate 'zoom'%></span></a>
+                               	<div class="upr"></div>
+                            </div>
+                            <div class="inf">
+                            	<%=product_body(@product)%>
+								<br />
+                                <div class="number"><label><%=translate 'quantity'%>:</label><input id="product_quantity" type="text" value="1" name="" /></div>
+                                <div class="bay"><span><strong><%=show_amount(@product.price)%></strong><a href="#" onClick="add_to_cart('<%=add2cart(@product)%>', $('#product_quantity').val()); return false;"><%=translate 'add_to_cart'%></a></span></div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        
+						<%=show_block('show_product')%>
+<%end%>
+					</div>
+             
+				
+				</div>
+
+<%=render :partial => "layouts/left" %>
+                <div class="right">
+<%=render :partial => "widgets/skidki"%>
+<%=render :partial => "widgets/delivery_photos"%>
+<%=render :partial => "widgets/last_reviews"%>
+                </div>

@@ -1,0 +1,314 @@
+en:
+  cancel: Cancel
+  remember_btn: Remember
+  select_delivery_country_and_city: 'Please, choose "COUNTRY" and "CITY"  for Belarus. For any other country , please, choose "COUNTRY"'
+  no_order_alone: "Order of this item is available only with flowers as a second choice. Please, add flowers to your order."
+  orders_history: Purchase history
+  pay: Pay
+  order_detail: Order detail
+  status: Status
+  order_status: Order status
+  order_number: Order number
+  check_order_status: Check order status
+  call_to_konwn_address: Please, contact the recipient to confirm delivery address
+  leave_order_to_friends: The order may be left with the neighbors/friends/colleagues if the recipient is away at the time of the delivery
+  sht: x
+  administration: Administration
+  dont_call_surprise: Сall in 1day before delivery
+  sitemap: Sitemap
+  cart_empty: Cart empty!
+  additional_services: additional services
+  repass_mail_text: <p> request was made to change password </ p> <p> If you do not make this request, then ignore this message </ p> <p> If you want to change your password, follow the link below
+  repass_form_info: Fill out the form and get instructions on how to reset your password by E-Mail
+  repass_email: Your E-mail
+  repass_btn: Update password
+  repass_title: Change password
+  password_changed: Password changed.
+  repass_message: Instructions for resetting your password have been sent to you. Check the email.
+  mail_footer: Best Regards, Administration
+  order_total_amount: Total amount
+  ordered_products: Ordered products
+  phones: Telephones
+  review: Comment
+  users_register_title: New customer registration
+  users_register_complete: Congratulations! You have successfully registered!
+  users_edit_complete: The Data has successfully updated.
+  
+  review_add_btn: Leave a Comment
+  review_add_complete: Thank you! Your comment has successfully added. You will be able to view it on our web site after moderator review.
+
+  profile_addresses_title: Personal Account. Delivery Addresses 
+
+  reviews_new: New review
+
+  get_order_status: Your order  id  Status orderstatus
+
+  holidays_all: All
+  holidays_prazdniki: Holidays
+  holidays_imenini: Name days
+
+  delete_in_process: Processing...
+
+  bouquet: Bouquet
+  bouquet_pack: Pack
+  bouquet_shtuk: flower(s)
+    
+  please_wait: Please wait...
+
+  firstname: First name
+  lastname: Last Name 
+  patronymic: Middle Name  
+  
+  invalid_email: Invalid E-Mail.
+  
+  payment_complete: Congratulations - Your Payment Has Been Processed. Thank you for your payment! 
+
+  pay_via_webpay_error: Error! Please, try to submit the payment again!
+
+  pay_via_easypay: Payment via Easypay
+  pay_via_easypay_error: Error! Please, try to submit the payment again!
+     
+  pay_via_webmoney: Payment via Webmoney
+  pay_via_webmoney_error: Error! Please, try to submit the payment again!
+
+  order_not_found: The order is not found. 
+  order_complete_webmoney: Your Order id is in process... Once you click "Make Payment" in the check-out process, we will direct you to “Web Money” electronic payment system to complete your purchase.
+  order_complete_easypay: Your Order id is in process... Once you click "Make Payment" in the check-out process, we will direct you to “Easy Pay” electronic payment system to complete your purchase. 
+  order_complete_webpay: Your Order id is in process... Once you click "Make Payment" in the check-out process, we will direct you to “Webpay” electronic payment system to complete your purchase. We will attempt to secure authorization on your credit card via system of payments Webpay. If there is a problem securing this authorization, you'll be notified and prompted to use another credit card. 
+  order_complete_payband: Your Order id is in process... Once you click "Make Payment" in the check-out process, we will direct you to “Payband” electronic payment system to complete your purchase. We will attempt to secure authorization on your credit card via system of payments Payband. If there is a problem securing this authorization, you'll be notified and prompted to use another credit card. 
+  order_complete: Your Order id is in process...
+
+  order_confrim_desc: Please, Review your Order Details. 
+
+  order_payment_method: Payment method
+
+  t_name: Name
+
+  cart_empy: There are no products in your shopping cart
+  order_page_title: Order
+
+  cart_title: Shopping Cart
+  cart_add_specials_title: Make it Extra Special!
+
+  auth_title: Authorization
+  auth_login: E-Mail
+  auth_password: Password
+  auth_forgot_password: Forgot your password?
+  auth_loginbtn: Login
+
+  personal_title: Personal Area
+
+  order: Order 
+  order_phone: Recipient's Phone
+  order_country_code: Country Code
+  order_city_code: Area Code 
+  order_telephone: Phone
+  order_call_time: The exact time of delivery
+  order_final_check: Your Order Information
+  order_confirm_title: Approve Order
+  order_confirm_desc: Please, Check the Data! 
+  order_delivery: Delivery 
+  order_total_amount: Subtotal
+  order_payment_method: Method of payment 
+  order_who: Recipient Information 
+  order_name: Recipient Name
+  order_address: Delivery Address 
+  order_telephone_cap: Recipient's Phone 
+  order_organization: Company
+  order_delivery_date: Delivery Date 
+  order_delivery_time: Delivery Time 
+  order_message: Card Message
+  order_info: Additional info/comments
+  order_sender_info: Customer Information
+  order_sender: Sender Name
+  order_address: Sender's Address
+  order_email: E-Mail
+  order_and_pay_btn: Continie Order and Pay 
+  order_back_to_order: Back 
+  order_via_easypay:  Method of payment - Easypay
+  order_payment_instruction: Read More
+  order_easypay_descr: 
+  order_easypay_id: Purse ID
+  order_delivery_address_title: Delivery Address.
+  order_delivery_info: Delivery. Recipient Information
+  order_receiver: Recipient
+  order_country: Country 
+  order_city: City
+  order_zip: Post Code
+  
+  news_title: News 
+  news_back_to_archive: View More News 
+  
+  filter_reason: Occasions 
+  filter_holidays: Holidays
+  filter_who: For 
+  filter_color: Color
+  filter_price: Price
+  filter_currency: Currency
+  
+  req_field: Please, fill in the field  
+  field_errors: Not correctly filled in the field   
+  price: Price
+  back: Back
+  
+  next_page: Next  
+  prev_page: Previous  
+ 
+  delivery_photos_title: Photogallery of Deliveries
+  
+  products_view_all: See all in this category 
+  products_view_paged: Show by the page 
+  
+  flowers_select: Choose flowers
+  flowers_color: Colour
+  flowers_count: Quantity
+  flowers_delete: Delete
+  flowers_price: Price
+  flowers_total: Total 
+  flowers_title: Compose a bouquet
+  flowers_pack: Decoration
+  flowers_add_another: Add flowers 
+  
+  composing_link: Compose your own bouquet
+  composing_descr: If you didnt find a flower bouquet suitable for you, please, compose your own!   
+  
+  cart: Shopping Cart
+  cart_descr: Description
+  cart_one_amount: Price
+  cart_count: Quantity
+  cart_amount: Total
+  cart_delete: Delete
+  cart_later: Remember Product 
+  cart_total: Tolal
+  cart_order_btn: Proceed to check out
+  cart_delivery: Delivery
+  cart_country: Country
+  cart_city: City 
+  cart_add_spicals_title: Make it Extra Special!
+  holiday_t_prazdniki: Holidays 
+  holiday_t_imenini: Name days
+  holiday_t_all: See all in this category 
+  holiday_in_month: In
+  holiday_nearest: Special dates to send flowers
+  holiday_month_1: January
+  holiday_month_2: February
+  holiday_month_3: March
+  holiday_month_4: April
+  holiday_month_5: May
+  holiday_month_6: June
+  holiday_month_7: July
+  holiday_month_8: August
+  holiday_month_9: September
+  holiday_month_10: October
+  holiday_month_11: November
+  holiday_month_12: December
+  holiday_month_nominative_1: January
+  holiday_month_nominative_2: February
+  holiday_month_nominative_3: March
+  holiday_month_nominative_4: April
+  holiday_month_nominative_5: May
+  holiday_month_nominative_6: June
+  holiday_month_nominative_7: July
+  holiday_month_nominative_8: August
+  holiday_month_nominative_9: September
+  holiday_month_nominative_10: October
+  holiday_month_nominative_11: November
+  holiday_month_nominative_12: December
+  page_title_prazdniki_i_imenini: Holidays and Name days 
+  recommended: Special Offers
+  main_page: Home 
+  add_to_cart: Add to Cart
+  more_holday: Read More 
+  close_holiday: Close
+  cart: Shopping Cart
+  Register: Registration 
+  login_for_clients: Login 
+  personal_data: Your account
+  exit: Log Out
+  order_status: Order Status
+  expand: Read More 
+  shop_news: News 
+  search_flower: Search flowers
+  for_example: E.g.
+  products_catalog: Products Catalog
+  users_reviews: Customers' Testimonials  
+  quantity: Quantity
+  zoom: Zoom in
+  activerecord:
+    errors:
+      messages:
+        greater_than: not indicated 
+    attributes:
+      letter:
+        subj: Letter Subject 
+        body: Letter Text 
+      shop:
+        domain: www.flower-shop.by
+        name: Shop Aroma of Love. Flowers and gifts delivery to Minsk, Belarus. 
+      review:
+        name: Name 
+        body: Testimonial
+      holiday:
+        name:  Name
+        d: Date
+        body1: Description
+      order:
+        sender_country: Country
+        sender_firstname: Sender Name
+        sender_email: Sender's E-Mail 
+        sender_telephone: Sender's phone 
+        payment_method_id: Method of payment 
+        firstname: First name
+        lastname: Last Name 
+        patronymic: Patronymic Name  
+        delivery_date: Delivery Date 
+        delivery_time: Delivery Time 
+        name: Recipient Name 
+        telephone: Recipient's Phone  
+        comment: Additional info/comments
+        zip: Post Code
+        address: Address
+        city: City
+        street: Street name
+        house: House number, Apartment 
+        vin: Vin-code
+      product:
+        name: Name
+      user:
+        "email": E-mail
+        password: Password
+        password_confirmation: Password Confirmation
+        username: User Name
+        wmz: Z-Purse WMZ 
+        site: Site
+        name: Name
+    models:
+        user: User 
+        company: Company 
+  authlogic:
+    error_messages:
+        login_blank: Please, enter a value to the fieled. Try again! 
+        login_not_found: Sorry but the username do not match. Try again!
+        login_invalid: Sorry but the username do not match. Try again! 
+        consecutive_failed_logins_limit_exceeded: Consecutive failed logins limit exceeded, account is disabled.
+        email_invalid: Please, enter correct e-mail. Try again!
+        password_blank: Please, enter a value to the fieled. Try again! 
+        password_invalid: Sorry but the password do not match. Try again!
+        not_active: Sorry but your Account is not active. Please, Contact us!
+        not_confirmed: Your account is not confirmed
+        not_approved: Your account is not approved
+        no_authentication_details: Please, enter a value to the fieled. Try again!
+    models:
+        user_session: Your Account
+        username: User Name 
+        password: Password
+    attributes:
+        user_session:
+            username: User Name 
+            password: Password
+            email: E-mail
+
+   #      login: Login
+    #      email: E-mail
+    #      password: Password
+    #      remember_me: Remember Me

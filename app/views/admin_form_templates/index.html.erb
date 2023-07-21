@@ -1,0 +1,15 @@
+<%admin_page do%>
+	<%#quick_add "Добавить шаблон", "/admin/form_templates/new" do%>
+		<%#render :partial => "form"%>
+	<%#end%>
+	<%admin_table ["Название", "Посмотреть", "Ред."] do%>
+		<%for item in @items%>
+			<%tr item do%>
+				<td><%=item.title%></td>
+				<td><a href="/admin_form_templates/show/<%=item.id%>" target="_blank">Посмотреть</a></td>
+				<td><%=btn_edit item%></td>
+<!--				<td><%#btn_del%></td>-->
+			<%end%>
+		<%end%>
+	<%end%>
+<%end%>

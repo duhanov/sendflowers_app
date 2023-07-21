@@ -1,0 +1,31 @@
+<% form_tag "/admin_blocks/update_block/#{@item.id}?ajax=true", :id => "edit_block_form", :enctype => "multipart/form-data", :target => "edit_frame", :onsubmit => "$('form_edit_content').style.display='none';$('form_submit_progress').style.display = 'block';" do %>
+<%=ajax_form_loading%>
+<div id="form_edit_content" style="width: 400px; height: 400px;">
+<p>
+	<label for="item_body">Изображение</label><br>
+	<input type="file" name="item[image]" id="item_image">
+	<% if !@item.image.blank?%><br>
+	<img src="<%=@item.image.url%>"><br>
+	<% end %>
+</p>
+<table>
+	<tr>
+		<td>URL</td>
+		<td><%=text_field :item, :banner_url%></td>
+	</tr>
+	<tr>
+		<td>Title</td>
+		<td><%=text_field :item, :banner_title%></td>
+	</tr>
+	<tr>
+		<td>Alt</td>
+		<td><%=text_field :item, :banner_alt%></td>
+	</tr>
+	<tr>
+		<td>В новом окне</td>
+		<td><%=check_box :item, :banner_newwindow%></td>
+	</tr>
+</table>
+<%=submit_tag "Редактировать" %>
+<% end %>
+</div>

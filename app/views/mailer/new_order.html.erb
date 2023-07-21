@@ -1,0 +1,50 @@
+<%session={:currency => "usd"}%>
+<%=trans 'order'%> # <%=@order.id%> (<%=standartDateTime(@order.created_at)%>)
+---------------------------------------------------------------------------
+<%=trans 'order_who'%>:
+---------------------------------------------------------------------------
+<%=trans 'order_name'%>: <%=order_name(@order)%>
+<%=trans 'order_telephone_cap'%>: <%=order_telephone(@order)%>
+<%=trans 'order_address'%>: <%=order_address(@order)%>
+<%=trans 'order_organization'%>: <%=@order.organization%>
+<%=trans 'order_delivery_date'%>: <%=@order.delivery_date%>
+<%=trans 'order_delivery_time'%>: <%=@order.delivery_time%>
+---------------------------------------------------------------------------
+<%if !@order.phones.blank?%>
+<%=trans 'phones'%>
+	<%for telephone in @order.phones%>
+<%=telephone(telephone)%>
+	<%end%>
+---------------------------------------------------------------------------
+<%end%>
+---------------------------------------------------------------------------
+<%=trans 'order_sender_info'%>:
+---------------------------------------------------------------------------
+<%=trans 't_name'%>: <%=order_sender_name @order%>
+<%=trans 'order_address'%>: <%=order_sender_address @order%>
+<%=trans 'order_email'%>: <%=@order.sender_email%>
+<%=trans 'order_telephone'%>: <%=@order.sender_telephone%>
+---------------------------------------------------------------------------
+<%=trans 'ordered_products'%>
+---------------------------------------------------------------------------
+
+<% for oi in @order.order_items %>
+<% if (!oi.product.blank?) && (!oi.product.is_service)%>
+<%=product_name oi.product%> x <%=oi.quantity%> = <%=show_amount2(oi.price).to_s.gsub("&nbsp;"," ")%>
+<%end%>
+<% end %>
+---------------------------------------------------------------------------
+<%=order_services2(@order).to_s.gsub("&nbsp;"," ")%>
+<%=order_options(@order).to_s.gsub("&nbsp;"," ")%>
+---------------------------------------------------------------------------
+<%if !@order.delivery.blank?%>
+<%=trans 'order_delivery'%>: <%=translate_name @order.delivery.name%> <%=show_amount2(@order.delivery.price).to_s.gsub("&nbsp;"," ")%>
+---------------------------------------------------------------------------
+<%=trans 'order_total_amount'%>: <%=show_amount2(@order.total_price + @order.delivery.price).to_s.gsub("&nbsp;"," ")%><%if @language == "ru"%> (<%=(@order.total_price_rub.to_f.round(2) + @order.delivery_price_rub.to_f.round(2))%> бел.руб.)<%end%>
+---------------------------------------------------------------------------
+<%end%>
+<%if !@order.payment_method.blank?%><%=trans 'order_payment_method'%>: <%=translate_name @order.payment_method.name%>
+---------------------------------------------------------------------------
+<%end%>
+
+<%=trans 'mail_footer'%> <%=translate_name Option.get("site_name")%>

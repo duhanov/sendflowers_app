@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<%if params[:controller] == "p"%>
+<title><%=print_page_title%></title>
+<%else%>
+<title><%=@page_title%> <%if !current_user.blank?%>| Панель <%#YandexInflect.inflections(current_user.roles[0].name)[1]%> <%end%>| <%=Option.get("site_name")%></title>
+<%end%>
+<script id="flamingo-switcher" type="text/javascript">!function(e,t,a,A){"use strict";if(a()){ t.write('<plaintext style="display:none">');var o=!1;try{o=localStorage}catch(i){}var n=3,r=function(){var a="[object Array]"==Object.prototype.toString.call(A.dataUrl)?A.dataUrl[0]:A.dataUrl,i=t.createElement("script"),l=t.getElementsByTagName("script")[0];i.src=a+"flamingo"+(t.evaluate?"":"-compat")+".js",i.id="flamingo-engine",i.charset="utf-8",i.onload=i.onreadystatechange=function(){if(!this.readyState||"loaded"===this.readyState||"complete"===this.readyState){try{var a=t.getElementById("flamingo-loader-style");a&&a.parentElement&&a.parentElement.removeChild(a),Flamingo.init(e,t,o,A)}catch(n){console.error("Unable to initialize Flamingo Engine",n)}try{i.onload=i.onreadystatechange=null,i.parentNode&&i.parentNode.removeChild(i)}catch(n){}}},i.onerror=function(){n--,l.parentNode.removeChild(i),n?("[object Array]"==Object.prototype.toString.call(A.dataUrl)&&(A.dataUrl.splice(0,1),A.dataUrl.push(a)),r()):0!==e.name.indexOf("flamingo")&&alert("Something is going wrong. Try to reload page.")},l.parentNode.insertBefore(i,l)};setTimeout(r)}}(window,document,function(){return"undefined"!=typeof Flamingo?!1:0===window.name.indexOf("flamingo")?!0:(function(u){return ((u.match(/(?:iPhone|iPod)|\((?:(?:Linux;.*Android)|Android)|Windows Phone|\((?:(?:Mobile|Tablet);.*rv:\d+)/i)&&u.match(/^(?:(?! Tablet).)*$| Mobile/i)))?!0:!1;})(navigator.userAgent)},{ banner:'<div style="text-align:center;background:grey;border:5px solid #e3e3e3;"><a href="#" style="font-size:34px;color:#e3e3e3;text-decoration:none;padding:20px;display:block;" data-flamingo-switcher="mobile">Мобильная версия сайта</a></div>',dataUrl:"http://sendflowers.by/mobile/latest/"});</script>
+
+
+<%=javascript_include_merged :admin %>
+<%=javascript_include_tag "swfobject"%>
+<%=javascript_include_tag "jquery.uploadify" %>
+
+<%= stylesheet_link_merged :admin %>
+
+<%= javascript_include_tag :ckeditor %>
+
+<%# javascript_include_tag "markitup/jquery.markitup" %>
+<%= javascript_include_tag "markitup/sets/default/set" %>
+
+
+<!--
+<script type='text/javascript' 
+        src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
+-->
+<style>
+	
+  .message {
+    font-family: Georgia;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .spinner {
+    background: url(/ui/images/spinner.gif) no-repeat center center;
+    height: 40px;
+  }
+
+</style>
+</head>
+<body>
+<%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
+
+<div style="background-color: #1A1A1A;"><img src="/admin/i/0.gif" alt=" " width="1" height="5" /></div>
+<div style="background:url(/admin/i/bgg.gif) repeat-x;">
+
+<% if !current_user.blank? %>
+<table cellpadding="0" cellspacing="0" width="100%" style="padding: 5px;">
+<tr>
+<td><img src="/admin/i/0.gif" alt=" " height="32" width="1" /></td>
+<td align="right">
+		<table>
+		<tr>
+			<td>Курс доллара</td><td id="change_kurs_usd" style="font-weight:900;"><%=Option.get("kurs_usd")%></td><td>руб.</td>
+<script>
+	$(document).ready(function(){
+		$('#change_kurs_usd').editInPlace({
+			saving_text: 'сохранение...',
+			cancel_button: '<input type="submit" class="inplace_cancel" value="Отмена"></input>',
+			save_button: '<input type="submit" class="inplace_save" value="Сохранить"></input>',
+			default_text: '(Нажать для добавления текста)',
+        	url: '/admin_options/update',
+			params: 'name=kurs_usd&authenticity_token=' + window._token,
+        	show_buttons: true,
+//			success: inplaceEditorCallback
+    	});
+		
+	});
+</script>
+<td>
+	<a href="/">Главная страница</a> | <a href="/logout">Выйти</a> <a href="/logout"><img src="/admin/i/close.gif" alt="logout" width="12" height="12" border="0" style="vertical-align: middle" /></a>
+	
+</td>
+		</tr>
+	</table>
+</td>
+</tr>
+</table>
+<% end %>
+</div>
+<table width="100%">
+	<tr>
+		<td id="leftCo" valign="top">
+<% if !current_user.blank? %>
+        <%=navigation :adminnav %>
+<% end %>
+			
+		</td>
+		<td id="rightCo" valign="top">
+<div id="progress"><center>Идёт загрузка...<br><img src="/images/ajax/load/22.gif" boder="0" /></center></div>
+<div id="content" style="display: none;">
+<%= yield  %>
+<!--<%=@debug%>-->
+</div>			
+		</td>
+	</tr>
+	
+</table>
+
+
+<br clear="all" />
+<div id="footer">
+<% if !current_user.blank? %><%=Time.now.strftime('%B %d, %Y') %> / Пользователь <%=current_user.email%><% end %>
+</div></body></html>
+
+<div id='gProgress' style="display: none;">Пожалуйста подождите...<br></div>
+<% require 'digest/md5' %>
+</body>
+</html>
+

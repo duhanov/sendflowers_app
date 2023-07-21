@@ -1,0 +1,97 @@
+<script>
+	function delete_flowers(el){
+		if($('#flowers>.compos>.add').length>1)
+		{
+			$(el).parent().parent().parent().remove();
+			$('#flowers>.compos>.add').first().show();
+			calcTotalPrice();
+		};
+	}
+	function add_flowers(){
+		$('.add_flower').hide();
+		$('#flowers').prepend($('#add_flower_el').html());
+		$('.add_flower').first().show();
+		$('.flower_name').first().change();
+	};
+	function changeFlower(el){
+		select = $(el).parent().parent().next().find("select");
+		select.html('<option><%=translate("please_wait")%></option>');
+		$.ajax({
+			el: select,
+			url: '/flowers/colors/' + $(el).val(),
+			complete: function(r){
+				this.el.html(r.responseText);
+				this.el.change();
+			}
+		});
+	};
+	function flowerPrice(el){
+		count = el.find('.flower_count').val();
+		one_price =el.find('.flower_color').find("option:selected").attr('price');
+		price = count * one_price;
+		el.find('.flowers_price').html(price + ' $');
+		return price;
+	};
+	function changeFlowerColor(el){
+		flowerPrice($(el).parent().parent().parent());
+		calcTotalPrice();
+		//Меняем картинку
+		opt = $(el).find("option:selected");
+		link = $(el).parent().parent().parent().find('.flower_big');//$(el).parent().next();
+		link.attr('href', opt.attr('photo_big'));
+		link.find('img').attr('src', opt.attr('photo_small'));
+	};
+	function changeFlowerCount(el){
+		flowerPrice($(el).parent().parent().parent());
+		calcTotalPrice();
+	};
+	function changeFlowerPack(){
+		$('#flower_pack_price').html(parseFloat($('#flower_pack').find("option:selected").attr('price')) + ' $');
+		calcTotalPrice();
+	};
+	function calcTotalPrice(){
+		var total = 0;
+		var flowers = $('.one_flower_item');
+		for(i=0;i<flowers.length;i++){
+			if($(flowers[i]).parent().is(':visible')){
+//			alert(flowerPrice($(flowers[i])));
+			total = total + flowerPrice($(flowers[i]));
+			$(flowers[i]).find('.flower_count').attr('name', 'quantity['+i+']');
+			$(flowers[i]).find('.flower_color').attr('name', 'flower['+i+']');
+				
+			};
+		};
+		total = total + parseFloat($('#flower_pack').find("option:selected").attr('price'));
+		$('#total_price').html('<%=trans "flowers_total"%>: '+total+' $');
+	};
+	
+	$(document).ready(function(){
+		$('.flower_name').first().change();
+		changeFlowerPack();
+	});
+</script>
+            	<div class="all">
+                	<div class="centeri">
+                		<%form_tag "/flowers/create_bouquet", :id => "form_flowers" do%>
+                    	<div class="crumb"><a href="/"><%=trans 'main_page'%></a> / <a href="/cart"><%=trans 'cart'%></a > / <span><%=trans 'flowers_title'%></span></div>
+                    	<h1><%=trans 'flowers_title'%></h1>
+<div id="flowers">
+	<%=render :partial => "flower"%>
+</div>
+                        <div class="forma compos pack">
+                        	<h2><%=trans 'flowers_pack'%></h2>
+                        	<div class="input cena"><p><select name="pack" onChange="changeFlowerPack();" id="flower_pack"><%for item in BouquetPack.find(:all, :order => "name")%><option value="<%=item.id%>" price="<%=item.price.to_f.to_s%>"><%=translate_name item.name%></option><%end%></select></p><span><%=trans 'price'%>:</span><strong id="flower_pack_price"> </strong></div>
+                        </div>
+                        <div class="go_basket"><span><a href="#" onClick="$('#form_flowers').submit();return false;"><%=trans 'add_to_cart'%></a></span></div>
+                        <h2 id="total_price"></h2>                		
+                    	<%end%>
+					</div>
+                </div>
+<%=render :partial => "layouts/left" %>
+				
+	
+				
+				
+<div style="display:none;" id="add_flower_el">
+	<%=render :partial => "flower"%>
+</div>

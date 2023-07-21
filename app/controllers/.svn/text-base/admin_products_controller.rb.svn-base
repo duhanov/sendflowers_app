@@ -1,0 +1,135 @@
+include ApplicationHelper
+
+class AdminProductsController < ApplicationController
+  layout "admin"
+  cache_sweeper :product_sweeper#, :only => [:set_parent, :sort, :delete, :new, :]
+
+  before_filter :init_tabs
+  
+  include Admin
+  
+  
+  
+  def update_filter_value
+    filter = F.find_by_id(params[:id])
+    if !filter.blank?
+      filter.value = params[:update_value]
+      filter.save
+    end
+    render :text => params[:update_value]
+  end
+  
+  def delete_filter_value
+    filter = F.find_by_id(params[:id])
+    if !filter.blank?
+      filter.destroy
+    end
+    render :text => "$('#item_#{params[:id]}').remove();"
+  end
+  
+  def sort_filter_values
+    p = 0
+    for filter_id in params[:item]
+      filter = F.find_by_id(filter_id)
+      if !filter.blank?
+        filter.p = p
+        filter.save
+      end
+      p = p + 1
+    end
+    render :text => "sorted"
+  end
+  
+  def add_filter_value
+    filter = F.new(params[:filter])
+    if filter.save
+      flash[:notice] = "Значение добавлено"
+    end
+    redirect_tab "/#{params[:controller]}/filters"
+  end
+  
+  def filters
+    @page_title = "Значения фильтров"  
+  end
+  
+  def save_product_filters
+    @item.fs = []
+    for filter in @filters_titles
+      #puts "filter: #{filter[:name]}"
+      if (!params[:filters].blank?) && (!params[:filters][filter[:name]].blank?)
+        for filter_id in params[:filters][filter[:name]]
+          #puts "params[:filters][#{filter[:name]}] = #{params[:filters][filter[:name]]}"
+          f = F.find_by_id(filter_id)
+          if !f.blank?
+            #puts "add..."
+            @item.fs << f
+          end
+        end
+      end
+    end
+    @item.save
+  end
+  
+  def edit
+    @page_title = "Редактировать #{model_title[:what]}"  
+    @item = model_name.find_by_id(params[:id])
+    if @item.blank?
+      flash[:error] = "Не удалось найти #{model_title[:one]}"
+      redirect_to "/admin_#{model_controller}/list"
+    else
+      if request.post?
+        if @item.update_attributes(params[:item])
+          #save_product_filters
+          flash[:notice] = "Запись отредактирована"
+          redirect_to "/admin_#{model_controller}/edit/#{@item.id}"
+        end
+      end
+    end
+  end
+  
+  def init_tabs
+    @tabs = [["Добавить #{model_title[:what]}", "/#{params[:controller]}/new/#{params[:id]}"], ["Список #{model_title[:list]}", "/#{params[:controller]}/list/#{params[:id]}"], ["Список дополнительных услуг", "/#{params[:controller]}/services"], ["Настройка фильтров", "/#{params[:controller]}/filters"]]
+    if params[:action] == "edit"
+      @tabs = [["Редактировать #{model_title[:what]}", "/#{params[:controller]}/edit/#{params[:id]}"]] + @tabs
+    end
+  end
+  
+  def new_service
+    if request.post?
+      item = Product.new(params[:item])
+      item.is_service = true
+      if item.save
+        flash[:notice] = "Дополнительная услуга добавлена."
+      end
+    end
+    redirect_to "/#{params[:controller]}/services"
+  end
+  
+  def services
+    @page_title = "Список дополнительных услуг"  
+    @items = Product.find(:all, :conditions => ["is_service = 1"], :order => "p")
+  end
+  
+  def model_name
+    Product
+  end
+  
+  helper_method :model_title
+  
+  def model_title
+    {:many => "товаров", :one => "товар", :what => "товар", :list => "товаров"}
+  end
+  
+  
+  
+  def list
+    @page_title = "Список #{model_title[:list]}"
+    cond = ""
+    #if !params.blank?
+     if params[:category].to_s!=""
+       @items = model_name.category_page(params[:page], 'is_service = 0', params[:category].to_i, 50, get_sort)
+     else
+       @items = model_name.items_page(params[:page], '', 50, get_sort)
+     end    
+  end
+ end

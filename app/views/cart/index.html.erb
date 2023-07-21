@@ -1,0 +1,180 @@
+<script>
+function number_with_delimiter(number, delimiter) {
+  /*number = number + '', delimiter = delimiter || ',';
+  var split = number.split('.');
+  split[0] = split[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + delimiter);
+  return split.join('.');*/
+  return number;
+};
+
+	function changeDelivery(save_cookie){
+		bel = $('#delivery1').find("option:selected").html();
+		if(save_cookie){
+			$.cookie('country', $('#delivery1').find("option:selected").val());
+			$.cookie('city', $('#delivery2').find("option:selected").val());
+
+		};
+
+		if((bel=="Беларусь") || (bel == "Belarus"))
+		{
+			$('#delivery_city_title').show();
+			$('#delivery2').show();
+			$('#delivery').attr('price', $('#delivery2').find("option:selected").attr('price'));
+			$('#delivery').val($('#delivery2').find("option:selected").val());
+		}
+		else
+		{
+			$('#delivery_city_title').hide();
+			$('#delivery2').hide();
+			
+			$('#delivery').attr('price', $('#delivery1').find("option:selected").attr('price'));			
+			$('#delivery').val($('#delivery1').find("option:selected").val());			
+		};
+		<%if (session[:currency].blank?) || (session[:currency] == "usd") %>
+		cur = '$';
+		<%else%>
+		cur = 'руб';
+		<%end%>
+		$('#delivery_amount').html(number_with_delimiter(parseFloat($('#delivery').attr('price')), '&nbsp;') + ' ' + cur);
+		calcTotalCart();
+	};
+	
+function calcTotalCart(){
+		<%if (session[:currency].blank?) || (session[:currency] == "usd") %>
+		cur = '$';
+		<%else%>
+		cur = 'руб';
+		<%end%>
+//	total = parseFloat($('#delivery').find("option:selected").attr('price')) + parseFloat($('#cart_total_no_delivery').val());
+	total = parseFloat($('#delivery').attr('price')) + parseFloat($('#cart_total_no_delivery').val());
+	$('#cart_total').html('<%=translate "cart_total"%>:&nbsp;&nbsp;&nbsp;' + number_with_delimiter(total, '&nbsp;') + cur);
+}
+
+function updateCartQuantity(q,t)
+{
+	if (isNaN(q.value)) {
+		alert('Введите число!');
+		q.focus();
+	}
+	else {
+		id = $(q).attr('product_id');
+		$(q).css('background', 'url(/images/ajax/load/progress_candy_hor.gif)');
+		$.ajax({
+			q:q,
+			dataType: "script",
+			url: '/cart/update_quantity/' + id + '?type='+t+'&quantity=' + $(q).val() + '&authenticity_token=' + window._token,
+			complete: function(){
+				$(this.q).css('background' , '');
+			}
+		});
+	};
+				
+};
+function deleteFromCart(el,id,t)
+{
+		//$(el).find('img').attr('src', '/images/ajax/load/1.gif');
+		$(el).html('<%=translate("delete_in_process")%>');
+		$.ajax({
+			el: el,
+			dataType: 'script',
+			url: '/cart/delete/' + id + '?type='+ t +'&authenticity_token=' + window._token,
+			complete: function(){
+				$(this.el).parent().parent().parent().remove();
+			}
+		});
+};
+</script>
+<input type="hidden" id="cart_total_no_delivery" value="<%=get_amount @cart.price%>">
+            	<div class="all">
+                	<div class="center">
+                    	<div class="clear"></div>
+                    	<div class="crumb"><a href="/"><%=translate 'main_page'%></a> / <span><%=trans 'cart'%></span></div>
+                    	<h1><%=trans 'cart'%></h1>
+                    	<%=flashes%>
+                        <table class="t_basket" cellpadding="0" cellspacing="0">
+                        <tr class="title">
+                        	<td style="width:17%;"></td>
+                            <td style="width:20%;"><%=trans 'cart_descr'%></td>
+                            <td><%=trans 'cart_one_amount'%></td>
+                            <td><%=trans 'cart_count'%></td>
+                            <td><%=trans 'cart_amount'%></td>
+                            <td></td>
+                        </tr>
+<%for item in @cart.items%>
+	<% if (!item.product.blank?) && (!item.product.is_service)%>
+                        <tr>
+                        	<td><div><img src="<%=product_image(item.product, :cart)%>" alt="<%=h item.product.name%>" /></div></td>
+                            <td><span><a href="<%=link2product(item.product)%>"><%=product_name(item.product)%></a></span></td>
+                            <td><strong><%=show_amount(item.product.price)%></strong></td>
+                            <td><span class="umn"></span><input type="text" value="<%=item.quantity%>" name="" product_id="<%=item.product.id%>" onBlur = "updateCartQuantity(this,'<%=item.product.type.to_s%>');"/><span class="ravno"></span></td>
+                            <td><strong id="cart_item_price_<%=item.product.id%>"><%=show_amount(item.price)%></strong></td>
+                            <td><p><a href="#" onClick="deleteFromCart(this,<%=item.product.id%>, '<%=item.product.type.to_s%>'); return false;"><%=trans 'cart_delete'%></a><br /></p></td>
+                        </tr>
+	<%end%>
+<%end%>
+                        </table>
+<%form_tag "/order/set_order" do%>
+	<%=render :partial => "order/hidden_fields" %>
+                        <div class="question">
+<%for item in Product.find(:all, :conditions => "is_service = 1", :order => "p")%>
+                            <div class="answer"><label for="option<%=item.id%>"><input class="product_service" <%if @cart.in_cart(item)%>checked='checked'<%end%> type="checkbox" name="option" id="option<%=item.id%>" value="<%=item.id%>" /><big><small><%=product_name item%></small><strong><%if item.price.blank?%>&nbsp;<%else%>(<%=show_amount(item.price)%>)<%end%></strong></big></label></div>
+<%end%>							
+                        </div>
+<style>
+.dostavka select.big_select, .dostavka select.big_select option{
+	font-size: 16px;
+	color: black;
+	font-weight: 900;
+}
+</style>
+
+                        <div class="itogo">
+                        	<input type="hidden" id="delivery" name="order[delivery_id]"/>
+                        	<div class="itog"><span id="cart_total"><%=trans 'cart_total'%>:&nbsp;&nbsp;&nbsp;<%=show_amount(@cart.price)%></span>
+
+                        		<input type="submit" value="<%=trans 'cart_order_btn'%>" name="order_btn" /></div>
+
+                        	<div class="dostavka">
+                                <small id="delivery_country_title"><%=trans 'cart_country'%></small><select class='big_select' onChange="changeDelivery(true);" id="delivery1"><%for item in Delivery.find(:all, :order => "p", :conditions => "t=0")%><option value="<%=item.id%>" price="<%=get_amount item.price%>" <%if cookies['country'].to_i == item.id%>selected='selected'<%end%>><%=delivery_name item%></option><%end%></select>
+                                <small id="delivery_city_title"><%=trans 'cart_city'%></small><select class='big_select' onChange="changeDelivery(true);" id="delivery2"><%for item in Delivery.find(:all, :order => "p", :conditions => "t=1")%><option value="<%=item.id%>" price="<%=get_amount item.price%>" <%if cookies['city'].to_i == item.id%>selected='selected'<%end%>><%=delivery_name item%></option><%end%></select>
+                                <!--!!!<%=cookies.inspect%>!!!-->
+<strong style="display: none;" id="delivery_amount"></strong>
+                            </div>
+                        		<%=page_content "cart_text_near_country_#{@language}", {:flybox => true, :textarea => false}%>
+
+                        </div>						
+<%end%>
+                        <h2> <%=trans 'cart_add_specials_title'%>:</h2>
+<%i=0%>
+<%for item in @cart_specials%>
+<%i=i+1%>
+                    	<div class="block3<%if i==6%><%i=0%> last_block"<%end%>">
+                        	<div class="bg" onclick="document.location='<%=link2product(item)%>'"></div>
+                        	<div class="img"><img src="<%=product_image(item, :cart)%>" alt="<%=h item.name%>" /></div>
+                            <h1><a href="<%=link2product(item)%>"><%=product_name item%></a> <span><%=product_description item%></span></h1>
+                            <div class="sp"></div>
+                            <div class="bay" onClick="add_to_cart('<%=add2cart(item)%>', ''); return false;"><span><strong><%=show_amount(item.price)%></strong><a href="#" onClick="add_to_cart('<%=add2cart(item)%>', ''); return false;"><%=trans 'add_to_cart'%></a></span></div>
+                        </div>
+<%end%>
+                    </div>
+                </div>
+<script>
+	$(document).ready(function(){
+		changeDelivery(false);
+		$('.product_service').click(function(){
+			if($(this).attr('checked')){
+				url='/cart/update_quantity/' + $(this).val() + '?quantity=1&authenticity_token=' + window._token;
+			}else{
+				url='/cart/delete/' + $(this).val() + '?authenticity_token=' + window._token;
+			}
+			$.ajax({
+				dataType: "script",
+				url: url,
+				complete: function(){
+				}
+			});
+		})
+	});
+
+</script>
+<%=render :partial => "layouts/left" %>

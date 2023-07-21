@@ -1,0 +1,17 @@
+<% form_tag "", :multipart => true do %>
+	  <table width=100%  class="list">
+		<tr><td>Товар:</td><td><%=select :item, :product_id,  Product.find(:all, :order => "name").map{|i| [i.name, i.id]}%></td></tr>
+		<tr><td>Дата доставки:</td><td><%= text_field :item, :created_at, :class => "datepicker"%></td></tr>
+		<tr>
+			<td>Фото:</td>
+			<td>
+				<img src="<%=@item.image.url(:thumb)%>"/><br>
+				<%=file_field :item, :image%>
+			</td>
+		</tr>
+       </table>
+	  <br>
+		<%if params[:action]=="new"%><%=submit_tag "Добавить"%><%end%>
+		<%if params[:action]=="edit"%><%=submit_tag "Редактировать"%><%end%>
+
+<% end %>

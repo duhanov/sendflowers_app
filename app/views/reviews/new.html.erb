@@ -1,0 +1,37 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=translate "main_page"%></a> / <a href="/reviews"><%=@page.name%></a> / <span><%=translate("reviews_new")%></span></div>
+                    	<h1><%=@page.name%></h1>
+						<%=@page.body%>
+						<%=flashes%>
+						<%= error_messages_for 'item', :header_message => "", :message => translate("field_errors") %>
+						<%form_tag do%>
+                        <div class="forma">
+                        	<div class="necessar"><%=translate 'req_field'%></div>
+                        	<div class="input necessarily block"><label><%=translate 'firstname'%>:</label></label><p><%=text_field :item, :name%></p></div>
+                        	<div class="input necessarily block"><label><%=translate 'review'%>:</label><p><%=text_area :item, :body, :style => "width:250px;height:200px;"%></p></div>
+                        </div>
+                        <input class="button" type="submit" value='<%=translate "review_add_btn"%>' style="width:200px;" name="" />
+						<%end%>
+                    </div>
+                </div>
+				<%=render :partial => "layouts/left"  %>
+                <div class="right">
+<%if @page.links_titles.to_s.strip!=""%>                
+                    <ul class="menur">
+						<%for i in 0..(@links_titles.size)%>
+						<%=menu2_li @links_titles[i], @links_urls[i]%>    
+						<!--<%=@links_urls[i]%>-->                	
+						<%end%>
+                    </ul>
+<%end%>
+<% if @page.show_photos%>
+                <%=render :partial => "widgets/delivery_photos"%>
+<%end%>				
+<% if @page.show_reviews%>
+				<%=render :partial => "widgets/last_reviews"%>
+<%end%>				
+                    <br />
+                    <div class="button1"><div><a href="/reviews/new"><%=translate "review_add_btn"%></a></div></div>
+                </div>
+				

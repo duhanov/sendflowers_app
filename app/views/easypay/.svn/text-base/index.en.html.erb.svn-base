@@ -1,0 +1,55 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=translate "main_page"%></a> / <a href="/easypay/index/<%=@order.id%>"><%=translate("order")%> #<%=@order.id%>. <%=translate("pay_via_easypay")%></a ></div>
+<%=flashes%>
+<%=page_content("easypay_pay_#{@language}",true)%>
+
+<!--<p>Инструкция по оплате:</p>
+<p>Пожалуйста, выбирите товар в нашем интернет-магазине, укажите идентификатор Вашего электронного кошелька EasyPay и оформите заказ на покупку товара. </p>
+<p>На основании оформленного заказа, Интернет-магазин формирует электронный счет и передает его в систему EasyPay на Ваше имя. </p>
+<p>После оформления заказа Вы должны зайти в систему EasyPay на сайте: www.easypay.by и там, в защищенном режиме, оплатить электронные счета на ранее сделанные заказы. </p>
+<p>Используя возможности системы EasyPay, Интернет-магазин оставляет за собой право контроля оплаты покупки и может подтвердить или отвергнуть выполнение заказа. </p>
+<p>Если сделка состоялась, банк переводит Ваши электронные деньги Интернет-магазину. </p>
+-->
+<!--<%form_tag do%>
+	
+	<table>
+		<tr>
+			<td>Идентификатор кошелька Easypay:</td>
+			<td><input name="card" size="8"/></td>
+		</tr>
+		<tr>
+			<td>Сумма платежа:</td>
+			<td><%=@order.total_price_rub%> руб.</td>
+		</tr>
+	</table>
+	<input type="submit" value="Оплатить" />
+<%end%>-->
+
+<form action="https://ssl.easypay.by/weborder/" method="post" enctype="application/x-www-form-urlencoded; charset=windows-1251">
+	<input type="hidden" name="EP_MerNo" value="<%=Option.get("easypay_mer_no")%>" />
+	<input type="hidden" name="EP_Expires" value="7" />
+	<input type="hidden" name="EP_Hash" value="<%=@EP_Hash%>" />
+	<input type="hidden" name="EP_Success_URL" value="http://<%=request.domain%>/easypay/ok/<%=@order.id%>" />
+	<input type="hidden" name="EP_Cancel_URL" value="http://<%=request.domain%>/easypay/cancel/<%=@order.id%>" />
+	<input type="hidden" name="EP_Debug" value="0" />
+	<input type="hidden" name="EP_OrderNo" value="<%=@order.id%>"/>
+	<input type="hidden" name="EP_Comment" value="<%=@EP_Comment%>"/>
+	<input type="hidden" name="EP_OrderInfo" value="<%=@EP_OrderInfo%>"/>
+	<input type="hidden" name="EP_Sum" value="<%=@order.total_price_rub.to_i + @order.delivery_price_rub.to_i%>"/>
+	<input type="hidden" name="CustName" value="<%= order_name(@order)%>"/>
+	<input type="hidden" name="CustAddr" />
+	<input type="hidden" name="CustEMail" />
+	<input type="hidden" name="OrderDetails" />
+	<input type="hidden" name="EP_Encoding" value="UTF-8">
+	<input type="submit" value="Make Payment" />
+	</form>
+	<!--<%=@to_md5%>-->
+
+
+
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                </div>

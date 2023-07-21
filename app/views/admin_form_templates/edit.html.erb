@@ -1,0 +1,42 @@
+<%admin_page do%>
+	<%form_tag "", :class => "form-horizontal" do%>
+		<%=render :partial => "form"%>
+		<input type="hidden" name="order_id" value="<%=params[:order_id]%>"/>
+		<%=submit_tag "Редактировать", :class => "btn btn-primary"%>
+	<%end%>
+<%end%>
+
+
+<h2>Предпросмотр</h2>
+
+<%if @item.name =~ /^order/%>
+<%begin%>
+	<%order = Order.find(:first, :conditions => ["id = ?", params[:order_id]])%>
+	<%order = Order.find(:first) if order.blank?%>
+
+
+<form class="form-inline">
+  <div class="form-group">
+    <label class="control-label col-md-6" for="order_id">Заказ№</label>
+    <div class="col-md-6">
+			<select id="order_id" class="form-control" name="order_id"><%=options_for_select(Order.find(:all).map{|i| [i.id, i.id]}, order.id)%></select>
+	</div>
+  </div>
+
+
+  <%=submit_tag "OK", :class => "btn btn-default"%>
+</form>
+<hr>
+	<%if !order.blank?%>
+		<%=render :inline => @item.body, :locals => {:order => order}%>
+	<%else%>
+		<%=@item.body.to_s.html_safe%>
+	<%end%>
+<%rescue Exception => exc%>
+  <div style="color: red;">
+	<%=("<b>Шаблон содержит ошибки:</b><br>#{exc.message}<br/>#{exc.backtrace.join('<br/>')}")%>
+	</div>
+<%end%>
+<%end%>
+
+

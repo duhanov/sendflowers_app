@@ -1,0 +1,46 @@
+<%admin_page [["Настройки", "/admin_options/list"]] do%>
+	<% form_tag '/admin_options/list', :name => "form_item", :enctype => "multipart/form-data" do %>
+	<%=admin_tabs OptionCategory.find(:all, :order => "p").map{|el| el.name}%>
+	<%for cat in OptionCategory.find(:all, :order => "p")%>
+		<%admin_tab cat.name do%>
+	  <table width=100%  class="list">
+	  	
+		<% 
+		group = ""
+		for option in cat.options%>		
+		<% if (!option.group.blank?) && (option.group != "") && (option.group != group)
+			group = option.group
+		%>
+        <tr><td class="act" nowrap><b><%=option.group%></b></td>
+		<td width="100%">
+		</td></tr>	  
+		<% end %>
+        <tr><td class="act" nowrap><%if(option.title.blank?)||(option.title == "")%><%=option.name%><% else %><%=option.title%><% end %>:</td>
+		<td width="100%">
+			<% if option.t == "text_field" %>
+			<input name="option[<%=option.name%>][value]" style="width: 300px;" value="<%=h(Option.getOption(option.name))%>">
+			<% end %>
+			<% if option.t == "text_area" %>
+			<textarea name="option[<%=option.name%>][value]"><%=h(Option.getOption(option.name))%></textarea> 
+			<% end %>
+			<% if option.t == "check_box" %>
+			<input type="hidden" name="option[<%=option.name%>][value]" value="0"/>
+			<%=check_box_tag "option[#{option.name}]", 1, (Option.getOption(option.name).to_i==1)%>
+			<% end %>
+			<% if option.t == "file_field" %>
+			<input type="hidden" name="option[<%=option.name%>][value]" value="0"/>
+			<%=file_field_tag "option[#{option.name}][file]"%>
+				<%if option.file?%>
+					<br/><a href="<%=option.file.url%>"><%=option.file_file_name%></a>
+					<%if !option.file_updated_at.blank?%> - Последние обновление: <%=standartDate option.file_updated_at%><%end%>
+				<%end%>
+			<% end %>
+		</td></tr>	  
+		<% end %>
+      </table>	  
+
+		<%end%>
+	<%end%>
+		<%=submit_tag "Редактировать"%>
+	<%end%>
+<%end%>

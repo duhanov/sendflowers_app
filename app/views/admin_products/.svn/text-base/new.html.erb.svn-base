@@ -1,0 +1,3 @@
+<% admin_page @tabs do%>
+<%=render :partial => "form"%>
+<% end %>

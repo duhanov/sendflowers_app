@@ -1,0 +1,49 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=trans 'main_page'%></a> / <span><%=@page.name%></span></div>
+                        <ul class="menu_year">
+                  	<%for year in @from_year..@to_year%>
+	                       	<li <%if year == params[:year]%>class="active"<%end%>><a href="/<%=params[:controller]%>?year=<%=year%>"><%=year%></a></li>
+					<%end%>
+                        </ul>
+                    	<h1><%=@page.name%></h1>
+						<%=@page.body%>
+						<%@i = 0%>
+						<%for item in @items%>
+						<%@i=@i+1%>
+                        <div class="block4 <%if @i == 3%>last_block<%@i=0;%><%end%>"">
+                        	<div class="bg"><a href="<%=item.image.url(:original)%>" title="example" rel="example_group">&nbsp;</a></div>
+                        	<div class="img"><img src="<%=item.image.url(:thumb)%>" alt="" /></div>
+                            <h1><span><%=photo_date(item)%></span><%if !item.product.blank?%><a href="<%=link2product(item.product)%>"><%=product_name item.product%></a><%end%></h1>
+
+                            <div class="bay"><span><a href="#" <%if !item.product.blank?%>onClick="add_to_cart('<%=add2cart(item.product)%>', ''); return false;"<%end%>><%=trans 'add_to_cart'%></a><strong><%=show_amount(item.product.price)%></strong></span></div>
+
+                        </div>
+						<%end%>
+
+                        <div class="clear"></div>
+
+<!--                        <div class="pades short"><a href="#" class="next">следюущая страница</a><a href="#" class="prev">Предыдущая страница</a><a href="#">1</a><strong><span>2</span></strong><a href="#">3</a></div>-->
+<%= will_paginate(@items, :renderer => PaginationListLinkRenderer) %>
+
+                    </div>
+
+                </div>
+<%=render :partial => "layouts/left" %>
+                <div class="right">
+<%if @page.links_titles.to_s.strip!=""%>                
+                    <ul class="menur">
+						<%for i in 0..(@links_titles.size)%>
+						<%=menu2_li @links_titles[i], @links_urls[i]%>    
+						<!--<%=@links_urls[i]%>-->                	
+						<%end%>
+                    </ul>
+<%end%>
+<% if @page.show_photos%>
+                <%=render :partial => "widgets/delivery_photos"%>
+<%end%>				
+<% if @page.show_reviews%>
+				<%=render :partial => "widgets/last_reviews"%>
+<%end%>				
+<%=render :partial => "widgets/skidki"%>
+                </div>

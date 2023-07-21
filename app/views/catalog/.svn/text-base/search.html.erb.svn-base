@@ -1,0 +1,25 @@
+<%#cache "products_filters_#{@filters.inspect}_#{session[:currency]}_#{params[:price]}_#{products_on_page}_#{params[:page]}_#{params[:show_all]}" do%>
+            	<div class="all">
+                	<div class="center">
+                		<%=print_way%>
+						<%if products_show_all%>
+                        <div class="sort"><a href="/catalog/search?q=<%=URI.escape(params[:q])%>"><%=trans 'products_view_paged'%></a> <%=trans 'products_view_all'%></div>
+						<%else%>
+                        <div class="sort"><%=trans 'products_view_paged'%> <a href="/catalog/search?q=<%=URI.escape(params[:q])%>&show_all=true"><%=trans 'products_view_all'%></a></div>
+						<%end%>
+                    	<h1><%if !@way.blank?%><%=@way[0][0]%><%end%></h1>
+	<%@i = 0%>
+	<%@products=Product.search_page(params[:page], params[:q], products_on_page, get_sort)%>
+	<% for product in @products%>
+		<%@i = @i + 1%>
+		<%=render :partial => "product", :locals => {:product => product} %>
+	<%end%>
+                    	<div class="clear"></div>
+						<% if !products_show_all%>
+<%= will_paginate(@products, :renderer => PaginationListLinkRenderer) %>
+
+						<%end%>
+                    </div>
+                </div>
+<%#end%>
+<%=render :partial => "layouts/left" %>

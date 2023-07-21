@@ -1,0 +1,23 @@
+<style>
+div.greeting_text {
+cursor: pointer;
+}
+</style>
+<h2>Выберите текст поздравления</h2>
+<%for item in @items%>
+	<div class="greeting_text">
+	<%=item.body_show%>
+	</div>
+	<div style="display: none;"><%=item.body%></div>
+	<hr/>
+<%end%>
+
+
+<script>
+$(document).ready(function(){
+	$('div.greeting_text').click(function(){
+		$('textarea#order_message').val($(this).next().html());
+		$.fancybox.close();
+	});
+});
+</script>

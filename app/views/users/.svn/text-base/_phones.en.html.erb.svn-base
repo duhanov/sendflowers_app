@@ -1,0 +1,35 @@
+<%
+if @user.telephones.blank?
+ phone = UserPhone.new({:country_code => "+375", :city_code => "29", :user_id => @user.id})
+ phone.save
+ @user.telephones << phone
+# @user.save
+end
+%>
+<%for phone in @user.telephones%>
+                            	<div class="input" id="phone_<%=phone.id%>">
+                                	<span class="uptext no_bg">&nbsp;</span><label>Phone:</label>
+                                    <p>
+                                    	<span class="cod">
+                                            <a>+375</a>
+                                            <a>+7</a>
+                                        </span>
+                                    	<span class="uptext"><a>Country&nbsp;Code</a></span><input style="width:30px; border:0;" type="text" value="<%=h phone.country_code%>" name="phones[<%=phone.id%>][country_code]" />
+                                    </p>
+                                    <p>
+                                    	<span class="cod">
+                                            <a>29</a>
+                                            <a>17</a>
+                                        </span>
+                                    	<span class="uptext"><a>City &nbsp;Code</a></span><input style="width:20px; border:0;" type="text" value="<%=h phone.city_code%>" name="phones[<%=phone.id%>][city_code]" />
+                                    </p>
+                                    <p class="necessarily"><span class="uptext no_bg">Phone Number</span><input style="width:70px;" type="text" value="<%=h phone.telephone%>" name="phones[<%=phone.id%>][telephone]" /></p>
+                                    <div class="answer"><span class="add">&nbsp;</span><big class="add">
+<%if phone.id == @user.telephones.first.id%>
+										<a href="#" onClick="addPhone();return false;">Additional Phone</a>
+<%else%>
+										<a href="#" onClick="deletePhone(<%=phone.id%>);return false;">Delete</a>
+<%end%>										
+										</big></div>
+                                </div>
+<%end%>

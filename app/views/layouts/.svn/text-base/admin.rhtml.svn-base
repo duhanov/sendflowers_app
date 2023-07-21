@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<%if params[:controller] == "p"%>
+<title><%=print_page_title%></title>
+<%else%>
+<title><%=@page_title%> <%if !current_user.blank?%>| Панель <%=YandexInflect.inflections(current_user.roles[0].name)[1]%> <%end%>| <%=Option.get("site_name")%></title>
+<%end%>
+<%=javascript_include_merged :admin %>
+<%=javascript_include_tag "swfobject"%>
+<%=javascript_include_tag "jquery.uploadify" %>
+
+<%= stylesheet_link_merged :admin %>
+
+<%= javascript_include_tag :ckeditor %>
+
+<%# javascript_include_tag "markitup/jquery.markitup" %>
+<%= javascript_include_tag "markitup/sets/default/set" %>
+<link rel="stylesheet" type="text/css" href="/javascripts/markitup/skins/markitup/style.css" />
+<link rel="stylesheet" type="text/css" href="/javascripts/markitup/sets/default/style.css" />
+
+
+<!--
+<script type='text/javascript' 
+        src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
+-->
+<style>
+	
+  .message {
+    font-family: Georgia;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .spinner {
+    background: url(/ui/images/spinner.gif) no-repeat center center;
+    height: 40px;
+  }
+
+</style>
+</head>
+<body>
+<%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
+
+<div style="background-color: #1A1A1A;"><img src="/admin/i/0.gif" alt=" " width="1" height="5" /></div>
+<div style="background:url(/admin/i/bgg.gif) repeat-x;">
+
+<% if !current_user.blank? %>
+<table cellpadding="0" cellspacing="0" width="100%" style="padding: 5px;">
+<tr>
+<td><img src="/admin/i/0.gif" alt=" " height="32" width="1" /></td>
+<td align="right">
+		<table>
+		<tr>
+			<td>Курс доллара</td><td id="change_kurs_usd" style="font-weight:900;"><%=Option.get("kurs_usd")%></td><td>руб.</td>
+<script>
+	$(document).ready(function(){
+		$('#change_kurs_usd').editInPlace({
+			saving_text: 'сохранение...',
+			cancel_button: '<input type="submit" class="inplace_cancel" value="Отмена"></input>',
+			save_button: '<input type="submit" class="inplace_save" value="Сохранить"></input>',
+			default_text: '(Нажать для добавления текста)',
+        	url: '/admin_options/update',
+			params: 'name=kurs_usd&authenticity_token=' + window._token,
+        	show_buttons: true,
+//			success: inplaceEditorCallback
+    	});
+		
+	});
+</script>
+<td>
+	<a href="/">Главная страница</a> | <a href="/logout">Выйти</a> <a href="/logout"><img src="/admin/i/close.gif" alt="logout" width="12" height="12" border="0" style="vertical-align: middle" /></a>
+	
+</td>
+		</tr>
+	</table>
+</td>
+</tr>
+</table>
+<% end %>
+</div>
+<table width="100%">
+	<tr>
+		<td id="leftCo" valign="top">
+<% if !current_user.blank? %>
+        <%=navigation :adminnav %>
+<% end %>
+			
+		</td>
+		<td id="rightCo" valign="top">
+<div id="progress"><center>Идёт загрузка...<br><img src="/images/ajax/load/22.gif" boder="0" /></center></div>
+<div id="content" style="display: none;">
+<%= yield  %>
+<!--<%=@debug%>-->
+</div>			
+		</td>
+	</tr>
+	
+</table>
+
+
+<br clear="all" />
+<div id="footer">
+<% if !current_user.blank? %><%=Time.now.strftime('%B %d, %Y') %> / Пользователь <%=current_user.email%><% end %>
+</div></body></html>
+
+<div id='gProgress' style="display: none;">Пожалуйста подождите...<br><img src='/images/activity.gif' /></div>
+<% require 'digest/md5' %>
+</body>
+</html>
+

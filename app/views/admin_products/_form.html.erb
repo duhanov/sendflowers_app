@@ -1,0 +1,79 @@
+<% form_tag "", :multipart => true do %>
+	  <table width=100%  class="list">
+	  	<tr><td>Включен</td><td><%=select :item, :active, [["Да", true], ["Нет", false]]%></td></tr>
+		<tr><td nowrap>Название(рус.):</td><td><%= text_field :item, :name%></td><td>Название(англ.)</td><td><%=text_field :item, :name_en%></td></tr>
+		<tr><td nowrap>Заголовок страницы(рус.):</td><td><%= text_field :item, :title%></td><td>Заголовок страницы(англ.)</td><td><%=text_field :item, :title_en%></td></tr>
+
+		<tr><td>Артикул:</td><td><%= text_field :item, :article%></td></tr>
+		<tr><td>Цена:</td><td><%= text_field :item, :price%></td></tr>
+		<tr><td>Старая цена (перечеркнута):</td><td><%= text_field :item, :old_price%></td></tr>
+		<tr><td>Добавить товар на витрину:</td><td><%= check_box :item, :is_special%></td></tr>
+		<tr><td>Добавить товар в "приятные мелочи":</td><td><%= check_box :item, :is_cartspecial%></td></tr>
+		<tr>
+			<td>Товар не может заказываться самостоятельно</td>
+			<td><%=check_box :item, :no_order_alone%></td>
+		</tr>
+		<tr><td>Количество в упаковке:</td><td><%= text_field :item, :count_in_pack%></td></tr>
+		<tr><td>Количество на складе:</td><td><%= text_field :item, :count_on_stock%></td></tr>
+		<tr>
+			<td>Фото:</td>
+			<td>
+				<%if params[:action]=="edit"%>
+				<a class="fancybox_big" href="/<%=params[:controller]%>/product_images/<%=@item.id%>" title="Фотографии #<%=h @item.name%>"><img id="product_image_<%=@item.id%>" alt="Фото (нажмите для редактирования)" title="Фото (Нажмите для редактирования)" src="<%=product_image(@item)%>" /></a>
+				<br><small>Нажмите на фото, для редактирования списка фотографий.</small>
+				<%end%>
+				<%if params[:action]=="new"%>
+				<%=file_field :product_image, :image%>
+				<%end%>
+			</td>
+		</tr>
+		<%=edit_meta_ru_en%>
+		<tr>
+			<td>Категория</td>
+			<td class="category">
+<%# collection_select(:item, :category_ids, Category.find(:all, :order => "category_id, p"), :id, :name,{},{:multiple => true, :name=>'item[category_ids][]'}) %>
+<%= category_multi_select(:item, :category_ids, @item.categories)%>
+			</td>
+		</tr>
+		<!--Filters-->
+		<%for filter in @filters_titles%>
+		<tr>
+			<td><%=filter[:title]%></td>
+			<td>
+			<%for f in F.list(filter[:name])%>	
+				<%=check_box_tag "item[f_ids][]", f.id, @item.fs.include?(f)%> <%=f.value%><br/>
+			<%end%>
+			</td>
+		</tr>
+		<%end%>
+		<!--/Filters-->
+
+
+       </table>
+	  <br>
+   Краткое Описание(рус.):<br>
+<%=text_area :item, :description, :cols => 50, :rows => 3%><Br>
+   Краткое Описание(англ.):<br>
+<%=text_area :item, :description_en, :cols => 50, :rows => 3%><Br>
+   Полное описание(рус.):<br>
+<%=ckeditor_textarea :item, :body, :toolbar=>'Full', :width=>'800px', :heigth=>'200px' %>
+   Полное описание(англ.):<br>
+<%=ckeditor_textarea :item, :body_en, :toolbar=>'Full', :width=>'800px', :heigth=>'200px' %>
+		<%if params[:action]=="new"%><%=submit_tag "Добавить"%><%end%>
+		<%if params[:action]=="edit"%><%=submit_tag "Редактировать"%><%end%>
+
+<% end %>
+
+<script>
+	$(document).ready(function(){
+/*		$('td.category>select>option').click(function(){
+			alert($(this).attr('selected'));
+			if($(this).attr('selected')){
+				$(this).attr('selected', true);
+			}
+			else{
+				$(this).attr('selected', false);				
+			};
+		});*/
+	});
+</script>

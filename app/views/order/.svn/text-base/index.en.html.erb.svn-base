@@ -1,0 +1,98 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=translate "main_page"%></a> / <a href="/"><%=translate "cart_title"%></a > / <span><%=translate "order_delivery_address_title"%></span></div>
+                    	<h1><%=translate "order_delivery_address_title"%><!-- <strong> Delivery&Order Information. Step 1 of 3 </strong>--></h1>
+
+<%form_tag do%>
+	<%=render :partial => "order/hidden_fields" %>
+<%= error_messages_for 'order', :header_message => "", :message => "#{translate 'field_errors'}:" %>
+                        <div class="forma">
+                        	<div class="necessar"><%=translate 'req_field'%></div>
+                        	<div class="input necessarily block"><label>Recipient:</label><p><%=text_field :order, :firstname, :onfocus => "if (this.value == 'First name') {this.value ='';}", :onblur=>"if (this.value == '') {this.value='First name';}" %></p><%if !current_user.blank?%><div class="answer"><label><big><a href="#" class="list">Please, enter another recipient's Delivery Address.</a></big></label></div><%end%></div>
+                        	<div class="input block"><label>&nbsp;</label><p class="ff"><%=text_field :order, :patronymic, :onfocus => "if (this.value == 'Middle Name') {this.value ='';}", :onblur=>"if (this.value == '') {this.value='Middle Name';}"%></p><div class="answer"><label for="opt1"><%=check_box :order, :call_to_known_address, :id=>"opt1"%><big><small> According to recipient's directions over phone
+</small></big></label></div></div>
+                        	<div class="input block"><label>&nbsp;</label><p><%=text_field :order, :lastname, :onfocus => "if (this.value == 'Last Name') {this.value ='';}", :onblur => "if (this.value == '') {this.value='Last Name';}" %></p></div>
+                        	<div class="input"><label>Address:</label><p><%=text_field :order, :address%></p></div>
+                        	<div class="input"><label>Country:</label><p><%=text_field :order, :country%></p><div class="answer"><label for="opt2"><%=check_box :order, :leave_order_to_friends, :id=>"opt2"%><big><small>The order may be left with the neighbors /friends/colleagues if the recipient is away at the time of the delivery</small></big></label></div></div>
+                        	<div class="input"><label>City:</label><p><%=text_field :order, :city%></p></div>
+                        	<div class="input"><label>Post Code:</label><p><%=text_field :order, :zip%></p></div>
+                        	<div class="input"><label>Company:</label><p><%=text_field :order, :organization%></p></div>
+                            <div class="line"></div>
+                        	<div class="input date necessarily"><label>Delivery Date:</label><p><%=text_field :order, :delivery_date, :class => "inputDate datepicker_close_dates", :id => "datepicker_close_dates", :readonly => "readonly"%></p><label>Delivery time:</label><p><%=select :order, :delivery_time, Option.delivery_times.map{|i| [i, i]}%></p></div>
+                            <div class="phone">
+                            	<div class="input">
+                                	<span class="uptext no_bg">&nbsp;</span><label>Recipient's Phone:</label>
+                                    <p>
+                                    	<span class="cod">
+                                            <a>+375</a>
+                                            <a>+7</a>
+                                        </span>
+                                    	<span class="uptext"><a>Country&nbsp;Code</a></span><%=text_field :order, :country_code, :style=>"width:30px; border:0;"%>
+                                    </p>
+                                    <p>
+                                    	<span class="cod">
+                                            <a>29</a>
+                                            <a>17</a>
+                                        </span>
+                                    	<span class="uptext"><a>Area&nbsp;Code</a></span><%=text_field :order, :city_code, :style=>"width:20px; border:0;" %>
+                                    </p>
+                                    <p class=""><span class="uptext no_bg">Recipient's Phone</span><%=text_field :order, :telephone, :style=>"width:70px;"%></p>
+                                    <div class="answer"><span class="add">&nbsp;</span><big class="add"><a href="#" onClick="add_phone(); return false;">Additional Phone Number</a></big></div>
+                                </div>
+                        		<div class="input"><label> Your Preferred Time of Call:</label><p><%=text_field :order, :call_time%></p><div class="answer"><label for="opt4"><%=check_box :order, :cant_call, :id=>"opt4"%><big class="pink"><small><%=translate 'dont_call_surprise'%></small></big></label></div></div>
+                            </div>
+<div style="display:none;" id="add_phone_el">
+	<%=render :partial => "phone", :locals => {:telephone => {:telephone => "", :city_code => "29", :country_code => "+375", :call_time => "from 9 a.m. to 8 p.m."}, :index => 0}%>
+</div>
+                        <div id="phones" class="fdorma addd">
+	<%if !params[:telephone].blank?%>
+		<%i = 0%>
+		<%for key in params[:telephone].keys%>
+	<%=render :partial => "phone", :locals => {:telephone => params[:telephone][key], :index => key}%>			
+			<%i=i+1%>
+		<%end%>
+	<%end%>
+                        </div>
+                            <div class="phone">                        
+<div class="textarea"><label>Card Message:</label><p><%=text_area :order, :message, :cols => 50, :rows => 3%></p><label>Please include your name. The card message is the only way for your recipient to know who sent the gift. Cannot find any words? We can help you!<a href="/greeting_texts/categories?language=<%=@language%>" class="select_greeting">Choose an option.</a><script>$(document).ready(function(){$('.select_greeting').fancybox();});</script></label></div>
+<div class="textarea"><label>Additional info/comments:</label><p><%=text_area :order, :info, :cols => 50, :rows => 3%></p></div>
+							</div>
+						</div>
+<script>
+	function add_phone(){
+		//Добавляем новый элемент 
+		$('#phones').prepend($('#add_phone_el').html());
+		phones = $('#phones>div.phone');
+		//Назначаем имена для формы
+		for(i=0;i<phones.length;i++){
+			$(phones[i]).find('.country_code').attr('name', 'telephone['+i+'][country_code]');
+			$(phones[i]).find('.city_code').attr('name', 'telephone['+i+'][city_code]');
+			$(phones[i]).find('.telephone').attr('name', 'telephone['+i+'][telephone]');
+			$(phones[i]).find('.call_time').attr('name', 'telephone['+i+'][call_time]');
+		};
+
+	};	
+	$(document).ready(function(){
+		if($('#item_lastname').val()==''){
+			$('#item_lastname').val('Last Name');
+		}
+		if($('#item_patronymic').val()==''){
+			$('#item_patronymic').val('Middle name');
+		}
+	})
+</script>
+
+
+                        <input class="button" type="button" value="Back" name="" onClick="document.location='/cart/index';"/>
+                        <input class="button" type="submit" value="Continue" name="" style="float:right"/>
+<%end%>
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                	<div class="basket"><strong><%=@cart.quantity%></strong> <%=Russian.p(@cart.quantity, "Product", "Product", "Products")%><br />Price <strong><%=show_amount(@cart.price)%></strong><br />Delivery to <span><a href="#"><%=translate_name @order.delivery.name%></a></span><br /> Delivery Cost <strong><%=show_amount(@order.delivery.price)%></strong><p>Total cost: <%=show_amount(@cart.price + @order.delivery.price)%></p></div>
+                    <div class="back"><a href="/cart">Back to Shopping Cart</a></div>
+                </div>
+
+                		
+

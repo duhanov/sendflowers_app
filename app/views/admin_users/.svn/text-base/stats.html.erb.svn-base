@@ -1,0 +1,47 @@
+<%admin_page [["Пользователи", "/admin_users/list"], ["Статистика партнера #{@user.email}", "/admin_users/stats?user_id=#{@user.id}"]] do%>
+	<form>
+		<input type="hidden" name="user_id" value="<%=@user.id%>"/>
+	Магазин <%=select_tag "shop_id", options_for_select([["Все", 0]] + Shop.find(:all, :order => "domain").map{|el| [el.domain, el.id]}, params[:shop_id].to_i)%>
+	<br/>Дата с <input name="date1" value="<%=params[:date1]%>" class="datepicker"> по <input name="date2" value="<%=params[:date2]%>" class="datepicker">
+	<br>
+	Статус <%=select_tag "status", options_for_select([["Любой", ""]] + order_statuses, params[:status].to_s)%>
+	<input type="hidden" name="filter" value="true">
+	<%=submit_tag "Фильтр"%>
+	</form>
+    <table cellspacing='0' cellpadding='0' border='0' width='100%' class='list'>
+    	<thead>
+    		<tr>
+    			<th><b>Дата</b></th>
+    			<th><b>Переходы</b></th>
+    			<th><b>Заказы</b></th>
+    			<th><b>На сумму</b></th>
+    			<th><b>Оплачено</b></th>
+    			<th><b>Начислено</b></th>
+    		</tr>
+    	</thead>	
+		<tbody>
+	<%
+	shop_id = 0
+	clicks = 0
+	%>
+	<%for date in @items.keys%>
+			<tr>
+				<td><%=standartDate(Date.parse(date))%></td>	
+				<td><%=@items[date][:count_clicks]%></td>	
+				<td>
+					<%if @items[date][:count_orders]>0%>
+					<a class="fancybox" href="/admin_users/orders/<%=date%>?user_id=<%=@user.id%>"><%=@items[date][:count_orders]%></a>
+					<%else%>
+					<%=@items[date][:count_orders]%>
+					<%end%>
+				</td>	
+				<td><%=@items[date][:total_amount]%> руб.</td>	
+				<td><%=@items[date][:count_payed_orders]%></td>	
+				<td><%=@items[date][:accrued_amount]%> руб.</td>	
+			</tr>
+	<%end%>
+		</tbody>
+    </table>
+
+
+<%end%>

@@ -1,0 +1,5 @@
+<%if @template.blank?%>
+Can't find template  <%="order_status_#{@order.status}"%> <%=@order.language%>
+<%else%>
+<%=render :inline => @t.body, :locals => {:order => @order}%>
+<%end%>

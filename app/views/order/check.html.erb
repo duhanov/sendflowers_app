@@ -1,0 +1,53 @@
+            	<div class="all">
+                	<div class="centeri">
+<%form_tag "/order/create" do %>
+	<%=render :partial => "order/hidden_fields" %>
+                    	<div class="crumb"><a href="/"><%=trans 'main_page'%></a> / <a href="/cart"><%=trans 'cart'%></a > / <span><%=trans 'order_final_check'%></span></div>
+                    	<h1><%=trans 'order_confirm_title'%></h1>
+                        <p><%=trans 'order_confrim_desc'%>	</p>
+                        <div class="check1">
+                        	<%for item in @cart.items %>
+                        	<div><h1><a href="#"><%=product_name item.product%></a><span><%=product_description item.product%></span></h1><strong><%=item.quantity%>шт.</strong><strong><%=show_amount(item.price)%></strong></div>
+							<%end%>
+                        	<div><h1><%=trans 'order_delivery'%>: <a href="#"><%=translate_name @order.delivery.name%></a></h1><strong>=</strong><strong><%=show_amount(@order.delivery.price)%></strong></div>
+                            <div class="line"></div>
+                            <div class="summ"><h1><%=trans 'order_total_amount' %></h1><strong>
+                            	<%=show_amount(@cart.price + @order.delivery.price)%> (
+								<%if (session[:currency].blank?) || (session[:currency] == "usd") %>
+								<%=((@cart.price + @order.delivery.price) * Option.get("kurs_usd").to_i)%> руб. 
+								<%else%>
+								<%=@cart.price  + @order.delivery.price %> $
+								<%end%>
+								)							
+								</strong></div>
+                        </div>
+                        <div class="check2">
+                        	<div><h1><%=trans 'order_payment_method'%>: <%=translate_name @order.payment_method.name%></h1></div>
+                        </div>
+                        <div class="check2">
+                        	<div><b><%=trans 'order_who'%></b></div>
+                        	<div><h1><%=trans 'order_name'%>:</h1><big><%=order_name @order%></big></div>
+                        	<div><h1><%=trans 'order_address'%>:</h1><span><%=order_address(@order)%></span><small><%=order_options(@order)%></small></div>
+                        	<div><h1><%=trans 'order_telephone_cap'%>:</h1><big><%=order_telephone(@order)%></big></div>
+                        	<div><h1><%=trans 'order_delivery_date'%>:</h1><big><%=@order.delivery_date%></big></div>
+                        </div>
+						<div class="check2">
+							<div><h1><%=trans 'order_message'%>:</h1><big><%=@order.message%></big></div>
+							<div><h1><%=trans 'order_info'%>:</h1><big><%=@order.info%></big></div>
+						</div>
+						<div class="check2">
+							<div><b><%=trans 'order_sender_info'%></b></div>
+                        	<div><h1><%=trans 'order_sender'%>:</h1><big><%=order_sender_name @order%></big></div>
+                        	<div><h1><%=trans 'order_address'%>:</h1><big><%=order_sender_address @order%></big></div>
+                        	<div><h1><%=trans 'order_telephone_cap'%>:</h1><big><%=@order.sender_telephone%></big></div>
+                        	<div><h1><%=trans 'order_email'%>:</h1><big><%=@order.sender_email%></big></div>
+						</div>
+						<input class="button" type="button" style="width:220px;" value="<%=trans 'back'%>" name="" onClick="document.location='/order/paymentmethod'"/>
+                        <input class="button" type="submit" style="width:300px; float:right;" value="<%=trans 'order_and_pay_btn'%>" name="" />
+<%end%>
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                    <div class="back"><a href="/order"><%=trans 'order_back_to_order'%></a></div>
+                </div>				

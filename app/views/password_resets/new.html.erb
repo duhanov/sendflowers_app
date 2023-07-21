@@ -1,0 +1,25 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=translate "main_page"%></a> / <span><%=translate("repass_title")%></span></div>
+<%=flashes%>
+
+<p><%=translate("repass_form_info")%></p>
+<% form_tag "/password_resets/create", :class => "reset_password", :id => "reset_password" do %>
+                        <div class="forma profil">
+
+                        	<div class="necessar"><%=translate("req_field")%></div>
+
+                       	<div class="input"><label><%=translate("repass_email")%>:</label><p><%= text_field_tag "email" %></p></div>
+
+                        </div>
+						
+                        <input class="button" type="submit" style="width:220px;" value="<%=translate("repass_btn")%>" name="" />
+
+<%end%>
+					</div>
+				</div>
+				
+<%=render :partial => "layouts/left" %>
+<%=render :partial => "users/right"%>					
+
+

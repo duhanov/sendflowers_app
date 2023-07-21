@@ -1,0 +1,24 @@
+<% admin_page @tabs do%>
+	<%quick_add "Добавить цвета", "/admin_flowers/add_colors" do%>
+		<input type="hidden" name="id" value="<%=@flower.id%>">
+		<small>Введите цвета, каждое с новой строки.</small><br>
+		<textarea name="names" cols="50" rows="10"></textarea>		
+	<%end%>
+	<br><br><small>Нажмите на цвет/цену, чтобы изменить их.<br><b>|</b> - этот знак разделяет русское название от английского. Например: Русское название|English name</small>
+	<%table_with_sort_links ["Фото", "Цвет", "Цена", "Уд."], {:del_url => "/admin_flowers/delete_color/", :update_url => "/admin_flowers/update_color/", :item_name => "цвет"} do %>
+		<%for item in @flower.colors%>
+			<% tr item do %>
+				<td>
+<!--							<img id="product_image_<%=item.id%>" onClick="edit_product_photo(<%=item.id%>, '/<%=params[:controller]%>/update_product_image/');" style='margin-top: 0px; cursor: pointer;' alt="Фото (нажмите для редактирования)" title="Фото (Нажмите для редактирования)" src="<%#item.image.url(:thumb)%>" />-->
+							<a class="fancybox_big" href="/<%=params[:controller]%>/product_images/<%=item.id%>" title="Фотографии <%#h item.color%>"><img id="product_image_<%=item.id%>" alt="Фото (нажмите для редактирования)" title="Фото (Нажмите для редактирования)" src="<%=product_image(item)%>" /></a>
+
+					
+				</td>
+				<td class="edit_string" field="color"><%=item.color%></td>
+				<td class="edit_string" field="price"><%=item.price%></td>
+				<td><%=btn_del%></td>
+			<%end%>
+		<%end%>
+	<%end%>
+<%end%>
+

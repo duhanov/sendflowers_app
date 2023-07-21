@@ -1,0 +1,12 @@
+<%admin_page @tabs do%>
+	<%table_with_sort_links ["Поздравление", "Ред.", "Уд."] do%>
+		<%for item in @items%>
+			<%tr item do%>
+				<td><%=item.body_show%></td>
+				<td><%=btn_edit item%></td>
+				<td><%=btn_del%></td>
+			<%end%>
+		<%end%>
+	<%end%>
+	<%=pagination @items%>
+<%end%>

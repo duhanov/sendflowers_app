@@ -1,0 +1,2 @@
+module AdminFormTemplatesHelper
+end

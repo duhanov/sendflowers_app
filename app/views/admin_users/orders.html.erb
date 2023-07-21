@@ -1,0 +1,22 @@
+	<table>
+		<tr>
+			<td>#</td>
+			<Td><b>Новый</b></Td>
+			<td><b>Оплачен</b></td>
+			<td><b>Ожидает</b></td>
+			<td><b>Отправлен</b></td>
+			<td><b>Доставлен</b></td>
+			<td><b>Отменен</b></td>
+		</tr>
+	<%for item in @items%>
+		<tr>
+			<td><%=item.id%></td>
+			<Td><%if !item.status_new_at.blank?%><%=standartDate(item.status_new_at)%><%end%></Td>
+			<Td><%if !item.status_payed_at.blank?%><%=standartDate(item.status_payed_at)%><%end%></Td>
+			<Td><%if !item.status_waiting_at.blank?%><%=standartDate(item.status_waiting_at)%><%end%></Td>
+			<Td><%if !item.status_sended_at.blank?%><%=standartDate(item.status_sended_at)%><%end%></Td>
+			<Td><%if !item.status_complete_at.blank?%><%=standartDate(item.status_complete_at)%><%end%></Td>
+			<Td><%if !item.status_cancel_at.blank?%><%=standartDate(item.status_cancel_at)%><%end%></Td>
+		</tr>
+	<%end%>
+		

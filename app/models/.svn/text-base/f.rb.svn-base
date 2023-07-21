@@ -1,0 +1,7 @@
+class F < ActiveRecord::Base
+  validates_presence_of :name, :value
+    
+  def self.list(name)
+    F.find(:all, :conditions => ["name = ?", name], :order => "p")
+  end
+end

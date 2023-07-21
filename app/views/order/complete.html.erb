@@ -1,0 +1,14 @@
+            	<div class="all">
+                	<div class="centeri">
+<%=flashes%>
+<%=page_content("order_complete_#{@language}_#{@order.payment_method_id}")%>
+<%=flash[:mail_error]%>
+
+
+
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                </div>
+				

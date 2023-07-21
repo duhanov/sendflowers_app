@@ -1,0 +1,59 @@
+<style>
+	li.ui-state-default {
+	height: 130px;
+	background: none;
+	}
+	span.ui-icon.ui-icon-arrowthick-2-n-s {
+		background: none;
+	}
+</style>
+
+<%sortable "/#{params[:controller]}/sort_images/#{@item.id}" do%>
+	<%for item in @items%>
+		<%sortable_item item do%>
+		<a href="<%=item.image.url(:big)%>" class="gallery_preview"><img src="<%=item.image.url(:admin_thumb)%>"/></a>
+		<div class="ctrls">
+			<a style='color:blue;font-size:12px;text-decoration: underline;' href="/<%=params[:controller]%>/delete_image/<%=item.id%>" class="delete_product_image">Удалить</a>
+		</div>
+		<%end%>
+	<%end%>
+<%end%>
+<script>
+	$('#gallery_big').unbind("load");
+	$('#gallery_big').bind("load", function(){
+			$('#gallery_loading').hide();
+			$('#gallery_big').show();
+			$('#gallery_big').fadeTo('slow', 1);
+	});
+		
+	$('a.gallery_preview').click(function(){
+				if($('#gallery_big').attr() != $(this).attr('href'))
+				{	
+					//alert($('#miss_big_photo').width() + "x" + $('#miss_big_photo').height());
+					$('#gallery_loading').width($('#gallery_big').width());
+					$('#gallery_loading').height($('#gallery_big').height());
+					$('#gallery_big').attr('new_src', $(this).attr('href'));
+					$('#gallery_big').fadeTo('slow', 0, function(){
+						$('#gallery_big').hide();
+						$('#gallery_loading').show();
+						$('#gallery_big').attr('src', $(this).attr('new_src'));
+					});		
+				};
+		return false;
+	});
+	$('.delete_product_image').click(function(){
+		$(this).html('Идёт удаление...');
+		$.ajax({
+			'del_item': $(this).parent().parent(),
+			'method': 'GET',
+			'url': $(this).attr('href'),
+			'success': function(){
+				this.del_item.remove();
+			},
+			'dataType': 'script'
+		});
+		return false;
+	});
+	$('#product_image_<%=@item.id%>').attr('src', '<%=product_image(@item)%>');        
+
+</script>

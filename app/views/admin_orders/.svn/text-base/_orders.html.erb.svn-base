@@ -1,0 +1,121 @@
+	<%for item in @items%>
+	<h2 class='order'><span id="order_status_<%=item.id%>"><%=order_status(item)%></span><%=standartDateTime(item.created_at)%></h2>
+	<div class="order_info">
+		<font style="font-size:20px;">Заказ #<%=item.id%></font>
+		<br>
+		<table>
+			<% if !item.ip.blank?%>
+			<tr>
+				<td>IP</td>
+				<td><%=item.ip%> (<a href="http://geoiptool.com/en/?IP=<%=item.ip%>" target="_blank">информация по ip<%#@geoip.country(item.ip)[5]%></a>)</td>
+			</tr>
+			<%end%>
+			<tr>
+				<td><b style="font-size:16px;">Данные получателя:</b></td>
+			</tr>
+			<tr>
+				<td><b>Имя:</b></td>
+				<td><%=order_name(item)%></td>
+			</tr>
+			<tr>
+				<td><b>Телефон:</b></td>
+				<td><%=order_all_telephones(item)%></td>
+			</tr>
+			<tr>
+				<td><b>Адрес:</b></td>
+				<td><%=order_address(item)%></td>
+			</tr>
+			<tr>
+				<td><b>Организация:</b></td>
+				<td><%=item.organization%></td>
+			</tr>
+			<tr>
+				<Td><%=trans 'order_delivery_date'%>:</Td><td><%=item.delivery_date%></td>
+			</tr>
+			<tr>
+				<Td><%=trans 'order_delivery_time'%>:</Td><td><%=item.delivery_time%></td>
+			</tr>
+			<tr>
+				<td><b>Сообщение с заказом:</b></td>
+				<td><%=item.message%></td>
+			</tr>
+			<tr>
+				<td><b>Дополнительная информация:</b></td>
+				<td><%=item.info%></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td><b style="font-size:16px;">Данные отправителя</b></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><b>Имя:</b></td>
+				<td><%=order_sender_name(item)%></td>
+			</tr>
+			<tr>
+				<td><b>Адрес:</b></td>
+				<td><%=order_sender_address item%></td>
+			</tr>
+			<tr>
+				<td><b>E-Mail:</b></td>
+				<td><%=item.sender_email%></td>
+			</tr>
+			<tr>
+				<td><b>Телефон:</b></td>
+				<td><%=item.sender_telephone%></td>
+			</tr>
+		</table>
+
+<!--		<b style="padding-left: 3px;">Комментарий:</b>
+		<%=item.comment%>-->
+		<br/><br/>
+		<b>Клиент заказывал:</b><br/>
+		<table>
+			<tr>
+				<td width="200"><b>Товар</b></td>
+				<td width="200"><b>Количество</b></td>
+				<td width="200"><b>Цена</b></td>
+			</tr>
+		<%for order_item in item.order_items%>
+			<% if (!order_item.product.blank?) && (!order_item.product.is_service)%>
+			<tr>
+				<td>
+		<a href="#" target="_blank"><%=product_name order_item.product%></a><br/>
+		<img src="<%=product_image(order_item.product, :thumb)%>"/>
+				</td>
+				<td><b>x<%=order_item.quantity%></b></td>
+				<td><%=show_amount(order_item.price)%></td>
+			<%end%>
+			</tr>
+			<%end%>
+		</table>
+		<%=order_services(item)%>
+		<br>
+		<%=order_options(item)%>
+		<br>
+		<br>
+	<%if !item.delivery.blank?%>
+		
+		<b style="font-size: 16px;">Доставка:</b><Br> <%=translate_name item.delivery.name%> (<%=show_amount(item.delivery.price)%>)
+		<br/><br/>
+		<b style="font-size: 16px;">Итого к оплате:</b> <%=show_amount(item.total_price + item.delivery.price)%><br><br>
+	<%end%>
+		<%if !item.payment_method.blank?%><b>Способ оплаты:</b> <%=translate_name item.payment_method.name%><br/><br/><%end%>
+		<%if !item.payed_from.blank?%>Оплачен с: <%=item.payed_from%><br/><%end%>
+
+		<a class="delete_order" href="/admin_orders/delete/<%=item.id%>">Удалить заказ</a> | Отметить как: 
+		<% for os in order_statuses%>
+		<a class="update_order" href="/admin_orders/update/<%=item.id%>?status=<%=os[1]%>"><%=os[0]%></a>,
+		<%end%>
+	</div>
+	<%end%>
+	<%=will_paginate @items, :prev_label => "&laquo;", :next_label => "&raquo;"%>
+	
+	
+	<%if params[:action]=="search"%>
+	<script>
+	init_orders();
+	</script>	
+	<%end%>

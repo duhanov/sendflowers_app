@@ -1,0 +1,16 @@
+<%admin_page @tabs do%>
+	<%quick_add "Добавить названия упаковок", "/admin_flowers/add_packs" do%>
+	<small>Введите названия упаковок, каждое с новой строки.</small><br>
+	<textarea name="names" cols="50" rows="10"></textarea>
+	<%end%>
+	<br><br><small>Нажмите на название/цену, чтобы изменить их.<br/><%=help_translate%></small>
+	<%table_with_sort_links ["Название", "Цена", "Уд."], {:del_url => "/admin_flowers/delete_pack/", :update_url => "/admin_flowers/update_pack/", :item_name => "упаковку"} do %>
+		<%for item in @items%>
+			<%tr item do%>
+				<td field="name" class="edit_string"><%=item.name%></td>	
+				<td field="price" class="edit_string"><%=item.price%></td>	
+				<td><%=btn_del%></td>
+			<%end%>
+		<%end%>
+	<%end%>
+<%end%>

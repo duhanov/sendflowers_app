@@ -1,0 +1,57 @@
+<div class="trail">
+<table>
+<Tr>
+<td valign="top" width="50%"><%=@page_title%></td>
+<td valign="top" width="50%" align="right">
+<% unless flash[:error].blank? %><%= flash[:error] %><% end %>
+<% unless flash[:notice].blank? %><%= flash[:notice] %><% end %>
+</td>
+</tr>
+</table>
+</div> 
+<div id="t2">
+				<span class="current"><a href="/syslog/list">Список</a></span>
+
+</div>
+<br><br>
+Фильтр: <select onChange="document.location='/syslog/list?filter=' + encodeURIComponent($(this).val());"><%=options_for_select([["Все события", ""]] + Syslog.find(:all, :select => "DISTINCT(t)", :order => "t").map{|i| [i.t, i.t]}, params[:filter])%></select>
+<br>
+    <br>
+<div>
+	
+</div>
+<table cellspacing="0" cellpadding="0" border="0" width="100%" class="list" item_name="новость" del_url="/admin_news/delete/">
+<thead>
+	<tr>
+		<th width="1">#</th>
+		<th><b>Дата/Время</b></th>
+		<th><b>Тип</b></th>
+		<th><b>Событие</b></th>
+		<th style="text-align:center">Подробнее</th>
+	</tr>
+</thead>
+<tbody>
+	
+	
+<% for item in @items %>
+  		<tr rowid="<%=item.id%>">
+			<td><%=item.id%>.</td>
+            <td><%=standartDateTime(item.created)%></td>
+			<td><%#item.t%></td>
+			<td><%=item.title%></td>
+			<td align=center><a href="/syslog/show/<%=item.id%>" class="fancybox">Подробнее</a></td>
+	  	</tr>
+<% end %>
+</tbody>	
+			
+	</table>
+
+<br><br>
+<script>
+	$('.fancybox').fancybox({hideOnContentClick: false});
+
+</script>
+<%= will_paginate @items %><!--tmp-->
+
+
+

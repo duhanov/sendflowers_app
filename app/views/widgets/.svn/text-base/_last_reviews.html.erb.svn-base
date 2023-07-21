@@ -1,0 +1,7 @@
+                        <div class="otziv">
+                    	<h2><a href="/reviews"><%=translate "users_reviews"%></a></h2>
+<%for review in Review.find(:all, :conditions => ["moderated = 1 AND language = ?", @language], :limit => 2, :order => "id DESC")%>						
+                        <p>— <%=review.body%> 
+                        <strong><%=standartDate review.created_at%>, <%=review.name%></strong></p>
+<%end%>						
+                    </div>

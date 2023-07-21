@@ -1,0 +1,3 @@
+<% admin_page [["Новая #{model_title[:one]}", "/#{params[:controller]}/new"], ["Список #{model_title[:list]}", "/#{params[:controller]}/list"]] do%>
+<%=render :partial => "form"%>
+<% end %>

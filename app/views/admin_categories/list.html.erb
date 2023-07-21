@@ -1,0 +1,17 @@
+<% admin_page [["Новая #{model_title[:one]}", "/#{params[:controller]}/new"], ["Список #{model_title[:list]}", "/#{params[:controller]}/list"]] do%>
+	<% if @items.blank?%>
+		<div id="flash_notice">
+		<p>Вы ещё не создали ни одной <%=model_title[:many]%>. <a href="/<%=params[:controller]%>/new">Создать <%=model_title[:what]%></a></p>
+		</div>
+	<%else%>
+		<small>
+			Используя мышь, Вы можете перетаскивать <%=model_title[:many]%> для изменения родительского раздела.<br/>
+		</small>			
+		<div id="dragdrop_table_messages"></div>
+		<script>controller = "<%=params[:controller]%>";</script>
+		<%=categories_draggable_tree(@items)%>
+	<% end %>
+<% end %>
+
+
+

@@ -1,0 +1,32 @@
+<%admin_page @tabs do%>
+	<%=print_way @way,false%>
+	<br><small>Кликните по названию/фотографии/цене/количеству чтобы изменить их.</small>
+
+<form>
+<b>Фильтр:</b> <%=category_filter(Category.find(:all, :conditions => "category_id = 0"), "category", params[:category])%>
+
+<input type="submit" value="Фильтр"/>
+
+</form>
+	<%table_with_sort_links [["#", "id"], ["Вкл", "active"], ["Артикул", "article"], "Фото", ["Название", "name"], "Категории", ["Цена", "price"], "Старая цена", "В упаковке", "На складе", "Ред.", "Уд."], {:del_url => "/#{params[:controller]}/delete/", :item_name => model_title[:one], :update_url => "/#{params[:controller]}/update/"} do%>
+		<%for item in @items%>
+			<%tr item do%>
+			<td><%=item.id%></td>
+			<td class="edit_yesno" field="active"><%=show_yesno item.active%></td>
+			<td class="edit_string" field="article"><%=item.article%></td>
+			<td>
+							<a class="fancybox_big" href="/<%=params[:controller]%>/product_images/<%=item.id%>" title="Фотографии #<%=h item.name%>"><img id="product_image_<%=item.id%>" alt="Фото (нажмите для редактирования)" title="Фото (Нажмите для редактирования)" src="<%=product_image(item)%>" /></a>
+			</td>
+			<td class="edit_string" field="name"><%=item.name%></td>
+			<td><%=item.categories.map{|i| i.name}.join(", ")%></td>
+			<td class="edit_string" field="price"><%=item.price%></td>
+			<td class="edit_string" field="old_price"><%=item.old_price%></td>
+			<td class="edit_string" field="count_in_pack"><%=item.count_in_pack%></td>
+			<td class="edit_string" field="count_on_stock"><%=item.count_on_stock%></td>
+			<td><%=btn_edit item%></td>
+			<td><%=btn_del%></td>
+			<%end%>
+		<%end%>
+	<%end%>
+	<%=will_paginate @items%>
+<%end%>

@@ -1,0 +1,12 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/">Home</a> / <a href="/order/webpay_ok/<%=@order.id%>">Order #<%=@order.id%>. Payment using the system of payments Webpay. Payment Successful </a></div>
+<h1>Thank you. Your payment was successfuly processed. You should receive an e-mail verifying your payment shortly.
+</h1>
+
+
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                </div>

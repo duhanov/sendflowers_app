@@ -1,0 +1,43 @@
+<%form_tag do%>
+<%end%>
+	<input id="images_upload" name="file" type="file" /> <a href="javascript:$('#images_upload').uploadifyUpload();">Загрузить изображения на сайт</a> | <a href="javascript:$('#images_upload').uploadifyClearQueue();">Очистить очередь</a><br/><br/>
+	<%- session_key_name = ActionController::Base.session_options[:key] -%>
+
+	<script>
+	$('#images_upload').uploadify({
+		'uploader': '/flash/uploadify.swf',
+		'script': 'http://<%=request.host%>:<%=request.port%>/<%=params[:controller]%>/upload_image/<%=@item.id%>',
+		'cancelImg': '/images/cancel_upload.png',
+		'multi': 'true',
+		'fileDesc': 'Изображения',
+		'fileExt' : '*.png;*.gif;*.jpg;*.jpeg',
+		'fileDataName': 'product_image[image]',
+	    'scriptData': {
+	    '<%= session_key_name %>' : encodeURIComponent('<%= u cookies[session_key_name] %>'),
+        'authenticity_token'  : encodeURIComponent('<%= u form_authenticity_token if protect_against_forgery? %>')
+		},
+		'onComplete': function(event, queueID, fileObj, response, data){
+			//eval(response);
+		},
+		'onAllComplete': function(){
+			$('#product_images').html("Идёт обновление списка...")
+			$('#product_images').load("/<%=params[:controller]%>/images_list/<%=@item.id%>");
+		},
+		'onError': function(event, queueID, fileObj, errorObj){
+			alert(errorObj.info);
+		}
+	});
+	</script>
+	<table width="100%">
+		<tr>
+			<td valign="top">
+				<div id="gallery_loading"></div>
+				<img id="gallery_big" src="<%=product_image(@item ,'big')%>" alt="Изображение" title="Изображение">
+			</td>
+			<td valign="top" width="100%">
+	<div id="product_images">
+		<%=render :partial => "widgets_admin/images_list" %>
+	</div>				
+			</td>
+		</tr>
+	</table>

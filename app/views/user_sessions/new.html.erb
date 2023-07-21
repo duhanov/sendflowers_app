@@ -1,0 +1,21 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=translate 'main_page'%></a> / <span><%=translate "personal_title"%></span></div>
+<%=flashes%>
+<% form_for(@user_session) do |f| %>
+<%= error_messages_for 'user_session', :header_message => "", :message => "#{translate('field_errors')}:" %>
+
+  <%# f.error_messages %>
+                    	<h1><%=translate "auth_title"%></h1>
+                        <div class="forma profil">
+                        	<div class="input"><label><%=translate "auth_login"%>:</label><p><%=f.text_field :email %></p></div>
+                        	<div class="input"><label><%=translate "auth_password"%>:</label><p><%= f.password_field :password %></p></div>
+                        </div>
+                        <%= f.submit translate("auth_loginbtn"), :class => "button" %>
+    	<a href="/password_resets/new"><%=translate "auth_forgot_password"%></a>
+
+<%end%>
+                    </div>
+                </div>
+<%=render :partial => "layouts/left" %>
+<%=render :partial => "users/right"%>				

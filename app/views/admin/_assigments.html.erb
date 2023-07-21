@@ -1,0 +1,17 @@
+<%if params[:action] == "edit"%>
+	<a href="#assigments_<%=name%>" class="admin_slide"><%=title%></a><br/>
+	<div id="assigments_<%=name%>" style="display: none;padding-left: 20px;">
+		<br/><br/>
+		<a class="fancybox" href="/<%=params[:controller]%>/assigments_for_add/<%=@item.id%>?assigment_type=<%=name%>">Добавить</a>
+		<div id="assigments_<%=name%>_items">			
+		Идёт загрузка...
+		</div>
+		<script>
+			$(document).ready(function(){
+				$("#assigments_<%=name%>_items").load('/<%=params[:controller]%>/assigment_items/<%=@item.id%>?assigment_type=<%=name%>');
+			});
+		</script>
+	</div>
+	<br/><br/>
+<%end%>
+

@@ -1,0 +1,75 @@
+<style>
+	.order {font-weight: 900; cursor: pointer;border: 1px solid black;padding: 5px 5px 5px 5px;font-size: 14px;margin: 0 0 0 0; background: url(/admin/i/hd_bg.gif)}
+	.order.current,.order:HOVER {background: #9DB3C8; background: url(/admin/i/hd_hover_bg.gif)}
+	.order_info {display: none;border: 1px solid black;padding: 5px 5px 5px 5px;}
+</style>
+<%admin_page [[@page_title, "/parthners/orders/#{params[:id]}"], ["Статистика", "/parthners/stats"]] do%>
+	<%for item in @items%>
+	<h2 class='order'><span id="order_status_<%=item.id%>"><%=order_status(item)%></span><%=standartDateTime(item.created_at)%></h2>
+	<div class="order_info">
+		<font style="font-size:20px;">Заказ #<%=item.id%> из магазина <b><%=order_shop(item)%></b></font>
+		<div id="order_dates_<%=item.id%>"><%=order_dates(item)%></div>
+
+		<table>
+			<tr>
+				<td><b>Имя:</b></td>
+				<td><%=item.name%></td>
+			</tr>
+			<tr>
+				<td><b>Телефон:</b></td>
+				<td>
+					<%=item.telephone%>
+				</td>
+			</tr>
+		</table>
+<!--		<b style="padding-left: 3px;">Комментарий:</b>
+		<%=item.comment%>-->
+		<br/><br/>
+		<b>Клиент заказывал:</b><br/>
+		<table>
+			<tr>
+				<td width="200"><b>Товар</b></td>
+				<td width="200"><b>Цена за еденицу</b></td>
+				<td width="200"><b>Количество</b></td>
+			</tr>
+		<%for order_item in item.order_items%>
+			<tr>
+				<td>
+		<a href="<%=link2product(order_item.product)%>" target="_blank"><%=order_item.product.title%></a><br/>
+		<img src="<%=product_image(order_item.product, :thumb)%>"/>
+				</td>
+				<td><%=order_item.price%> руб.</td>
+				<td><b>x<%=order_item.quantity%></b></td>
+		<%end%>
+			</tr>
+		</table>
+		<br/><br/>
+		Итого к оплате: <%=item.total_price%> руб.
+		<br><br>
+	</div>
+	<%end%>
+	<%#will_paginate @items, :prev_label => "&laquo;", :next_label => "&raquo;"%>
+
+<%end%>
+
+
+<script>
+	$(document).ready(function(){
+		//Разворачиваем 1й заказ
+		$('.order:first').next().slideToggle();
+		$('.order:first').addClass('current');
+		//Кликаем
+		$('.order').click(function(){
+			if(!$(this).is('.current')){
+				$('.order.current').next().slideToggle();
+				$('.order.current').removeClass('current');
+				$(this).addClass('current');
+				$(this).next().slideToggle();
+			};
+			return false;
+		});
+
+		
+	});
+	
+</script>

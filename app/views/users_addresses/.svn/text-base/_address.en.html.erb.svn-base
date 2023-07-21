@@ -1,0 +1,64 @@
+                        <div class="forma adresa_dostavki" style="margin-bottom: 10px;" id="user_address_<%=address.id%>">
+
+                        	<div class="necessar">Value is required and can't be empty</div>
+
+                        	<div class="input necessarily"><label>Name:</label><p><input item_id="<%=address.id%>" type="text" onfocus="if (this.value == 'Name') {this.value ='';}" onblur="if (this.value == '') {this.value='Name';}else{save_address_field(this);}" value="<%=h address.firstname%>" name="firstname" /></p><div class="answer"><label for="opt2" class="set_main_address"><input type="checkbox" name="opt" value="<%=address.id%>" <%if address.is_main%>checked='checked'<%end%>/><big><small>Main </small></big></label></div><span class="del"><a class="delete_address" href="/users_addresses/delete/<%=address.id%>">Delete</a></span></div>
+                        	<div class="input block"><label>Middle Name:</label><p><input item_id="<%=address.id%>" type="text" onfocus="if (this.value == 'Middle Name') {this.value ='';}" onblur="if (this.value == '') {this.value='Middle Name';}else{save_address_field(this);}" value="<%=h address.patronymic%>" name="patronymic" /></p></div>
+                        	<div class="input block"><label>Last Name:</label><p><input item_id="<%=address.id%>" type="text" onfocus="if (this.value == 'Last Name') {this.value ='';}" onblur="if (this.value == '') {this.value='Last Name';}else{save_address_field(this);}" value="<%=h address.lastname%>" name="lastname" /></p></div>
+
+                        	<div class="input"><label>Country:</label><p><input onBlur="save_address_field(this);" item_id="<%=address.id%>" name="country" value="<%=h address.country%>"/></p></div>
+
+                        	<div class="input"><label>City:</label><p><input onBlur="save_address_field(this);" item_id="<%=address.id%>" name="city" value="<%=h address.city%>"/></p></div>
+
+                        	<div class="input necessarily"><label>Post Code:</label><p><input onBlur="save_address_field(this);" item_id="<%=address.id%>" type="text" value="<%=h address.zip%>" name="zip" /></p></div>
+
+                        	<div class="input necessarily"><label>Address:</label><p><input onBlur="save_address_field(this);" item_id="<%=address.id%>" type="text" value="<%=h address.address%>" name="address" /></p></div>
+
+                        	<div class="input necessarily"><label>Organization:</label><p><input onBlur="save_address_field(this);" item_id="<%=address.id%>" type="text" value="<%=h address.organization%>" name="organization" /></p></div>
+
+                            <div class="phone">
+
+                            	<div class="input">
+
+                                	<span class="uptext no_bg">&nbsp;</span><label>Recipient's Phone:</label>
+
+                                    <p>
+
+                                    	<span class="cod">
+
+                                            <a>+375</a>
+
+                                            <a>+7</a>
+
+                                        </span>
+
+                                    	<span class="uptext"><a>Country&nbsp;Code</a></span><input onBlur="save_address_field(this);" item_id="<%=address.id%>" style="width:30px; border:0;" type="text" value="<%=h address.country_code%>" name="country_code" />
+
+                                    </p>
+
+                                    <p>
+
+                                    	<span class="cod">
+
+                                            <a>29</a>
+
+                                            <a>17</a>
+
+                                        </span>
+
+                                    	<span class="uptext"><a>City &nbsp;Code</a></span><input onBlur="save_address_field(this);" item_id="<%=address.id%>" style="width:20px; border:0;" type="text" value="<%=h address.city_code%>" name="city_code" />
+
+                                    </p>
+
+                                    <p class="necessarily"><span class="uptext no_bg">Phone Number</span><input item_id="<%=address.id%>" onBlur="save_address_field(this);" style="width:70px;" type="text" value="<%=h address.telephone%>" name="telephone" /></p>
+
+                                    <!--<div class="answer"><span class="add">&nbsp;</span><big class="add"><a href="#">Additional Phone Number</a></big></div>-->
+
+                                </div>
+
+                        		<div class="input"><label>Your Preferred Time of Call:</label><p><input onBlur="save_address_field(this);" item_id="<%=address.id%>" type="text" value="<%=h address.call_time%>" name="call_time" /></p></div>
+
+                            </div>
+
+                        </div>
+						

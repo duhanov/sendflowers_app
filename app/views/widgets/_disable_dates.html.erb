@@ -1,0 +1,64 @@
+<style>
+   .css-class-to-highlight{
+/*       background-color: #ff0;*/
+   }
+    
+
+   .css-class-to-highlight a.ui-state-default{
+    color: silver;
+    }
+</style>
+<!--Страны заблокированные в календаре-->
+<%#dd = DeliveryCloseDate.find(:all, :conditions => ["language = ? AND year > 0", @language]).map{|i| "#{i.month}-#{i.day}-#{i.year}"}%>
+<%
+if !session[:order].blank? && !session[:order].delivery.blank? && !Delivery.find_by_id(session[:order].delivery_id).blank? && Delivery.find_by_id(session[:order].delivery_id).is_main_delivery
+  l = "main"
+else
+  l = "other"
+end
+%>
+<%dd = DeliveryCloseDate.find(:all, :conditions => ["language = ? AND year > 0", l]).map{|i| "#{i.month}-#{i.day}-#{i.year}"}%>
+<%all_years_dates = DeliveryCloseDate.find(:all, :conditions => ["year = 0 AND language = ?", l])%>
+<% for year in ((DateTime.now.year.to_i - 2)..(DateTime.now.year.to_i + 2))%>
+<%dd = dd + all_years_dates.map{|i| "#{i.month}-#{i.day}-#{year}"}%>
+<%end%>
+
+<!--Выключаем текущую дату до указанного времени. Текущее время: <%=DateTime.now.hour%>:<%=DateTime.now.min%>-->
+<%
+h = Option.get('delivery_end_hour').gsub(/^0/, '').to_i
+m = Option.get('delivery_end_minute').gsub(/^0/, '').to_i
+dd << "#{DateTime.now.month}-#{DateTime.now.day}-#{DateTime.now.year}" if DateTime.now.hour >= h && DateTime.now.min >= m 
+%>
+<script>
+var disabledDays = [<%=dd.map{|i| "'#{i}'"}.join(',')%>];// ["2-21-2010","2-24-2010","2-27-2010","2-28-2010","3-3-2010","3-17-2010","4-2-2010","4-3-2010","4-4-2010","4-5-2010"];
+
+
+/* utility functions */
+function nationalDays(date) {
+  var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+  //console.log('Checking (raw): ' + m + '-' + d + '-' + y);
+ // alert(new Date()); alert(date);
+ yesterday = new Date();
+ today = new Date();
+ yesterday.setDate(today.getDate()-1);
+  for (i = 0; i < disabledDays.length; i++) {
+    if($.inArray((m+1) + '-' + d + '-' + y,disabledDays) != -1 || date < yesterday ) {
+    
+    //  console.log('bad:  ' + (m+1) + '-' + d + '-' + y + ' / ' + disabledDays[i]);
+//    alert(123);
+      return [true, 'css-class-to-highlight', 'tooltip text'];//[false];
+    }
+  }
+  //console.log('good:  ' + (m+1) + '-' + d + '-' + y);
+  return [true];
+}
+function noWeekendsOrHolidays(date) {
+  var noWeekend = jQuery.datepicker.noWeekends(date);
+  //return noWeekend[0] ? nationalDays(date) : noWeekend;
+//  alert(date);
+  //alert(nationalDays(date));
+  return nationalDays(date);
+}
+
+</script>
+

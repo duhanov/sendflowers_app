@@ -1,0 +1,37 @@
+						<%=hidden_field :order, :payment_method_id%>
+						<%=hidden_field :order, :delivery_id%>
+						<%=hidden_field :order, :firstname%>
+						<%=hidden_field :order, :lastname%>
+						<%=hidden_field :order, :patronymic%>
+						<%=hidden_field :order, :zip%>
+						<%=hidden_field :order, :city%>
+						<%=hidden_field :order, :address%>
+						<%=hidden_field :order, :country%>
+						<%=hidden_field :order, :delivery_date%>
+						<%=hidden_field :order, :delivery_time%>
+						<%=hidden_field :order, :cant_call%>
+						<%=hidden_field :order, :call_to_known_address%>
+						<%=hidden_field :order, :leave_order_to_friends%>
+						<%=hidden_field :order, :telephone%>
+						<%=hidden_field :order, :city_code%>
+						<%=hidden_field :order, :country_code%>
+						<%=hidden_field :order, :call_time%>
+						<%=hidden_field :order, :organization%>
+						<%=hidden_field :order, :sender_telephone%>
+						<%=hidden_field :order, :sender_email%>
+						<%=hidden_field :order, :sender_address%>
+						<%=hidden_field :order, :sender_country%>
+						<%=hidden_field :order, :sender_patronymic%>
+						<%=hidden_field :order, :sender_lastname%>
+						<%=hidden_field :order, :sender_firstname%>
+						<%=hidden_field :order, :info%>
+						<%=hidden_field :order, :message%>
+						
+<%if !@telephone.blank?%>
+                        	<%for k in @telephone.keys%>					
+							<input type="hidden" name="telephone[<%=k%>][telephone]" value="<%=h @telephone[k][:telephone]%>">		
+							<input type="hidden" name="telephone[<%=k%>][city_code]" value="<%=h @telephone[k][:city_code]%>">		
+							<input type="hidden" name="telephone[<%=k%>][country_code]" value="<%=h @telephone[k][:country_code]%>">		
+							<input type="hidden" name="telephone[<%=k%>][call_time]" value="<%=h @telephone[k][:call_time]%>">		
+							<%end%>
+<%end%>	

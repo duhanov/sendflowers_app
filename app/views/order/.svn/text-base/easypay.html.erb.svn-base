@@ -1,0 +1,21 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=trans 'main_page'%></a> / <a href="/order/easypay/<%=@order.id%>"><%=trans 'order'%> #<%=@order.id%>. <%=trans 'order_via_easypay'%></a></div>
+<h1><%=trans 'order_payment_instruction'%></h1>
+<%=page_content("easypay_pay_#{@language}",true)%>
+
+<p>Пожалуйста, выбирите товар в нашем интернет-магазине, укажите идентификатор Вашего электронного кошелька EasyPay и оформите заказ на покупку товара. На основании оформленного заказа, Интернет-магазин формирует электронный счет и передает его в систему EasyPay на Ваше имя. После оформления заказа Вы должны зайти в систему EasyPay на сайте: www.easypay.by и там, в защищенном режиме, оплатить электронные счета на ранее сделанные заказы. Используя возможности системы EasyPay, Интернет-магазин оставляет за собой право контроля оплаты покупки и может подтвердить или отвергнуть выполнение заказа. Если сделка состоялась, банк переводит Ваши электронные деньги Интернет-магазину.</p>
+	<%form_tag do%>
+	<%=render :partial => "order/hidden_fields" %>
+<%= error_messages_for 'order', :header_message => "", :message => trans('field_errors') %>
+
+                        <div class="forma">
+                        	<div class="necessar"><%=trans 'req_field'%></div>
+                        	<div class="input necessarily block"><label><%=trans 'order_easypay_id'%>:</label><p><%=text_field :order, :easypay_id%></p></div>
+						</div>	
+	<%end%>
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                </div>

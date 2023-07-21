@@ -1,0 +1,22 @@
+							<div class="phone">
+                            	<div class="input">
+                                	<span class="uptext no_bg">&nbsp;</span><label><%=trans 'order_phone'%>:</label>
+                                    <p>
+                                    	<span class="cod">
+                                            <a>+375</a>
+                                            <a>+7</a>
+                                        </span>
+                                    	<span class="uptext"><a><%=trans 'order_country_code'%></a></span><input style="width:30px; border:0;" type="text" class="country_code" value="<%=telephone[:country_code]%>" name="telephone[<%=index%>][country_code]" />
+                                    </p>
+                                    <p>
+                                    	<span class="cod">
+                                            <a>29</a>
+                                            <a>17</a>
+                                        </span>
+                                    	<span class="uptext"><a><%=trans 'order_city_code'%></a></span><input style="width:20px; border:0;" type="text"  class="city_code" value="<%=telephone[:city_code]%>" name="telephone[<%=index%>][city_code]" />
+                                    </p>
+                                    <p class="necessarily_"><span class="uptext no_bg"><%=trans 'order_telephone'%></span><input class="telephone" style="width:70px;" type="text" value="<%=telephone[:telephone]%>" name="telephone[<%=index%>][telephone]" /></p>
+                                    <div class="answer"><span class="add">&nbsp;</span><!--<big class="add"><a href="#" onClick="add_phone(); return false;">добавить ещё один номер</a></big>--></div>
+                                </div>
+                        		<div class="input"><label><%=trans 'order_call_time'%>:</label><p><input type="text" class="call_time" value="<%=telephone[:call_time]%>" name="telephone[<%=index%>][call_time]" /></p></div>
+                            </div>

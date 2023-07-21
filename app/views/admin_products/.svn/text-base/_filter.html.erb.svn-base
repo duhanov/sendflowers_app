@@ -1,0 +1,23 @@
+	<%admin_tab title do%>
+		<%if !["price", "price_usd"].include?(name)%>
+		<small>Разделяйте значение на русском|английском знком <b>|</b>, например: <b>красный|red</b></small>
+		<%end%>
+		<br><%form_tag "/#{params[:controller]}/add_filter_value" do%>
+			<input type="hidden" name="filter[language]" value="ru"/>
+			<input type="hidden" name="filter[name]" value="<%=name%>"/>
+			<input name="filter[value]"/><%=submit_tag "Добавить значение"%>
+			<input type="hidden" name="tab_selected" class="tab_selected" value="<%=@admin_tab_current%>"/>
+		<%end%><br>
+		<%sortable "/#{params[:controller]}/sort_filter_values?name=#{name}" do%>
+			<%for filter in F.list(name) do%>
+				<%sortable_item filter do %>
+				<div itemid="<%=filter.id%>" style="float:left;" class="filter_value">
+				<%=filter.value%>
+				</div>
+				<div style="float:right;">
+				<a href="#" class="delete_filter" itemid="<%=filter.id%>">Удалить</a>
+				</div>
+				<%end%>
+			<%end%>
+		<%end%>		
+	<%end%>

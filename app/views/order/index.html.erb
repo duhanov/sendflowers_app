@@ -1,0 +1,84 @@
+<style>
+#order_delivery_time{width: 150px;}
+</style>
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=translate "main_page"%></a> / <a href="/"><%=translate "cart_title"%></a > / <span><%=translate "order_delivery_address_title"%></span></div>
+                    	<h1><%=translate "order_delivery_address_title"%><!-- <strong>шаг 1 из 3</strong>--></h1>
+
+<%form_tag do%>
+	<%=render :partial => "order/hidden_fields" %>
+<%= error_messages_for 'order', :header_message => "", :message => "#{translate 'field_errors'}:" %>
+                        <div class="forma">
+                        	<div class="necessar"><%=translate 'req_field'%></div>
+                        	<div class="input necessarily block"><label>Получатель:</label><p><%=text_field :order, :firstname, :onfocus => "if (this.value == 'Имя') {this.value ='';}", :onblur=>"if (this.value == '') {this.value='Имя';}" %></p><%if !current_user.blank?%><%end%></div>
+                        	<div class="input block"><label>&nbsp;</label><p class="ff"><%=text_field :order, :patronymic, :onfocus => "if (this.value == 'Отчество') {this.value ='';}", :onblur=>"if (this.value == '') {this.value='Отчество';}"%></p></div>
+                        	<div class="input block"><label>&nbsp;</label><p><%=text_field :order, :lastname, :onfocus => "if (this.value == 'Фамилия') {this.value ='';}", :onblur => "if (this.value == '') {this.value='Фамилия';}" %></p></div>
+                        	<div class="input"><label>Адрес:</label><p><%=text_field :order, :address%></p></div>
+                        	<div class="input"><label>Страна:</label><p><%=text_field :order, :country%></p></div>
+                        	<div class="input"><label>Город:</label><p><%=text_field :order, :city%></p></div>
+                        	<div class="input"><label>Индекс:</label><p><%=text_field :order, :zip%></p></div>
+                            <div class="line"></div>
+                        	<div class="input date necessarily"><label>Дата доставки:</label><p><%=text_field :order, :delivery_date, :class => "inputDate datepicker_close_dates", :id => "datepicker_close_dates", :placeholder => "ГГГГ-ММ-ДД"%></p></div>
+                            <div class="phone">
+                            	<div class="input">
+                                	<label>Телефон получателя:</label>
+                                    <p class=""><%=text_field :order, :telephone, :style=>"width:100px;"%></p>
+                                </div>
+                            </div>
+<div style="display:none;" id="add_phone_el">
+	<%=render :partial => "phone", :locals => {:telephone => {:telephone => "", :city_code => "29", :country_code => "+375", :call_time => "с 9 утра до 20.00"}, :index => 0}%>
+</div>
+                        <div id="phones" class="fdorma addd">
+	<%if !params[:telephone].blank?%>
+		<%i = 0%>
+		<%for key in params[:telephone].keys%>
+	<%=render :partial => "phone", :locals => {:telephone => params[:telephone][key], :index => key}%>			
+			<%i=i+1%>
+		<%end%>
+	<%end%>
+                        </div>
+                            <div class="phone">                        
+<div class="textarea"><label>Сообщение с заказом:</label><p><%=text_area :order, :message, :cols => 50, :rows => 3%></p><label>Если Вы не подпишетесь, получатель не узнает, что подарок от Вас.
+ Не можете найти слов? Мы готовы помочь Вам! <a href="/greeting_texts/categories?language=<%=@language%>" class="select_greeting" rel="zzzzz">Предлагаем Вам готовые тексты посланий.</a><script>$(document).ready(function(){$('.select_greeting').fancybox();});</script></label></div>
+<div class="textarea"><label>Дополнительная информация:</label><p><%=text_area :order, :info, :cols => 50, :rows => 3%></p></div>
+							</div>
+						</div>
+<script>
+	function add_phone(){
+		//Добавляем новый элемент 
+		$('#phones').prepend($('#add_phone_el').html());
+		phones = $('#phones>div.phone');
+		//Назначаем имена для формы
+		for(i=0;i<phones.length;i++){
+			$(phones[i]).find('.country_code').attr('name', 'telephone['+i+'][country_code]');
+			$(phones[i]).find('.city_code').attr('name', 'telephone['+i+'][city_code]');
+			$(phones[i]).find('.telephone').attr('name', 'telephone['+i+'][telephone]');
+			$(phones[i]).find('.call_time').attr('name', 'telephone['+i+'][call_time]');
+		};
+
+	};	
+	$(document).ready(function(){
+		if($('#item_lastname').val()==''){
+			$('#item_lastname').val('Фамилия');
+		}
+		if($('#item_patronymic').val()==''){
+			$('#item_patronymic').val('Отчество');
+		}
+	})
+</script>
+
+
+                        <input class="button" type="button" value="Назад" name="" onClick="document.location='/cart/index';"/>
+                        <input class="button" type="submit" value="Продолжить" name="" style="float:right"/>
+<%end%>
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                	<div class="basket"><strong><%=@cart.quantity%></strong> <%=Russian.p(@cart.quantity, "товар", "товара", "товаров")%><br />на сумму <strong><%=show_amount(@cart.price)%></strong><br />доставка в <span><a href="#"><%=translate_name @order.delivery.name%></a></span><br />стоимостью <strong><%=show_amount(@order.delivery.price)%></strong><p>Итого: <%=show_amount(@cart.price + @order.delivery.price)%></p></div>
+                    <div class="back"><a href="/cart">Вернуться в корзину</a></div>
+                </div>
+
+                		
+

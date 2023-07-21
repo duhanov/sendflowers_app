@@ -1,0 +1,61 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=translate "main_page"%></a> / <a href="/"><%=translate "sitemap"%></a > </div>
+						<h1><%=@page_title%></h1>
+						<table>
+							<tr>
+								<td valign="top" style="padding: 20px 20px 20px 20px">
+
+<a href="/"><%=translate "main_page"%></a>
+<div style="padding-left: 5px;">
+<%=pages_links%>
+</div>
+								</td>
+								<td valign="top" style="padding: 20px 20px 20px 20px">
+<%=translate 'products_catalog'%>
+<div style="padding-left: 5px;">
+<%=categories_links%>									
+</div>
+								</td>
+								<td valign="top" style="padding: 20px 20px 20px 20px">
+        	<%=trans 'filter_reason'%>
+			<div style="padding-left: 5px;">
+<%for filter in F.list("reason")%><a href="/catalog/filter?filter[]=<%=filter.id%>"><%=f_title(filter)%></a><br><%end%>
+			</div>
+<br>
+        	
+			<%=trans 'filter_holidays'%></a>
+			<div style="padding-left: 5px;">
+<%for filter in F.list("holiday")%><a href="/catalog/filter?filter[]=<%=filter.id%>"><%=f_title(filter)%></a><br><%end%>
+			</div>
+<br>
+			
+        	<%=trans 'filter_who'%></a>
+			<div style="padding-left: 5px;">
+<%for filter in F.list("who")%><a href="/catalog/filter?filter[]=<%=filter.id%>"><%=f_title(filter)%></a><br><%end%>
+			</div>
+<br>
+        	
+        	<%=trans 'filter_color'%></a>
+			<div style="padding-left: 5px;">
+<%for filter in F.list("color")%><a href="/catalog/filter?filter[]=<%=filter.id%>"><%=f_title(filter)%></a><br><%end%>
+			</div>
+<br>
+			<a href="/<%=@language%>/news"><%=translate 'shop_news'%></a><br>
+			<a href="/reviews"><%=translate 'users_reviews'%></a><br>
+			<a href="/holidays/index"><%=trans 'holiday_nearest'%></a><br>
+			<a href="/flowers"><%=trans 'composing_link'%></a><br>
+			<a href="/delivery_photos"><%=translate "delivery_photos_title"%></a>
+
+								</td>
+							</tr>
+						</table>
+					</div>
+             
+				
+				</div>
+
+<%=render :partial => "layouts/left" %>
+<!--                <div class="right">
+                </div>
+-->

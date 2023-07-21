@@ -1,0 +1,53 @@
+<style>
+#order_delivery_time{width: 150px;}
+</style>            	<div class="all">
+                	<div class="centeri">
+            	<div class="crumb"><a href="/"><%=trans 'main_page'%></a><font>/</font><span><%=trans 'personal_data'%></span></div>				
+<h1><%=trans 'orders_history'%></h1>
+<!--menu-->
+<%=flashes%>
+
+				<table class="history">
+					<tr>
+						<th><%=trans 'order_number'%></th>
+						<th><%=trans 'order_detail'%></th>
+						<th><%=trans 'cart_amount'%></th>
+						<th><%=trans 'order_who'%></th>
+						<th><%=trans 'status'%></th>
+					</tr>
+<%for item in @items%>	
+					<tr>
+						<td class="number"><div>в„– <%=item.id%></div> <%=standartDate item.created_at%></td>
+						<td class="details">
+							<%for order_item in item.order_items%>
+							<div><div><img src="<%=product_image(order_item.product, :history)%>" alt="<%=h product_name order_item.product%>" /><p><img src="<%=product_image(order_item.product, :full)%>" width="567" alt="<%=h product_name(order_item.product)%>" /></p></div> <%=product_name order_item.product%></div>
+							<%end%>
+						</td>
+						<td class="cost"><%=show_amount item.total_price%></td>
+						<td><%=order_address(item)%><em>(<%=order_name(item)%>)</em></td>
+						<td class="status">
+							<%=standartDate item.created_at%>
+							<%=history_order_status item%>
+						</td>
+					</tr>
+<%end%>
+				</table>
+				<script type="text/javascript">
+				$(function(){
+					$('table.history td.details div div').each(function(){
+						//alert(1);
+						$('img',this).click(function(){
+							$('p',this.parentNode).show('slow');
+						});
+						$('p img',this).click(function(){
+							$(this.parentNode).hide('slow');
+						});
+					});
+				});
+				</script>
+
+                    </div>
+                </div>
+<%=render :partial => "layouts/left" %>
+<%=render :partial => "users/right"%>	
+			

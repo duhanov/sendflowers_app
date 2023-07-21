@@ -1,0 +1,11 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/">Главная</a> / <a href="/order/webpay_ok/<%=@order.id%>">Заказ #<%=@order.id%>. Оплата заказа через Webpay</a></div>
+<h1>Оплата произведена успешно</h1>
+
+
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                </div>

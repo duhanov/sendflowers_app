@@ -1,0 +1,12 @@
+                <div class="right">
+<%if !current_user.blank?%>
+                	<ul class="menur">
+                        <li<%if params[:controller]=="users"%> class="active"<%end%>><a href="/profile">Личные данные</a></li>
+                    	<li<%if params[:controller]=="users_addresses"%> class="active"<%end%>><a href="/users_addresses">Адреса доставки</a></li>
+                    	<li<%if params[:controller]=="order" && params[:action] == "status"%> class="active"<%end%>><a href="/order/status">Статус заказа</a></li>
+						<li <%if params[:controller]=="order" && params[:action] == "history"%> class="active"<%end%>><a href="/order/history">История заказов</a></li>
+<!--                        <li<%if params[:controller]=="orders"%> class="active"<%end%>><a href="/orders">История заказов</a></li>-->
+<!--                        <li><a href="#">Заявки на товары</a></li>-->
+                    </ul>
+<%end%>
+                </div>

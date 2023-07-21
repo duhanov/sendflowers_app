@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+<h1>Регистрация на сайте <%=Option.get('mail_site')%></h1>
+<p>Вы были зарегистрированы на сайте <%=Option.get('mail_site')%></p>
+<p>Ваши данные для входа:</p>
+<p>Адрес входа: <a href="<%=Option.get('mail_url')%>login"><%=Option.get('mail_url')%>login</a>
+<p>Логин: <%=@user.email%></p>
+<p>Пароль: <%=@password%></p>
+
+
+--<br>
+С уважением, администрация  <%=Option.get('mail_url')%>
+ 
+
+	</body>
+</html>

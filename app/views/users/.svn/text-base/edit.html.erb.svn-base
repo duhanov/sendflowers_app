@@ -1,0 +1,72 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/">Главная</a> / <span>Личный кабинет: Личные данные</span></div>
+<%=flashes%>
+<% form_for(@user) do |f| %>
+<%= error_messages_for 'user', :header_message => "", :message => "#{translate 'field_errors'}:" %>
+                        <div class="forma profil">
+
+                        	<div class="necessar">Поле обязательно для заполнения</div>
+
+                        	<div class="input disabled"><label>Логин/Эл. почта:</label><p><input disabled="disabled" type="text" value="<%=current_user.email%>" name="" /></p></div>
+
+ <!--                       	<div class="input necessarily"><label>Эл. почта:</label><p><input type="text" value="kirchenn@gmail.com" name="" /></p></div>-->
+
+                        </div>
+
+                        <div class="forma profil">
+
+                        	<div class="input"><label>Имя:</label><p><%=f.text_field :firstname%></p></div>
+
+                        	<div class="input"><label>Фамилия:</label><p><%=f.text_field :lastname%></p></div>
+
+                        	<div class="input"><label>Отчество:</label><p><%=f.text_field :patronymic%></p></div>
+
+                        	<div class="input"><label>Страна:</label><p><%=f.text_field :country%></p></div>
+
+                        </div>
+
+                        <div class="forma add profil">
+
+                        	<div class="necessar">Поле обязательно для заполнения</div>
+
+							<div class="phone">
+
+                            	<div class="input"><label>ICQ:</label><p><%=f.text_field :icq%></p></div><br />
+<script>
+	function addPhone(){
+		$('#phones').load("/users_phones/add_phone");
+	};
+	function deletePhone(id){
+		$.ajax({
+			dataType: "script",
+			url: "/users_phones/delete_phone/" + id
+		});
+	};
+</script>
+<div id="phones">
+	<%=render :partial => "users/phones"%>	
+</div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="forma profil password">
+
+                        	<h2>Сменить пароль</h2>
+
+                        	<div class="input"><label>Новый пароль:</label><p><%=f.password_field :password%></p></div>
+
+                        	<div class="input"><label>Подтверждение нового пароля:</label><p><%=f.password_field :password_confirmation%></p></div>
+
+                        </div>
+
+                        <input class="button" type="submit" style="width:220px;" value="Сохранить изменения" name="" />
+
+<%end%>
+                    </div>
+                </div>
+<%=render :partial => "layouts/left" %>
+<%=render :partial => "users/right"%>				

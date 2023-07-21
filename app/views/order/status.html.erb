@@ -1,0 +1,18 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=translate 'main_page'%></a> / <a href="/cart/index"><%=trans 'cart'%></a > / <span><%=trans 'order_status'%></span></div>
+                    	<h1><%=trans 'order_status'%></h1>
+						<%=flashes%>
+                        	<%form_tag do%>
+                        <div class="forma">
+                        	<div class="input"><label><%=trans 'order_number'%></label><p><%=text_field :order, :id%></p></div>
+                        	<div class="input"><label>Email</label><p><%=text_field :order, :email%></p></div>
+                        </div>
+                        <input class="button" type="submit" value="<%=trans 'check_order_status'%>" style="width:200px;" name="" />
+							<%end%>
+                    </div>
+                </div>
+				<%=render :partial => "layouts/left"  %>
+<% if !current_user.blank?%>
+<%=render :partial => "users/right"%>	
+<%end%>

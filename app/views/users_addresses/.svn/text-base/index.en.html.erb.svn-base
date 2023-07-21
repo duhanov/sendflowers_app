@@ -1,0 +1,44 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/">Home</a> / <span>Your Account: Delivery Addresses</span></div>
+<%=flashes%>
+<h1><big class="add"><%=link_to_remote "Additional Address", :url => {:action => "add"}%></big>Delivery Addresses</h1>
+
+<div id="user_addresses">
+	<%for address in @user.addresses%>
+	<%=render :partial => "address.#{@language}", :locals => {:address => address}%>
+<%end%>
+</div>
+                    </div>
+                </div>
+<%=render :partial => "layouts/left" %>
+<%=render :partial => "users/right"%>				
+
+<script>
+	function save_address_field(el){
+//		$(el).after('<img src="/images/ajax/load/1.gif" style="vertical-align: middle; border: none;" class="address_save_progress"/>');
+		$.ajax({
+			url: '/users_addresses/update_address_field/' + $(el).attr('item_id') + '?field=' + $(el).attr('name') + '&value=' + encodeURIComponent($(el).val())
+		});
+	};
+	
+	$(document).ready(function(){
+		$('.delete_address').click(function(){
+			$(this).html('Delete...');
+			$.ajax({
+				dataType: 'script',
+				url: $(this).attr('href')
+			});
+			return false;
+		});
+		$('.set_main_address').click(function(){
+			ch = $(this).find('input');
+			$('.set_main_address input').attr('checked', false);
+			ch.attr('checked', 'checked');
+			$.ajax({
+				url: '/users_addresses/set_main/' + ch.val()
+			});
+//			return false;
+		});
+	});
+</script>

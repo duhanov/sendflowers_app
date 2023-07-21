@@ -1,0 +1,24 @@
+
+<%table_with_sort_links ["Название", "Добавить"] do%>
+	<%for item in @items%>
+		<tr>
+			<td><%=item.name%></td>
+			<td><a class="add_assigment" href="/<%=params[:controller]%>/add_assigment/<%=@parent.id%>?assigment_id=<%=item.id%>&assigment_type=<%=params[:assigment_type]%>">Добавить</a></td>
+		</tr>
+	<%end%>
+<%end%>
+
+<script>
+	$('.add_assigment').click(function(){
+		$(this).html('Идет добавление...');
+		$.ajax({
+			el: $(this),
+			url: $(this).attr('href'),
+			dataType: 'script',
+			success: function(){
+				this.el.parent().parent().remove();
+			} 
+		})
+		return false;
+	});
+</script>

@@ -1,0 +1,16 @@
+<%admin_page @tabs do%>
+	<%quick_add "Добавить названия цветов", "/admin_flowers/add" do%>
+	<small>Введите названия цветов, каждое с новой строки.</small><br>
+	<textarea name="names" cols="50" rows="10"></textarea>
+	<%end%>
+	<br><br><small>Нажмите на название, чтобы изменить его.<br><b>|</b> - этот знак разделяет русское название от английского. Например: Ирисы|Irisi</small>
+	<%table_with_sort_links ["Название", "Цвета", "Уд."] do%>
+		<%for item in @items%>
+			<%tr item do%>
+				<td field="name" class="edit_string"><%=item.name%></td>	
+				<td><a href="/admin_flowers/colors/<%=item.id%>" class="">Редактировать цвета</a></td>
+				<td><%=btn_del%></td>
+			<%end%>
+		<%end%>
+	<%end%>
+<%end%>

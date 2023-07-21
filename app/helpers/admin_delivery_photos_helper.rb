@@ -1,0 +1,2 @@
+module AdminDeliveryPhotosHelper
+end

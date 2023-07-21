@@ -1,0 +1,24 @@
+	<%form_tag(request.request_uri, :multipart => true) do%>
+		<table>
+      		<tr><td>Язык</td><td><%=select :item, :language, [["Русский", "ru"], ["Английский", "en"]]%></td></tr>
+			<tr><td>Дата публикации</td><td><%=text_field :item, :created_at, :class => "datepicker"%></td></tr>
+			<tr>
+				<td>Имя</td>
+				<td><%=text_field :item, :name%></td>
+			</tr>
+			<tr>
+				<td>Имя</td>
+				<td><%=text_field :item, :name%></td>
+			</tr>
+			<tr>
+				<Td>Отзыв</Td>
+				<td><%=text_area :item, :body%></td>
+			</tr>
+			<Tr>
+				<td>Отмодерирован</td>
+				<td><%=check_box :item, :moderated%></td>
+			</Tr>
+		</table>
+		<%if params[:action]=="new"%><%=submit_tag "Добавить"%><%end%>
+		<%if params[:action]=="edit"%><%=submit_tag "Редактировать"%><%end%>
+	<%end%>

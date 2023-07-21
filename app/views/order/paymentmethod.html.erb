@@ -1,0 +1,45 @@
+            	<div class="all">
+
+                	<div class="centeri">
+
+                    	<div class="crumb"><a href="/">Главная</a> / <a href="/order/index">Заказ и доставка</a > / <span>Способы оплаты</span></div>
+
+                    	<h1>Данные отправителя. Выбор формы оплаты.</h1>
+<%form_tag "/order/paymentmethod" do%>
+<%= error_messages_for 'order', :header_message => "", :message => "Следующие поля заполнены не верно:" %>
+
+	<%=render :partial => "order/hidden_fields" %>
+	
+	
+	<h2>Данные отправителя</h2>
+                        <div class="forma">
+                        	<div class="necessar">Поле обязательно для заполнения</div>
+                        	<div class="input block necessarily"><label>Отправитель:</label><p><%=text_field :order, :sender_firstname, :onfocus => "if (this.value == 'Имя') {this.value ='';}", :onblur=>"if (this.value == '') {this.value='Имя';}"%></p></div>
+<!-- 							<div class="input block"><label>&nbsp;</label><p><%=text_field :order, :sender_patronymic, :onfocus => "if (this.value == 'Отчество') {this.value ='';}", :onblur=>"if (this.value == '') {this.value='Отчество';}"%></p></div>
+                        	<div class="input block"><label>&nbsp;</label><p><%=text_field :order, :sender_lastname, :onfocus => "if (this.value == 'Фамилия') {this.value ='';}", :onblur => "if (this.value == '') {this.value='Фамилия';}" %></p></div> -->
+                        	<div class="input necessarily"><label>Страна:</label><p><%=text_field :order, :sender_country%></p></div>
+<!--                        	<div class="input"><label>Адрес:</label><p><%=text_field :order, :sender_address%></p></div> -->
+                        	<div class="input necessarily"><label>E-Mail:</label><p><%=text_field :order, :sender_email%></p></div>
+                        	<div class="input necessarily"><label>Телефон:</label><p><%=text_field :order, :sender_telephone%></p></div>
+                        	
+						</div>	
+	<h2>Выбор формы оплаты</h2>
+	<input type="hidden" name="order[payment_method_id]" value="0"/>
+	<%for pm in PaymentMethod.find(:all, :order => "p")%>
+	<div class="answer_radio"><label for="opl<%=pm.id%>"><input type="radio" name="order[payment_method_id]" id="opl<%=pm.id%>" value="<%=pm.id%>" <%if @order.payment_method_id == pm.id %>selected="selected"<%end%>/><span class="inputRadio">&nbsp;</span><big><small><%=translate_name pm.name%></small></big><%if pm.image_file_name.to_s != ""%><img src='<%=pm.image(:original)%>'/><%end%></label></div>
+	<p><%=translate_name pm.description%></p>
+	<%end%>
+
+
+
+                        <input class="button" type="button" style="width:220px;" value="Назад" name="" onClick="document.location='/order/index'"/>
+                        <input class="button" type="submit" style="width:220px; float:right;"  value="Продолжить" name="" />
+<%end%>
+                    </div>
+
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                	<div class="basket"><strong><%=@cart.quantity%></strong> <%=Russian.p(@cart.quantity, "товар", "товара", "товаров")%><br />на сумму <strong><%=show_amount(@cart.price)%></strong><br />доставка в <span><a href="#"><%=@order.delivery.name%></a></span><br />стоимостью <strong><%=show_amount(@order.delivery.price)%></strong><p>Итого: <%=show_amount(@cart.price + @order.delivery.price)%></p></div>
+                    <div class="back"><a href="/cart">Вернуться в корзину</a></div>
+                </div>

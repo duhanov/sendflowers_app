@@ -1,0 +1,92 @@
+<%#form_tag do%>
+<%#end%>
+<!--
+	<input id="images_upload" name="file" type="file" /> <a href="javascript:$('#images_upload').uploadifyUpload();">Загрузить изображения на сайт</a> | <a href="javascript:$('#images_upload').uploadifyClearQueue();">Очистить очередь</a>
+
+-->
+
+
+<link rel='stylesheet'  href='/engine/fileuploader.css' type='text/css' media='all' />
+<script src="/engine/fileuploader.js"></script>
+
+
+                <div id="images_upload" style="ddisplay: none;">
+                    <noscript>
+                     <p>Enable JavaScript for Upload.</p>
+                     <!-- or put a simple form for upload here -->
+                    </noscript>
+                </div>
+
+
+	<br/><br/>
+	<%- session_key_name = ActionController::Base.session_options[:key] -%>
+
+	<script>
+            var image_uploader = new qq.FileUploader({
+            	params: {
+	    '<%= session_key_name %>' : encodeURIComponent('<%= u cookies[session_key_name] %>'),
+        'authenticity_token'  : encodeURIComponent('<%= u form_authenticity_token if protect_against_forgery? %>')
+
+            	},
+                element: document.getElementById('<%="images_upload"%>'),
+//                action: '/admin/images/upload_image/<%=@item.id if !@item.blank?%>',
+                action: '/<%=params[:controller]%>/upload_image/<%=@item.id%>',
+template: '<div class="qq-uploader">' + 
+                '<div class="qq-upload-drop-area"><span>Drop files here</span></div>' +
+                '<div class="qq-upload-button btn btn-primary btn-small" style="width: 200px;">+ Загрузить изображение</div>' +
+                '<ul class="qq-upload-list"></ul>' + 
+             '</div>',                
+                onProgress: function(id, fileName, loaded, total){
+                },
+                onCancel: function(id, fileName){
+                },
+                onComplete: function(id, fileName, responseJSON){
+			$('#product_images').html("Идёт обновление списка...")
+			$('#product_images').load("/<%=params[:controller]%>/images_list/<%=@item.id%>");
+
+                }
+            });
+
+	</script>
+
+	<script>
+		/*
+	$('#images_upload').uploadify({
+		'uploader': '/flash/uploadify.swf',
+		'script': 'https://<%=request.host%>:<%=request.port%>/<%=params[:controller]%>/upload_image/<%=@item.id%>',
+		'cancelImg': '/images/cancel_upload.png',
+		'multi': 'true',
+		'fileDesc': 'Изображения',
+		'fileExt' : '*.png;*.gif;*.jpg;*.jpeg',
+		'fileDataName': 'product_image[image]',
+	    'scriptData': {
+	    '<%= session_key_name %>' : encodeURIComponent('<%= u cookies[session_key_name] %>'),
+        'authenticity_token'  : encodeURIComponent('<%= u form_authenticity_token if protect_against_forgery? %>')
+		},
+		'onComplete': function(event, queueID, fileObj, response, data){
+			//eval(response);
+		},
+		'onAllComplete': function(){
+			$('#product_images').html("Идёт обновление списка...")
+			$('#product_images').load("/<%=params[:controller]%>/images_list/<%=@item.id%>");
+		},
+		'onError': function(event, queueID, fileObj, errorObj){
+			alert(errorObj.info);
+		}
+	});
+	*/
+
+	</script>
+	<table width="100%">
+		<tr>
+			<td valign="top">
+				<div id="gallery_loading"></div>
+				<img id="gallery_big" src="<%=product_image(@item ,'big')%>" alt="Изображение" title="Изображение">
+			</td>
+			<td valign="top" width="100%">
+	<div id="product_images">
+		<%=render :partial => "widgets_admin/images_list" %>
+	</div>				
+			</td>
+		</tr>
+	</table>

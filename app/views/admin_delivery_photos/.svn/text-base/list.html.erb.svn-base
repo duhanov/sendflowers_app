@@ -1,0 +1,22 @@
+<%admin_page @tabs do%>
+	<%table_with_sort_links ["Фото", "Дата доставки", "Товар", "Ред.", "Уд."], {:update_url => "/#{params[:controller]}/update/", :del_url =>"/#{params[:controller]}/delete/",:item_name =>"Фотографию доставки"} do%>
+		<%for item in @items%>
+			<%tr item do%>
+				<td>
+					<img id="product_image_<%=item.id%>" onClick="edit_product_photo(<%=item.id%>, '/<%=params[:controller]%>/update_product_image/');" style='margin-top: 15px; cursor: pointer;' alt="Фото (нажмите для редактирования)" title="Фото (Нажмите для редактирования)" src="<%=item.image.url(:admin_thumb)%>" />
+				</td>
+				<td class="edit_string" field="created_at"><%=mysqlDateTime item.created_at%></td>
+				<td>
+					<%if item.product.blank?%>
+					Не указан
+					<%else%>
+					<%=item.product.name%>
+					<%end%>
+				</td>
+				<td><%=btn_edit item%></td>
+				<td><%=btn_del%></td>
+			<%end%>
+		<%end%>
+	<%end%>
+	<%=will_paginate @items%>
+<%end%>

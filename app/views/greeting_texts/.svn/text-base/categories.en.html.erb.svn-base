@@ -1,0 +1,12 @@
+<h2>Select category</h2>
+<%for item in @items%>
+	<div>
+		<a href="/greeting_texts/category/<%=item.id%>" style="font-size: 16px;" class="greeting_category"><%=item.name%></a>
+	</div>
+<%end%>
+
+<script>
+$(document).ready(function(){
+	$('.greeting_category').fancybox();
+});
+</script>

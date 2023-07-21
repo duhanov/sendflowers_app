@@ -1,0 +1,11 @@
+                        <div class="forma compos one_flower_item">
+                        	<span class="del"><a href="#" onClick="delete_flowers(this); return false;"><%=trans 'flowers_delete'%></a></span>
+                        	<a href="#" class="prevu flower_big"><img src="images/bask1.jpg" alt="" width="100" height="100" /></a>
+                    		<div class="add add_flower"><span><a href="#" onClick="add_flowers();return false;"><%=trans 'flowers_add_another'%></a></span></div>
+                        	<div class="input compos_img"><label><%=trans 'flowers_select'%>:</label><p><select class="flower_name" onChange="changeFlower(this);" name=""><%=options_for_select(FlowerName.find(:all, :order => "name").map{|i| [translate_name(i.name), i.id]})%></select></p></div>
+                        	<div class="input compos_img"><label><%=trans 'flowers_color'%>:</label><p><select class="flower_color" onChange="changeFlowerColor(this);" name="flower[1]"></select></p></div>
+                        	<div class="input cena"><label><%=trans 'flowers_count'%>:</label><p><input class="flower_count" onChange="changeFlowerCount(this);" type="text" value="1" name="quantity[1]" /></p><span><%=trans 'flowers_price'%>:</span><strong class="flowers_price"> <!--43 $--></strong></div>
+                        </div>
+<script>
+	$(".flower_big").fancybox();
+</script>

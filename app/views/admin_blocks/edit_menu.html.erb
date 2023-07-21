@@ -1,0 +1,33 @@
+<div style='width: 400px; height: 400px;'>
+<% form_remote_tag :url => "/admin_blocks/add2menu/#{@item.id}", :update => "menu_items", :complete => "menu_items_create_sortable(#{@item.id});" do %>
+Добавить: <Br>
+<%
+@linkTypes = [['Ссылку на новости', 'link2news'],
+			['Ссылку на TOP-Товаров', 'link2top'],
+			['Ссылку на новинки', 'link2newproducts'],
+			['Ссылку на статьи', 'link2articles'],
+			['Ссылку на страницу', 'link2page']]
+
+%>
+<select name="menuitem[type]" onChange="changeLinkType(this.value);">
+	<%=options_for_select(@linkTypes,'')%>
+</select><br>
+<div id="page_id_div" style="display: none;">
+<%= page_select(Page.find(:all, :conditions => ["page_id = 0"]), 'menuitem', 'page_id') %>
+</div>
+<%=submit_tag "Добавить" %>
+<% end %><br><br>
+
+
+
+
+<ul id="menu_items" class="blocks_list">
+<%=render :file => "admin_blocks/_menu_items" %>
+</ul>
+<script>menu_items_create_sortable(<%=@item.id%>);</script>
+
+
+
+
+
+</div>

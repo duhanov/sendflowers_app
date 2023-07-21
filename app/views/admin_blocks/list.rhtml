@@ -1,0 +1,65 @@
+<div id="btn_edit_block_text" style="display: none;">Вы можете отредактировать содержимое блока нажав на эту кнопку.</div>
+<div class="trail">
+<table>
+<Tr>
+<td valign="top" width="50%"><%=@page_title%></td>
+<td valign="top" width="50%" align="right">
+<% unless flash[:error].blank? %><%= flash[:error] %><% end %>
+<% unless flash[:notice].blank? %><%= flash[:notice] %><% end %>
+</td>
+</tr>
+</table>
+</div> 
+<div id="t2">
+				<span class="current"><a href="/admin_blocks/list">Список</a></span>
+</div>
+
+<%=admin_tabs ["Русская версия", "Английская версия"]%>
+
+<%admin_tab "Русская версия" do%>
+<table cellspacing="0" cellpadding="0" border="0" width="100%" class="list">
+	<tr>
+		<th width="1">#</th>
+
+		<th width="1" style="text-align: center; color: #CC0000;">&nbsp;</th>
+		<th><b>Название</b></th>
+		<th style="text-align:center">Редактировать</th>
+	</tr>
+<% for block in Block.find(:all, :conditions => ["t = 0 AND language = 'ru'"], :order => "p" ) %>	            	
+  		<tr>
+			<td><%=block.id%>.</td>
+
+			<td align=center></td>
+                         <td><a href='/admin_blocks/edit/<%=block.id%>'><%=block.runame%></a></td>
+			<td align=center><a href="/admin_blocks/edit/<%=block.id%>"><img src="/admin/i/edit.gif" alt="Редактировать" width=15 height=15 border="0"></a></td>
+
+	  	</tr>
+<% end %>
+</table>
+
+<%end%>
+
+
+<%admin_tab "Английская версия" do%>
+<table cellspacing="0" cellpadding="0" border="0" width="100%" class="list">
+	<tr>
+		<th width="1">#</th>
+
+		<th width="1" style="text-align: center; color: #CC0000;">&nbsp;</th>
+		<th><b>Название</b></th>
+		<th style="text-align:center">Редактировать</th>
+	</tr>
+<% for block in Block.find(:all, :conditions => ["t = 0 AND language = 'en'"], :order => "p" ) %>	            	
+  		<tr>
+			<td><%=block.id%>.</td>
+
+			<td align=center></td>
+                         <td><a href='/admin_blocks/edit/<%=block.id%>'><%=block.runame%></a></td>
+			<td align=center><a href="/admin_blocks/edit/<%=block.id%>"><img src="/admin/i/edit.gif" alt="Редактировать" width=15 height=15 border="0"></a></td>
+
+	  	</tr>
+<% end %>
+</table>
+
+<%end%>
+

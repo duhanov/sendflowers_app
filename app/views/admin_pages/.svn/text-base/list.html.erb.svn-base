@@ -1,0 +1,17 @@
+<% admin_page [["Новая страница", "/admin_pages/new"], ["Список страниц", "/admin_pages/list"]] do%>
+	<% if @items.blank?%>
+		<div id="flash_notice">
+		<p>Вы ещё не создали ни одной страницы. <a href="/admin_pages/new">Создать страницу</a></p>
+		</div>
+	<%else%>
+		<small>
+			Используя мышь, Вы можете перетаскивать страницы для изменения родительского раздела.<br/>
+		</small>
+		<script>controller = "<%=params[:controller]%>";</script>
+		<div id="dragdrop_table_messages"></div>
+		<%=pages_draggable_tree(@items)%>
+	<% end %>
+<% end %>
+
+
+

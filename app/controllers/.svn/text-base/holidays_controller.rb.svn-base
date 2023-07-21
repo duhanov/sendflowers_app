@@ -1,0 +1,42 @@
+class HolidaysController < ApplicationController
+  layout "main"
+  
+  def index
+    @page_title = I18n.t 'page_title_prazdniki_i_imenini'
+    @months = []
+    for i in 1..12
+      @months << [I18n.t("holiday_month_#{i}"), i]
+      
+    end
+    @filters = [[translate("holidays_all"), "all"], [translate("holidays_prazdniki"), "prazdniki"], [translate("holidays_imenini"), "imenini"]]
+    if params[:filter].blank?
+      @filter = @filters[0]
+    else
+      @filter = @filters.find{|i| i[1] == params[:filter]}
+      if @filter.blank?
+        @filter = @filters[0]        
+      end
+    end
+    if !params[:id].blank?
+      @month_i = params[:id].to_i
+    else
+      @month_i = DateTime.now.month
+    end
+    if @month_i < 1 || @month_i > 12
+      @month_i = DateTime.now.month      
+    end
+    @month = @months.find{|i| i[1] == @month_i}
+
+    if @filter == @filters[0]
+      @holidays = Holiday.find(:all, :conditions => ["holiday_month = ? AND language= ?", @month_i, @language], :order => "holiday_month, holiday_day") 
+    else
+      @holidays = Holiday.find(:all, :conditions => ["holiday_month = ? AND t = ? AND language = ?", @month_i, @filter[1], @language], :order => "holiday_month, holiday_day")       
+    end
+  end
+  
+  def month
+    index
+    render :action => "index"
+  end
+  
+end

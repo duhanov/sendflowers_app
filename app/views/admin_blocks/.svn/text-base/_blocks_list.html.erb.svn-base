@@ -1,0 +1,37 @@
+
+	
+<% for block in @blocks %>			
+	<li id="sortable_list_<%= block.id %>"><div><b><%=get_block_title(block)%></b>
+	<div class="controls">
+	<table>
+		<tr>
+			<Td>
+	<% if block.content_type == "contacts" %>
+	<%=btn_edit(block, "admin_blocks", "edit_text", {:title => "Редактирование контактов"})%>
+	<% end %>
+	<% if block.content_type == "text" %>
+	<%=btn_edit(block, "admin_blocks", "edit_text", {:title => "Редактирование текстового блока"}, "btn_edit_block_text")%>
+	<% end %>
+	<% if block.content_type == "last_articles" %>
+	<%=btn_edit(block, "admin_blocks", "edit_last_articles", {:title => ""}, "btn_edit_block_text")%>
+	<% end %>
+	<% if block.content_type == "banner" %>
+	<%=btn_edit(block, "admin_blocks", "edit_banner", {:title => "Редактирование баннера"})%>
+	<% end %>
+	<% if block.content_type == "menu" %>
+	<%=btn_edit(block, "admin_blocks", "edit_menu", {:title => "Редактирование меню"})%>
+	<% end %>
+
+			</Td>
+			<td>
+		<a href="#" onClick="deleteBlock(<%=block.id%>); return false;"><img id="delImg<%=block.id%>" src="/admin/i/delf.gif" alt="Удалить" border=0></a>				
+			</td>
+		</tr>
+	</table>
+	
+	</div></div></li>
+
+
+<% end %>
+			
+

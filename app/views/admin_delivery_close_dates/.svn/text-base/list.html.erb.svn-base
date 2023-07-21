@@ -1,0 +1,115 @@
+	<div id="flash_notice">Данные даты будут заблокированы в календаре выбора даты доставки.</div>
+	<%form_remote_tag :url => "/#{params[:controller]}/add", :update => "list", :complete => "i = $('#tabs_close_dates').tabs('option', 'selected'); $('#tabs_close_dates').tabs('load', i);" do%>
+		День:  <select name="item[day]"><%=options_for_select(@days)%></select>
+		Месяц: <select name="item[month]"><%=options_for_select(@months)%></select>
+		Год: <select name="item[year]"><%=options_for_select(@years) %></select>
+		<input type="hidden" name="item[language]" value="<%=params[:id]%>"/>
+	<%=submit_tag "Добавить дату"%>
+	<%end%>
+	<%table_with_sort_links ["Число", "Месяц", "Год", "Уд."] do%>
+		<%for item in @items%>
+			<%tr item do%>
+				<td class="edit_day" field="day"><%=item.day%></td>
+				<td class="edit_month" field="month"><%if !@months.find{|i| i[1].to_i == item.month}.blank?%><%=@months.find{|i| i[1].to_i == item.month}[0]%><%end%></td>
+				<td class="edit_year" field="year"><%if !@years.find{|i| i[1].to_i == item.year}.blank?%><%=@years.find{|i| i[1].to_i == item.year}[0]%><%end%></td>
+				<td><%=btn_del%></td>
+			<%end%>
+		<%end%>
+	<%end%>
+
+
+
+<script>
+//$(document).ready(function(){
+	$('.edit_month').each(function(){
+		opts = '<%=@months.map{|i| "#{i[0]}:#{i[1]}"}.join(',')%>';
+	
+		if(this.tagName == "TD"){
+			isTD = true;
+		}else{
+			idTD = false;
+		};
+		table = $(this).parent().parent().parent();
+		row = $(this).parent();
+		thead = table.find('thead');
+		update_url = table.attr('update_url');
+		row_id = row.attr('rowid');
+
+
+		$(this).editInPlace({
+			show_buttons: true,
+			field_type: "select",
+			saving_text: saving_text,
+			cancel_button: cancel_button,
+			save_button: save_button,
+			default_text: default_text,
+			params: 'field=' + $(this).attr('field') + '&authenticity_token=' + window._token,
+			url: update_url + row_id,
+			select_options: opts
+		});
+
+	});		
+
+	$('.edit_year').each(function(){
+		opts = '<%=@years.map{|i| "#{i[0]}:#{i[1]}"}.join(',')%>';
+	
+		if(this.tagName == "TD"){
+			isTD = true;
+		}else{
+			idTD = false;
+		};
+		table = $(this).parent().parent().parent();
+		row = $(this).parent();
+		thead = table.find('thead');
+		update_url = table.attr('update_url');
+		row_id = row.attr('rowid');
+
+
+		$(this).editInPlace({
+			show_buttons: true,
+			field_type: "select",
+			saving_text: saving_text,
+			cancel_button: cancel_button,
+			save_button: save_button,
+			default_text: default_text,
+			params: 'field=' + $(this).attr('field') + '&authenticity_token=' + window._token,
+			url: update_url + row_id,
+			select_options: opts
+		});
+
+	});		
+
+
+
+	$('.edit_day').each(function(){
+		opts = '<%=@days.map{|i| "#{i[0]}:#{i[1]}"}.join(',')%>';
+	
+		if(this.tagName == "TD"){
+			isTD = true;
+		}else{
+			idTD = false;
+		};
+		table = $(this).parent().parent().parent();
+		row = $(this).parent();
+		thead = table.find('thead');
+		update_url = table.attr('update_url');
+		row_id = row.attr('rowid');
+
+
+		$(this).editInPlace({
+			show_buttons: true,
+			field_type: "select",
+			saving_text: saving_text,
+			cancel_button: cancel_button,
+			save_button: save_button,
+			default_text: default_text,
+			params: 'field=' + $(this).attr('field') + '&authenticity_token=' + window._token,
+			url: update_url + row_id,
+			select_options: opts
+		});
+
+	});	
+
+
+//});
+</script>

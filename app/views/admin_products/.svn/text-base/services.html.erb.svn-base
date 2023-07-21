@@ -1,0 +1,109 @@
+<style>
+li.ui-state-default {
+/*	height: 30px;*/
+}
+.sortable {
+	width: 100%;
+}
+</style>
+<%admin_page @tabs do%>
+	<%quick_add "Добавить дополнительную услугу", "/#{params[:controller]}/new_service" do%>
+	<table>
+		<tr>
+			<td>Название</td>
+			<td><input name="item[name]"></td>
+		</tr>
+		<tr>
+			<td>Цена</td>
+			<td><input name="item[price]"></td>
+		</tr>
+		<tr>
+			<td>Товар не может заказываться самостоятельно</td>
+			<td><input value="1" name="item[no_order_alone]" type="checkbox" checked="checked"/></td>
+		</tr>
+	</table>
+	<%end%>
+	<br><Br>
+	<small>
+		Вы можете изменить порядок расположения дополнительных услуг с помощью перетягивания мышью.
+		<br>
+		Нажмите на название/цену, чтобы изменить их.
+		<br>
+		<%=help_translate%>
+	</small>
+	<Table style="padding-left: 30px;">
+		<tr>
+			<td width="350"><b>Название</b></td>
+			<td width="350"><b>Название(англ)</b></td>
+			<td width="150"><b>Товар не может заказываться самостоятельно</b></td>
+			<td><b>Цена</b></td>
+		</tr>
+	</Table>
+	<%sortable "/#{params[:controller]}/sort" do %>
+		<%for item in @items%>
+			<%sortable_item item do%>
+				<div style="float:left;">
+					<table cellpadding="0" cellspacing="0" class="product_info" update_url="/<%=params[:controller]%>/update/">
+					<tbody>
+						<tr rowid="<%=item.id%>">
+							<td width="350" class="edit_string" field="name"><%=item.name%></td><td></td>
+							<td width="350" class="edit_string" field="name_en"><%=item.name_en%></td>
+							<td width="150">
+<input class="update_no_order_alone" type="checkbox" item_id="<%=item.id%>" <%if item.no_order_alone%>checked='checked'<%end%> />
+							</td>
+							<td class="edit_string" field="price"><%=item.price%></td><td>$</td>
+						</tr>
+					</tbody>
+					</table>
+				</div>
+				<div class="ctrls" style="float:right;">
+<!--							<a href="/<%=params[:controller]%>/edit/<%=item.id%>" style='color:blue;font-size:12px;text-decoration: underline;'>Редактировать <%=model_title[:what]%></a>
+							<br/>-->
+							<a href="" item_id="<%=item.id%>" class="del_product" style='color:blue;font-size:12px;text-decoration: underline;'>Удалить</a>
+				</div>
+			<%end%>
+		<%end%>
+	<%end%>
+<%end%>
+
+<script>
+	$(document).ready(function(){
+		$('.update_no_order_alone').click(function(){
+			$(this).after('<img src="/images/ajax/load/1.gif" style="vertical-align: middle;" class="loader"/>')
+			if($(this).is(':checked')){
+				v = '1';
+			}else{
+				v = '0';
+			};
+			$.ajax({
+				el: $(this),
+				url: '/admin_products/update/' + $(this).attr('item_id') + '?field=no_order_alone&update_value=' + v,
+				success: function(){
+					if(this.el.next().is('.loader')){
+						this.el.next().remove();
+					};
+				}
+			});
+		});
+
+		$('.del_product').click(function(){
+			if(confirm('Вы действительно хотите удалить услугу?'))	
+			{
+				item_id = $(this).attr('item_id');
+//				$("#item_" + item_id).effect("drop",{},500);
+//				$("#drop_" + item_id).hide("drop", { direction: "down" }, 1000);
+				
+				$(this).html("Идёт удаление...")
+				$.ajax({
+					"item_id": $(this).attr('item_id'),
+					"type": "GET",
+					"url": "/<%=params[:controller]%>/delete/" + $(this).attr('item_id'),
+					"success": function(){
+						$('#item_' + this.item_id).remove();
+					}
+				})
+			};
+			return false;
+		})
+	});
+</script>

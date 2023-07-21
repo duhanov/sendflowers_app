@@ -1,0 +1,107 @@
+<script>
+	$('#mini_cart').load('/cart/mini_cart');
+function calcTotalCart(){
+}
+
+function updateCartQuantity(q)
+{
+	if (isNaN(q.value)) {
+		alert('Введите число!');
+		q.focus();
+	}
+	else {
+		id = /quantity([0-9]+)$/.exec(q.id)[1];
+		$(q).css('background', 'url(/images/ajax/load/progress_candy_hor.gif)');
+		$.ajax({
+			q:q,
+			dataType: "script",
+			url: '/cart/update_quantity/' + id + '?quantity=' + q.value + '&authenticity_token=' + window._token,
+			complete: function(){
+				$(this.q).css('background' , '');
+				calcTotalCart();
+			}
+		});
+	};
+				
+};
+
+function deleteFromCart(el,id)
+{
+		$(el).find('img').attr('src', '/images/ajax/load/1.gif');
+		$.ajax({
+			el: el,
+			dataType: 'script',
+			url: '/cart/delete/' + id + '?authenticity_token=' + window._token,
+			complete: function(){
+				$(this.el).parent().parent().remove();
+			}
+		});
+};
+</script>
+<style>
+	#cartTable tr td {
+		font-size: 12px;
+	}
+	#cartTable tr  td {
+		border-bottom: 1px solid silver;
+	}
+	#cartTable thead tr td {
+		font-size: 12px;
+		font-weight: 900;
+		padding:3px;
+	}
+</style>
+<!-- Cart --> 
+<table class="cart">
+ <tr><td class="cartsend">
+  <table id="cartTable" cellspacing="0" cellpadding="4" class="formsend">
+  	<thead>
+  		
+   <tr>
+    <td>Название</td>
+	<td>Производитель</td>
+    <td>Количество</td>
+    <td>Стоимость</td>
+    <td></td>
+   </tr>
+  	</thead>
+   <% total = 0 %>
+   <% if (@cart.blank?) || (@cart.items.blank?) %>
+   <tr>
+   	<td class="ff">Корзина пуста</td>
+	<td class="ff"></td>
+	<td class="ff"></td>
+	<td class="ff"></td>
+	<td class="ff"></td>
+   </tr>
+   <% else %>   
+   <% for item in @cart.items %>
+   <% total = total + item.price %>
+   <tr>
+   	<input type='hidden' id="cart_item_price_<%=item.product.id%>" class="cart_item_price" value='<%=item.price%>'>
+	<td class="ff"><%=item.title%></td>
+	<td><%=item.product.producer.name%></td>
+    <td><input type="text" id="quantity<%=item.product.id%>" name="quantity[]" size=1 class="numbl" value="<%=item.quantity%>" onBlur = "updateCartQuantity(this);" /></td>
+    <td id="cart_item_price_show_<%=item.product.id%>"><%=show_amount(item.price)%></td>
+    <td><a href="#" onClick="deleteFromCart(this,<%=item.product.id%>); return false;"><img id="delCartImg<%=item.product.id%>" src="/admin/i/delf.gif" alt="Удалить" title="Удалить" border="0" /></a></td>
+   </tr>
+   <% end %>
+   <% end %>
+   <tr>
+    <td class="ff" colspan="3" align="left"><b>Итого:</b></td>
+    <td class="ff"><b><font id="cart_total" class="none"><%=show_amount(total)%></font></b></td>
+    <td class="ff">&nbsp;</td>
+   </tr>
+   <tr>
+    <td style="background-color: #ececec; padding-top: 10px; text-align: center;" colspan="5">
+    <a style="font-size: 13.7pt; text-decoration: none; font-weight: normal;" href="#" onclick="$.fn.fancybox.close(); return false;" title="Закрыть корзину">&larr; Назад</a>&nbsp;&nbsp;&nbsp;
+    <a style="font-size: 13.7pt; text-decoration: none; font-weight: normal;" href="/order/index" title="Оформить заказ">Оформить &rarr;</a>
+    </td>
+   </tr>
+  </table>
+  <input type=hidden name=update value=1>
+  <input type=hidden name=shopping_cart value=1>
+  </td>
+ </tr>
+</table>
+<!-- End Cart -->

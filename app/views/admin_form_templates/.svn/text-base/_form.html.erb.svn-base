@@ -1,0 +1,18 @@
+<%form_item "Название" do%>
+	<%=@item.title%>
+<!--	<select class="form-control" name="item[name]">
+		<%#options_for_select templates_names, @item.name%>
+	</select>-->
+<%end%>
+<%form_item "Тема письма" do%>
+	<%=text_field :item, :subject, :class => "form-control"%>
+<%end%>
+<b>Шаблон</b>
+<div>
+	<%=text_area :item, :body, :class => "form-control", :style => "height: 300px;"%>
+</div>
+<script>
+	$(document).ready(function(){
+		//$('#item_body').linedtextarea();
+	});
+</script>

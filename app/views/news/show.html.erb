@@ -1,0 +1,23 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=trans 'main_page'%></a> / <span><%=trans 'news_title'%></span></div>
+                    	<h1><%=@item.title%></h1>
+                        <div class="news_content">
+                            <span><%=news_date @item%></span>
+<%=@item.body%>
+                        </div>
+                    </div>
+                </div>
+<%=render :partial => "layouts/left" %>
+                <div class="right">
+                    <div class="back"><a href="/news"><%=trans 'news_back_to_archive'%></a></div>
+                    <div class="news_list_right">
+<%@news = News.find(:all, :order => "created_at DESC", :conditions => ["language = ?", @language], :limit => 3)%>
+<%for news in @news%>
+                        <div class="news_item">
+                            <a href="<%=link2news(news)%>"><%=news.title%></a>
+                            <span><%=news_date(news)%></span>
+                        </div>
+<%end%>
+                    </div>
+                </div>

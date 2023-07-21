@@ -1,0 +1,1 @@
+	<%=admin_tabs2([["Основная страна", "/#{params[:controller]}/list/main"], ["Остальные страны", "/#{params[:controller]}/list/other"]], "close_dates")%>

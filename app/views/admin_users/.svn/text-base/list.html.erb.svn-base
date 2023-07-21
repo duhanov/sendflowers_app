@@ -1,0 +1,67 @@
+<%admin_page @tabs do %>
+  
+<script>
+	function delItem(id)
+	{
+
+		if(confirm("Вы действительно хотите удалить пользователя?"))
+		{
+			if (document.getElementById("item" + id)) {
+				highliteItem(id);
+				new Ajax.Request('/admin_users/delete/' + id + '?authenticity_token=' + window._token, {
+						asynchronous: true,
+						onComplete: function(){
+							deleteRow(document.getElementById("item" + id));
+						}
+					});
+
+			};
+		};
+	};
+</script>
+
+  
+<% form_tag :action => 'delete' do %>
+<input type="hidden" name="back" value="<%=request.request_uri%>">
+<table cellspacing="0" cellpadding="0" border="0" width="100%" class="list" item_name="пользователя" del_url="/admin_users/delete/">
+	<thead>
+	<tr>
+		<th width="1"><%=users_sort_link("#", "id", "id DESC")%></th>
+		<th><b><%=users_sort_link("Пользователь", "email", "email DESC")%></b></th>
+		<th><b><%=users_sort_link("Роль", "t", "t DESC")%></b></th>
+		<th><b>Статистика</b></th>
+		<th style="text-align:center">Отправить сообщение</th>
+		<th style="text-align:center">Редактировать</th>
+		<th style="text-align:center">Удалить</th>
+	</tr>
+</thead>
+	<tbody>
+<% for user in @users %>			
+  		<tr rowid="<%=user.id%>">
+			<td><%=user.id%>.</td>
+      		<td><a href='/admin_users/edit/<%=user.id%>'><%=user.email%></a>
+			<% if user.active == 0%>
+			<font color="red"> - Ожидает активации</font>
+			<% end %>
+
+			</td>
+      		<td><% if !user.roles.blank? %><%=user.roles[0].name%><% end %></td>
+			<td><a href="/admin_users/stats?user_id=<%=user.id%>">Статистика</a></td>
+			<td align=center><a href="mailto:<%=user.email%>">Сообщение</a></td>
+			<td align=center><a href="/admin_users/edit/<%=user.id%>"><img src="/admin/i/edit.gif" alt="Редактировать" width=15 height=15 border=0></a></td>
+	        <td valign="top" align=center>
+	        	<% if ((!current_user.blank?) && (current_user.id != user.id)) || (current_user.blank?)%>
+				<%=btn_del_row%>
+				<% end %>
+			</td>
+	  	</tr>
+<% end %>
+</tbody>
+			
+	</table>
+<br>
+<br><br>
+<%= will_paginate @users %>
+<% end %>
+
+<%end%>

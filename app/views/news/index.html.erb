@@ -1,0 +1,23 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/"><%=trans 'main_page'%></a> / <span><%=trans 'news_title'%></span></div>
+                    	<h1><%=trans 'news_title'%></h1>
+<% for news in @items%>
+                        <div class="news_item">
+                        	<a href="<%=link2news(news)%>"><%=news.title%></a>
+                            <span><%=news_date(news)%></span>
+                            <p><%=news.description%></p>
+                        </div>
+<%end%>
+                    </div>
+                </div>
+<%=render :partial => "layouts/left" %>
+                <div class="right">
+<!--                    <ul class="news_year">
+                    	<li class="active"><a href="#">2010</a></li>
+                        <li><a href="#">2009</a></li>
+                        <li><a href="#">2008</a></li>
+                        <li><a href="#">2007</a></li>
+                        <li><a href="#">2009</a></li>
+                    </ul>-->
+                </div>

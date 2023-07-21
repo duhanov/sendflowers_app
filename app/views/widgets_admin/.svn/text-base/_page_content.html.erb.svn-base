@@ -1,0 +1,34 @@
+<!--<%=@page_content.name%>-->
+ <%if !is_admin %>
+  <%= show_payment_text(@page_content.body)%>
+ <%elsif (!params[:edit_page_content].blank?) && (params[:edit_page_content].to_i == @page_content.id) %>
+	<%form_tag "/admin_pages/update_page_content/#{@page_content.id}" do%>
+		<input type="hidden" name="back" value="<%=request.request_uri.gsub('?edit_page_content='+@page_content.id.to_s ,'')%>">
+		<%if opts[:textarea]%>
+		<!--Простой редактор textarea-->
+		<%=text_area :page_content, :body, :cols => opts[:textarea][:cols], :rows => opts[:textarea][:rows]%><br/>
+		<%else%>
+		<!--Ckeditor-->
+		<%=ckeditor_textarea(:page_content, :body, :width => '100%')%>
+		<%end%>
+		<%=submit_tag "Редактировать"%> или <a href="<%=request.request_uri.gsub('?edit_page_content='+@page_content.id.to_s ,'')%>">Вернуться</a>
+	<%end%>
+<%else%>
+	<%if flybox%>
+   <b style='font-size:14px;'><a  id="update_page_content_popup_<%=@page_content.id%>" href='/admin_pages/update_page_content/<%=@page_content.id%>' class='update_page_content_popup'><%=page_content_link_title(opts)%></a></b>
+   <script>
+  // 		$(document).ready(function(){
+			$('#update_page_content_popup_<%=@page_content.id%>').popupWindow({ 
+				centerScreen:1,
+				height:500, 
+				width:800, 
+	//			top:50, 
+		//		left:50 
+			}); 
+//		});
+   </script>
+	<%else%>
+   <a href='<%=request.request_uri%>?edit_page_content=<%=@page_content.id%>'><b style='font-size:14px;'><%=page_content_link_title(opts)%></b></a>
+   	<%end%>
+   <div id="page_content_<%=@page_content.id%>_show"><%=show_payment_text(@page_content.body)%></div>
+ <%end%>

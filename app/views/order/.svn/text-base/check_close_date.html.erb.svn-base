@@ -1,0 +1,9 @@
+<%if !@next_date.blank? %>
+	<%if @language == "ru"%>
+	alert('Доставка на указанную дату не возможна. Ближайшая дата доставки: <%=@next_date.strftime('%Y-%m-%d')%>');
+	<%else%>
+	alert('Delivery on this date is not possible. The nearest delivery date: <%=@next_date.strftime('%Y-%m-%d')%>');
+	<%end%>
+	$('#datepicker_close_dates').val('<%=@next_date.strftime('%Y-%m-%d')%>');
+<%end%>
+

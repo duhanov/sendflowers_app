@@ -1,0 +1,15 @@
+	<%form_tag do%>
+	<table>
+      <tr><td class="act" nowrap>E-Mail:</td><td width="100%"><%= text_field :user, :"email", :class => "field" %></td></tr>
+      <tr><td class="act" nowrap>Пароль:</td><td width="100%"><%= text_field :user, :"password", :class => "field" %><%=gen_password('user_Password')%></td></tr>
+      <tr><td class="act" nowrap>Роль в системе:</td><td width="100%"><%= select_tag "role", options_for_select(@roles.map {|u| [u.name,u.id]}, @user.roles[0].id) %><td></tr>
+      <tr><td class="act" nowrap>Активный</td><td width="100%"><%= select( "user", "active", { "Активен" => 1, "Отключён" => 0}) %></td></tr>
+	  <tr><td>Имя</td><td><%=text_field :user, :firstname%></td></tr>
+	  <tr><td>Фамилия</td><td><%=text_field :user, :lastname%></td></tr>
+	  <tr><td>Отчество</td><td><%=text_field :user, :patronymic%></td></tr>
+	  <tr><td>Телефон</td><td><%=text_field :user, :telephone%></td></tr>
+
+</table>
+		<%if params[:action]=="new"%><%=submit_tag "Добавить"%><%end%>
+		<%if params[:action]=="edit"%><%=submit_tag "Редактировать"%><%end%>
+	<%end%>

@@ -1,0 +1,19 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/">Главная</a> / <a href="/cart/index">Корзина</a > / <span>Статус заказа.</span></div>
+                    	<h1>Статус заказа</h1>
+						<%=flashes%>
+                        	<%form_tag do%>
+                        <div class="forma">
+                        	<div class="necessar">Поле обязательно для заполнения</div>
+                        	<div class="input necessarily block"><label>Номер заказа:</label><p><%=text_field :order, :id%></p></div>
+                        	<div class="input necessarily block"><label>Email:</label><p><%=text_field :order, :email%></p></div>
+                        </div>
+                        <input class="button" type="submit" value="Проверить статус" style="width:200px;" name="" />
+							<%end%>
+                    </div>
+                </div>
+				<%=render :partial => "layouts/left"  %>
+<% if !current_user.blank?%>
+<%=render :partial => "users/right"%>	
+<%end%>

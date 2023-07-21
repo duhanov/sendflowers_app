@@ -1,0 +1,17 @@
+<%form_tag "" do%>
+<table>
+	<Tr>
+		<td>Категория</td>
+		<td><%=@category.name%></td>
+	</tr>
+	<tr>
+		<td>Текст поздравления</td>
+		<td><%=text_area :item, :body%></td>
+	</tr>
+</table>
+	<%if params[:action] =~ /new/%>
+		<%=submit_tag "Добавить поздравление"%>
+	<%else%>
+		<%=submit_tag "Редактировать поздравление"%>
+	<%end%>
+<%end%>

@@ -1,0 +1,71 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/">Главная</a> / <a href="/order/webmoney/<%=@order.id%>">Заказ #<%=@order.id%>. Оплата заказа через Webmoney</a ></div>
+<%=flashes%>
+<%=page_content("wm_pay_#{@language}",true)%>
+
+<script>
+	function changeWMCurrency(){
+		if(($("#wm_currency option:selected").html())=="WMZ"){
+			$('#wm_total_amount').val('<%=@order.total_price.to_f + @order.delivery_price.to_f%>');
+			$('#wm_currency_name').html('$');
+			$('#wm_submit').attr('disabled', false);
+		};
+		if(($("#wm_currency option:selected").html())=="WMB"){
+			$('#wm_total_amount').val('<%=@order.total_price_rub.to_i + @order.delivery_price_rub.to_i%>');
+			$('#wm_currency_name').html('бел.руб.');
+			$('#wm_submit').attr('disabled', false);
+		};
+	};
+	$(document).ready(function(){
+		changeWMCurrency();
+	});
+</script>
+
+<form target="_parent" action="https://merchant.webmoney.ru/lmi/payment.asp" method="post">
+	<input type="hidden" name="LMI_PAYMENT_NO" value="<%=@order.id%>"/>
+	<input type="hidden" name="LMI_FAIL_METHOD" value="0"/><!--Это поле должно принимать значение 0, 1 или 2, что соответствует значениям параметра "Метод вызова Fail URL" - "GET", "POST" или "LINK".-->
+<!--	<input type="hidden" name="LMI_SIM_MODE" value="1"/>-->
+	<!--
+	0 или не отсутствует: Для всех тестовых платежей сервис будет имитировать успешное выполнение;
+    1: Для всех тестовых платежей сервис будет имитировать выполнение с ошибкой (платеж не выполнен);
+    2: Около 80% запросов на платеж будут выполнены успешно, а 20% - не выполнены.
+	-->
+	<?
+//	$_SERVER["SERVER_NAME"]='178.125.51.166';//$_SERVER["REMOTE_ADDR"];
+	?>
+	<input type="hidden" name="LMI_PAYMENT_DESC" value='<%=Russian.transliterate("Заказ №#{@order.id}. Оплата за товар. Получатель платежа: #{request.host}")%>'/>
+	<input type="hidden" name="LMI_RESULT_URL" value="http://<%=request.host%>:<%=request.port%>/order/wm_result"/>
+	<input type="hidden" name="LMI_SUCCESS_URL" value="http://<%=request.host%>:<%=request.port%>/order/wm_success"/>
+	<input type="hidden" name="LMI_FAIL_URL" value="http://<%=request.host%>:<%=request.port%>/order/wm_fail"/>
+	<table>
+		<tr>
+			<td>Кошелёк:</td>
+			<td>
+	<select name="LMI_PAYEE_PURSE" id="wm_currency" onChange="changeWMCurrency();">
+		<%if Option.get('wmb_purse')!=""%>
+		<option value="<%=Option.get('wmb_purse')%>">WMB</option>
+		<%end%>
+		<%if Option.get('wmz_purse')!=""%>
+		<option value="<%=Option.get('wmz_purse')%>">WMZ</option>
+		<%end%>
+	</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Сумма платежа:</td>
+			<td>
+	<input name="LMI_PAYMENT_AMOUNT" id="wm_total_amount" readonly="true"/><span id="wm_currency_name"></span>				
+			</td>
+		</tr>
+	</table>
+	<input type="submit" class="btn" value="Оплатить" disabled="true" id="wm_submit"/>
+</form>
+
+
+
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                </div>

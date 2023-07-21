@@ -1,0 +1,60 @@
+            	<div class="all">
+                	<div class="centeri">
+                    	<div class="crumb"><a href="/">Главная</a> / <a href="/order/webpay/<%=@order.id%>">Заказ #<%=@order.id%>. Оплата заказа через Webpay</a></div>
+
+<%=flashes%>
+<%=page_content("webpay_pay_#{@language}",true)%>
+<form action="https://secure.webpay.by/" method="post" accept-charset="UTF-8">
+	<%for item in @order.order_items%>
+	<input type="hidden"name="wsb_invoice_item_quantity[]" value="<%=item.quantity%>">
+	<input type="hidden"name="wsb_invoice_item_price[]" value="<%=item.price_rub/item.quantity%>">
+	<input type="hidden"name="wsb_invoice_item_name[]" value="Оплата за товар"><!--Название товара-->
+	<%end%>
+
+	<input type="hidden"name="*scart">
+	<input type="hidden"name="wsb_version" value="2">
+	<%if @language.blank? || @language == "ru"%>
+	<input type="hidden"name="wsb_language_id" value="russian">
+	<%else%>
+	<input type="hidden"name="wsb_language_id" value="english">
+	<%end%>
+	<!--Индефикатор магазина в системе WebPay -->
+	<!--RU--><!--<%=@language%>-->
+	<input type="hidden"name="wsb_storeid" value="<%=translate_name Option.get('webpay_wsb_stroreid')%>">
+	<input type="hidden"name="wsb_store" value="<%=h(translate_name(Option.get('site_name')))%>">
+	<!--Индификатор заказа примываемый магазином -->
+	<input type="hidden"name="wsb_order_num" value="<%=@order.id%>" >
+	<!--Тестовая оплата -->
+	<input type="hidden"name="wsb_test" value="<%=@wsb_test%>" >
+	<input type="hidden"name="wsb_currency_id" value="<%=@wsb_currency_id%>">
+	<!--Случайная последовательность (Эл. подпись заказа) -->
+	<input type="hidden"name="wsb_seed" value="<%=@wsb_seed%>">
+	<!-- Электронная подпись заказа -->
+	<input type="hidden"name="wsb_signature" value="<%=@wsb_signature%>" >
+
+	<input type="hidden"name="wsb_return_url" value="http://<%=request.domain%>/order/webpay_ok/<%=@order.id%>">
+	<input type="hidden"name="wsb_cancel_return_url" value="http://<%=request.domain%>/order/webpay_cancel/<%=@order.id%>">
+	<input type="hidden"name="wsb_notify_url" value="http://<%=request.domain%>/order/webpay_notify/<%=@order.id%>">
+	<input type="hidden"name="wsb_email" value="<%=h @order.sender_email%>" >
+	<input type="hidden"name="wsb_phone" value="<%=h @order.sender_telephone%>" >
+	
+	<input type="hidden"name="wsb_shipping_name" value="<%=h translate_name(@order.delivery.name)%>" >
+	<input type="hidden"name="wsb_shipping_price" value="<%=h @order.delivery_price_rub%>" >
+	<!-- Скидка -->
+	<input type="hidden"name="wsb_discount_name" value="<%=@skidka_title%>" >
+	<input type="hidden"name="wsb_discount_price" value="<%=@skidka%>" >
+
+	<input type="hidden"name="wsb_total" value="<%=@wsb_total%>" >
+	<!-- Сумма налога -->
+	<input type="hidden"name="wsb_tax" value="0">
+
+	<input type="submit" value="Перейти к оплате" class="btn">
+	</form>
+
+
+
+                    </div>
+                </div>
+<%=render :partial => "layouts/left"  %>
+                <div class="right">
+                </div>

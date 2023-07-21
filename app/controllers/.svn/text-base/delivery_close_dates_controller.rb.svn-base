@@ -1,0 +1,2 @@
+class DeliveryCloseDatesController < ApplicationController
+end

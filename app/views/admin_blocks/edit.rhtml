@@ -1,0 +1,18 @@
+<% admin_page([["Редактировать", "/admin_blocks/edit/#{@block.id}"], ["Список", "/admin_blocks/list"]])do %>
+<% form_tag "/admin_blocks/edit/#{@block.id}", :name => "form_hotel", :enctype => "multipart/form-data" do %>
+<%= hidden_field :block, "id" %>
+            <div id="mainDIV">
+	  <table width=100%  class="list">
+        <tr><td class="act" nowrap>Блок:</td><td width="100%"><b><%=@block.runame%> (<%if @block.language=="ru"%>Русская версия<%end%><%if @block.language=="en"%>Английская версия<%end%>)</b></td></tr>
+	  
+      </table>
+   Код:<br>
+<%= ckeditor_textarea("block", "body", :toolbarSet => 'Simple', :width => '800px', :height => '300px') %>
+   
+	  
+	  </div>
+<br><input type=submit value="Редактировать" class=field>  
+
+<% end %>
+
+<%end%>

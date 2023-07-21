@@ -1,0 +1,84 @@
+<%admin_page @tabs do%>
+	<%quick_add "Добавить категорию", "/admin_greeting_text_categories/new" do%>
+		<table>
+			<tr>
+				<td>Язык</td>
+				<td><%=select :item, :language, [["Русский", "ru"], ["Английский", "en"]]%></td>
+			</tr>
+			<tr>
+				<td>Название</td>
+				<td><%=text_field :item, :name%></td>
+			</tr>
+		</table>
+	<%end%>
+	<h2>Русский</h2>
+	<Table style="padding-left: 30px;">
+		<tr>
+			<td width="400"><b>Название</b></td>
+		</tr>
+	</Table>
+	<%sortable "/#{params[:controller]}/sort" do %>
+		<%for item in @items_ru%>
+			<%sortable_item item do%>
+				<div style="float:left;">
+					<table cellpadding="0" cellspacing="0" class="product_info" update_url="/<%=params[:controller]%>/update/">
+					<tbody>
+						<tr rowid="<%=item.id%>">
+							<td width="400" class="edit_string" field="name"><%=item.name%></td>						</tr>
+					</tbody>
+					</table>
+				</div>
+				<div class="ctrls" style="float:right;">
+					<a href="/admin_greeting_texts/list/<%=item.id%>" style='color:blue;font-size:12px;text-decoration: underline;'>Поздравления</a>
+					<a href="" item_id="<%=item.id%>" class="del_product" style='color:blue;font-size:12px;text-decoration: underline;'>Удалить</a>
+				</div>
+			<%end%>
+		<%end%>
+	<%end%>
+
+	<h2>Английский</h2>
+	<Table style="padding-left: 30px;">
+		<tr>
+			<td width="400"><b>Название</b></td>
+		</tr>
+	</Table>
+	<%sortable "/#{params[:controller]}/sort" do %>
+		<%for item in @items_en%>
+			<%sortable_item item do%>
+				<div style="float:left;">
+					<table cellpadding="0" cellspacing="0" class="product_info" update_url="/<%=params[:controller]%>/update/">
+					<tbody>
+						<tr rowid="<%=item.id%>">
+							<td width="400" class="edit_string" field="name"><%=item.name%></td>						</tr>
+					</tbody>
+					</table>
+				</div>
+				<div class="ctrls" style="float:right;">
+					<a href="/admin_greeting_texts/list/<%=item.id%>" style='color:blue;font-size:12px;text-decoration: underline;'>Поздравления</a>
+					<a href="" item_id="<%=item.id%>" class="del_product" style='color:blue;font-size:12px;text-decoration: underline;'>Удалить</a>
+				</div>
+			<%end%>
+		<%end%>
+	<%end%>
+<%end%>
+
+<script>
+	$(document).ready(function(){
+		$('.del_product').click(function(){
+			if(confirm('Вы действительно хотите удалить категорию?'))	
+			{
+				item_id = $(this).attr('item_id');
+				$(this).html("Идёт удаление...")
+				$.ajax({
+					"item_id": $(this).attr('item_id'),
+					"type": "GET",
+					"url": "/<%=params[:controller]%>/delete/" + $(this).attr('item_id'),
+					"success": function(){
+						$('#item_' + this.item_id).remove();
+					}
+				})
+			};
+			return false;
+		})
+	});
+</script>

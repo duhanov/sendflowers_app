@@ -1,0 +1,74 @@
+<b>Время доставки (каждое значение с новой строки):</b>
+<Br/>
+<small>Нажмите чтобы отредактировать</small>
+<Br/>
+<Table>
+	<tr>
+	<td valign="top" style="width:300px; padding:5px 5px 5px 5px ; border: 1px solid silver;">
+Русская версия:<Br/>
+<pre id="opt_delivery_times"><%=Option.get('delivery_times')%></pre>
+<script>
+	$(document).ready(function(){
+		$('#opt_delivery_times').editInPlace({
+			saving_text: 'сохранение...',
+			cancel_button: '<input type="submit" class="inplace_cancel" value="Отмена"></input>',
+			save_button: '<input type="submit" class="inplace_save" value="Сохранить"></input>',
+			default_text: '(Нажать для добавления текста)',
+        	url: '/admin_options/update',
+			params: 'name=delivery_times&authenticity_token=' + window._token,
+        	show_buttons: true,
+        	field_type: 'textarea',
+//			success: inplaceEditorCallback
+    	});
+		
+	});
+</script>
+<Br/>
+	</td>
+	<td valign="top" style="width:300px; padding:5px 5px 5px 5px ; border: 1px solid silver;">
+Английская версия:<Br/>
+<pre id="opt_delivery_times_en"><%=Option.get('delivery_times_en')%></pre>
+<script>
+	$(document).ready(function(){
+		$('#opt_delivery_times_en').editInPlace({
+			saving_text: 'сохранение...',
+			cancel_button: '<input type="submit" class="inplace_cancel" value="Отмена"></input>',
+			save_button: '<input type="submit" class="inplace_save" value="Сохранить"></input>',
+			default_text: '(Нажать для добавления текста)',
+        	url: '/admin_options/update',
+			params: 'name=delivery_times_en&authenticity_token=' + window._token,
+        	show_buttons: true,
+        	field_type: 'textarea',
+//			success: inplaceEditorCallback
+    	});
+		
+	});
+</script>
+	</td>
+</tr>
+</table>
+
+
+<b>Выбор текущей даты доставки возможен до указанного времени:</b>
+<br/>
+
+<span field="delivery_end_hour" class="select_option" opts="<%=(0..24).map{|i| "#{i.to_s.rjust(2, '0')}:#{i.to_s.rjust(2, '0')}"}.join(',')%>"><%=Option.get('delivery_end_hour')%></span>:<span field="delivery_end_minute" opts="<%=(0..59).step(5).map{|i| "#{i.to_s.rjust(2, '0')}:#{i.to_s.rjust(2, '0')}"}.join(',')%> field="delivery_end_minute" class="select_option"><%=Option.get('delivery_end_minute')%></span>
+
+
+<script>
+	$('.select_option').each(function(){
+		opts = $(this).attr('opts');
+		$(this).editInPlace({
+			show_buttons: true,
+			field_type: "select",
+			saving_text: saving_text,
+			cancel_button: cancel_button,
+			save_button: save_button,
+			default_text: default_text,
+        	url: '/admin_options/update',
+			params: 'name=' + $(this).attr('field') + '&authenticity_token=' + window._token,
+			select_options: opts
+		});
+
+	});	
+</script>

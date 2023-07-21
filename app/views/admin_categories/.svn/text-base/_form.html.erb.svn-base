@@ -1,0 +1,21 @@
+<% form_tag  do %>
+	  <table>
+      <tr><td nowrap>Родительская категория:</td><td nowrap><%= category_select(Category.find(:all, :conditions => "category_id = 0"), 'item', 'category_id', @item) %></td><td></td><td></td></tr>
+      <tr><td nowrap>Название(рус):</td><td><%=text_field :item, :name%></td><td nowrap>Название(англ.)</td><td><%=text_field :item, :name_en%></td></tr>
+	  <tr><td nowrap>Заголовок страницы(рус):</td><td><%= text_field :item, :title%></td><td nowrap>Заголовок страницы(англ.):</td><td><%= text_field :item, :title_en%></td></tr>
+	  <tr><td nowrap>Показывать в меню<td><%=check_box :item, :show_in_menu%></td><Td></Td><td></td></tr>
+<%=edit_meta_ru_en%>
+
+       </table>
+	  <br>
+   Описание(рус.):<br>
+
+<%=ckeditor_textarea :item, :description, :toolbar=>'Full', :width=>'800px', :heigth=>'200px' %>
+   Описание(англ.):<br>
+
+<%=ckeditor_textarea :item, :description_en, :toolbar=>'Full', :width=>'800px', :heigth=>'200px' %>
+		<%if params[:action]=="new"%><%=submit_tag "Добавить"%><%end%>
+		<%if params[:action]=="edit"%><%=submit_tag "Редактировать"%><%end%>
+
+<% end %>
+

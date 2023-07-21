@@ -1,0 +1,19 @@
+	<%form_tag do%>
+	<table>
+      <tr><td>Язык новости</td><td><%=select :item, :language, [["Русский", "ru"], ["Английский", "en"]]%></td></tr>
+      <tr><td>Название</td><td><%=text_field :item, :title%></td></tr>
+<%if params[:action]=="edit"%>
+      <tr><td>Дата публикации</td><td><%=text_field :item, :created_at, :class => "datepicker"%></td></tr>
+<%end%>
+	</table>
+Краткое описание:<br>
+<%=text_area :item, :description, :cols => 50, :rows => 10%>
+<br>
+Полный текст новости:
+<br>
+<%= ckeditor_textarea(:item, :body, :toolbarSet => 'Simple', :width => '600', :height => '500px') %>
+
+		<%if params[:action]=="new"%><%=submit_tag "Добавить"%><%end%>
+		<%if params[:action]=="edit"%><%=submit_tag "Редактировать"%><%end%>
+	<%end%>
+

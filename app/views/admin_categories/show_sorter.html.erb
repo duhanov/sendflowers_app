@@ -1,0 +1,35 @@
+<style type="text/css">
+	#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+	#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+	#sortable li span { position: absolute; margin-left: -1.3em; }
+	#sortable li {cursor: move}
+	.ui-state-default .ui-icon, span.ui-icon,li.ui-state-default  {background: none;}
+</style>
+
+<div class="demo">
+<small>Используя мышь меняйте порядок сортировки страниц.</small>
+<div id="sortable_messages"></div>
+<% if @items.blank?%>
+<div id="flash_notice">Нет подразделов.</div>
+<%end%>
+<ul id="sortable">
+	<% for item in @items %>
+	<li class="ui-state-default" id="sortable_list_<%=item.id%>"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%=item.name%></li>
+	<% end %>
+</ul>
+
+</div>
+
+<script type="text/javascript">
+		$("#sortable").sortable({
+			'update': function(){
+				$('#sortable_messages').append('<div id="flash_notice">Идёт сортировка...</div>');
+				url = '/<%=params[:controller]%>/sort/<%=params[:id]%>?' + $("#sortable").sortable('serialize') + '&authenticity_token=' + window._token;
+				$.ajax({
+					url: url,
+					dataType: 'script'
+				});
+			}
+		});
+		$("#sortable").disableSelection();
+</script>
